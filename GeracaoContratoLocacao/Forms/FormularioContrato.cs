@@ -1,17 +1,19 @@
-using GeracaoContratoLocacao.Presentation.Controllers;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
+using GeracaoContratoLocacao.Presentation.Utils;
 
 namespace GeracaoContratoLocacao
 {
     public partial class FormularioContrato : Form
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IFormularioContratoController _controller;
 
-        public FormularioContrato()
+        public FormularioContrato(/*IServiceProvider serviceProvider*/)
         {
             InitializeComponent();
-            _controller = new FormularioContratoController();
+            //_serviceProvider = serviceProvider;
+            //_controller = _serviceProvider.GetService<IFormularioContratoController>();
         }
 
         private void cmdGerarContrato_Click(object sender, EventArgs e)
@@ -34,6 +36,21 @@ namespace GeracaoContratoLocacao
                 MessageBox.Show($"Erro ao gerar contrato:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void txtCPFLocatario_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyCPFMask(sender, e);
+        }
+
+        private void txtDataInicio_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyDateMask(sender, e);
+        }
+
+        private void txtValorAluguel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyMoneyMask(sender, e);
         }
     }
 }

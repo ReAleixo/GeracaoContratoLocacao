@@ -94,6 +94,7 @@
             txtCPFLocatario.Name = "txtCPFLocatario";
             txtCPFLocatario.Size = new Size(164, 21);
             txtCPFLocatario.TabIndex = 2;
+            txtCPFLocatario.KeyPress += txtCPFLocatario_KeyPress;
             // 
             // lblCPFLocatario
             // 
@@ -162,6 +163,7 @@
             txtValorAluguel.Name = "txtValorAluguel";
             txtValorAluguel.Size = new Size(86, 20);
             txtValorAluguel.TabIndex = 7;
+            txtValorAluguel.KeyPress += txtValorAluguel_KeyPress;
             // 
             // label4
             // 
@@ -177,6 +179,7 @@
             // 
             cmbNumeroCasa.Font = new Font("Arial", 8.25F);
             cmbNumeroCasa.FormattingEnabled = true;
+            cmbNumeroCasa.Items.AddRange(new object[] { "Casa 1", "Casa 2", "Casa 3", "Casa 4", "Casa 5", "Casa 6" });
             cmbNumeroCasa.Location = new Point(15, 82);
             cmbNumeroCasa.Name = "cmbNumeroCasa";
             cmbNumeroCasa.Size = new Size(164, 22);
@@ -219,6 +222,7 @@
             txtDataInicio.Name = "txtDataInicio";
             txtDataInicio.Size = new Size(164, 20);
             txtDataInicio.TabIndex = 4;
+            txtDataInicio.KeyPress += txtDataInicio_KeyPress;
             // 
             // lblPrazo
             // 
