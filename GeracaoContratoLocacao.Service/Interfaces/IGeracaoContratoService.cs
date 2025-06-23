@@ -1,6 +1,6 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
 
-namespace GeracaoContratoLocacao.Service.Services
+namespace GeracaoContratoLocacao.Service.Interfaces
 {
     public interface IGeracaoContratoService
     {

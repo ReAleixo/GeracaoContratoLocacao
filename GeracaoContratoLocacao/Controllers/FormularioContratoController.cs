@@ -1,7 +1,7 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
-using GeracaoContratoLocacao.Service.Services;
+using GeracaoContratoLocacao.Service.Interfaces;
 
 namespace GeracaoContratoLocacao.Presentation.Controllers
 {

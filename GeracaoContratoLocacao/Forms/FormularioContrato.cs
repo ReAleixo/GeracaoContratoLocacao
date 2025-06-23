@@ -2,7 +2,7 @@ using GeracaoContratoLocacao.Presentation.Controllers;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.Utils;
 using GeracaoContratoLocacao.Presentation.ViewModels;
-using GeracaoContratoLocacao.Service.Interfaces;
+using GeracaoContratoLocacao.Service.Services;
 
 namespace GeracaoContratoLocacao
 {

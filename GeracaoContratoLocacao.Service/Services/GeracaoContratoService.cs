@@ -1,9 +1,9 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
 using GeracaoContratoLocacao.Domain.Utils;
-using GeracaoContratoLocacao.Service.Services;
+using GeracaoContratoLocacao.Service.Interfaces;
 using Spire.Doc;
 
-namespace GeracaoContratoLocacao.Service.Interfaces
+namespace GeracaoContratoLocacao.Service.Services
 {
     public class GeracaoContratoService : IGeracaoContratoService
     {
