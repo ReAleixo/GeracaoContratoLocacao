@@ -58,7 +58,7 @@
 
             if (long.TryParse(cpfSemMascara, out long cpfConvertido))
             {
-                return Convert.ToUInt64(cpfConvertido).ToString("000.000.000-00");
+                return Convert.ToUInt64(cpfConvertido).ToString(@"000\.000\.000\-00");
             }
             throw new ArgumentException("O CPF inserido é inválido.");
         }

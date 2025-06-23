@@ -1,6 +1,8 @@
+using GeracaoContratoLocacao.Presentation.Controllers;
 using GeracaoContratoLocacao.Presentation.Interfaces;
-using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Presentation.Utils;
+using GeracaoContratoLocacao.Presentation.ViewModels;
+using GeracaoContratoLocacao.Service.Interfaces;
 
 namespace GeracaoContratoLocacao
 {
@@ -13,7 +15,7 @@ namespace GeracaoContratoLocacao
         {
             InitializeComponent();
             //_serviceProvider = serviceProvider;
-            //_controller = _serviceProvider.GetService<IFormularioContratoController>();
+            _controller = new FormularioContratoController(new GeracaoContratoService());
         }
 
         private void cmdGerarContrato_Click(object sender, EventArgs e)
@@ -26,10 +28,12 @@ namespace GeracaoContratoLocacao
                     txtRGLocatario.Text,
                     txtDataInicio.Text,
                     txtPrazo.Text,
-                    (int)cmbNumeroCasa.SelectedValue,
+                    (int)cmbNumeroCasa.SelectedIndex +1,
                     txtValorAluguel.Text);
 
                 _controller.GerarContrato(contratoViewModel);
+
+                MessageBox.Show("Contrato gerado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

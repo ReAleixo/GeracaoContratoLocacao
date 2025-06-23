@@ -76,7 +76,13 @@ namespace GeracaoContratoLocacao.Presentation.Utils
                 return;
             }
 
+            if (textBox.Text.Length >= textBox.MaxLength)
+            {
+                return;
+            }
+
             string digits = new string(textBox.Text.Where(char.IsDigit).ToArray());
+            digits = digits.TrimStart('0');
 
             if (!e.Handled && char.IsDigit(e.KeyChar))
             {

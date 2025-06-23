@@ -22,19 +22,16 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
 
         private string SetNewFilePath(ContratoViewModel contratoViewModel)
         {
-            OpenFileDialog ofd = new OpenFileDialog()
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog()
             {
-                Title = "Salvar Contrato de Locação",
-                Filter = "Documento Word|*.docx|PDF|*.pdf",
-                FileName = $"CONTRATO LOCAÇÃO - {contratoViewModel.NomeLocatario.ToUpper()}",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
 
-            if (ofd.ShowDialog() != DialogResult.OK)
+            if (folderBrowser.ShowDialog() != DialogResult.OK)
             {
                 throw new ArgumentException("O caminho de destino não foi selecionado ou é inválido.");
             }
-            return ofd.FileName;
+            return folderBrowser.SelectedPath;
         }
 
         private ContratoLocacao MapFromViewModelToDomain(ContratoViewModel contratoViewModel)

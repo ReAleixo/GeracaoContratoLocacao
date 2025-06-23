@@ -159,7 +159,7 @@
             // 
             txtValorAluguel.Font = new Font("Arial", 8.25F);
             txtValorAluguel.Location = new Point(207, 82);
-            txtValorAluguel.MaxLength = 8;
+            txtValorAluguel.MaxLength = 7;
             txtValorAluguel.Name = "txtValorAluguel";
             txtValorAluguel.Size = new Size(86, 20);
             txtValorAluguel.TabIndex = 7;

@@ -29,7 +29,10 @@ namespace GeracaoContratoLocacao.Service.Interfaces
                 var documentoContratoModelo = new Document();
                 documentoContratoModelo.LoadFromFile(Paths.pathModeloContrato);
                 EditDocument(documentoContratoModelo, contratoLocacao);
-                documentoContratoModelo.SaveToFile(pathDestino + ".pdf", new ToPdfParameterList());
+
+                string nomeNovoArquivo = $"Contrato de locação - Locatário {contratoLocacao.Locatario.Nome}.pdf";
+                string fullPath = Path.Combine(pathDestino, nomeNovoArquivo);
+                documentoContratoModelo.SaveToFile(fullPath);
             }
             catch (Exception ex)
             {
@@ -39,16 +42,16 @@ namespace GeracaoContratoLocacao.Service.Interfaces
 
         private void EditDocument(Document contrato, ContratoLocacao contratoLocacao)
         {
-            contrato.Replace("#NOME_LOCATARIO#", contratoLocacao.Locatario.Nome, true, true);
+            contrato.Replace("#NOME_LOCATARIO#", contratoLocacao.Locatario.Nome.ToUpper(), true, true);
             contrato.Replace("#CPF_LOCATARIO#", contratoLocacao.Locatario.CPF, true, true);
             contrato.Replace("#RG_LOCATARIO#", contratoLocacao.Locatario.RG, true, true);
             contrato.Replace("#CASA#", contratoLocacao.Imovel.Endereco.Complemento, true, true);
             contrato.Replace("#PRAZO#", contratoLocacao.PrazoLocacao.ToString(), true, true);
             contrato.Replace("#INICIO_CONTRATO#", contratoLocacao.DataInicioLocacao.ToShortDateString(), true, true);
             contrato.Replace("#TERMINO_CONTRATO#", contratoLocacao.DataFimLocacao.ToShortDateString(), true, true);
-            contrato.Replace("#VALOR#", contratoLocacao.ValorAluguel.ToString(), true, true);
+            contrato.Replace("#VALOR#", contratoLocacao.ValorAluguel.ToString("C", System.Globalization.CultureInfo.CurrentCulture), true, true);
             contrato.Replace("#VALOR_EXTENSO#", contratoLocacao.ValorAluguel.ToString("C", System.Globalization.CultureInfo.CurrentCulture), true, true);
-            contrato.Replace("#VENCIMENTO#", contratoLocacao.DataVencimentoPagamento.ToString(), true, true);
+            contrato.Replace("#VENCIMENTO#", contratoLocacao.DataVencimentoPagamento.Day.ToString(), true, true);
             contrato.Replace("#DATA_GERACAO_CONTRATO#", contratoLocacao.DataGeracao.ToShortDateString(), true, true);
         }
     }

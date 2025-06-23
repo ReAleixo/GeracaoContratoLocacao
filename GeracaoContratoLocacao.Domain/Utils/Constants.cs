@@ -7,6 +7,6 @@
 
     public class Paths
     {
-        public const string pathModeloContrato = "Yor\\Path\\Here";
+        public const string pathModeloContrato = "Your\\File\\Path\\Here";
     }
 }
