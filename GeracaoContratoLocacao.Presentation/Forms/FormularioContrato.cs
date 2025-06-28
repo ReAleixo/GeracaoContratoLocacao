@@ -1,8 +1,7 @@
-using GeracaoContratoLocacao.Presentation.Controllers;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.Utils;
 using GeracaoContratoLocacao.Presentation.ViewModels;
-using GeracaoContratoLocacao.Service.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GeracaoContratoLocacao
 {
@@ -11,11 +10,11 @@ namespace GeracaoContratoLocacao
         private readonly IServiceProvider _serviceProvider;
         private readonly IFormularioContratoController _controller;
 
-        public FormularioContrato(/*IServiceProvider serviceProvider*/)
+        public FormularioContrato(IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            //_serviceProvider = serviceProvider;
-            _controller = new FormularioContratoController(new GeracaoContratoService());
+            _serviceProvider = serviceProvider;
+            _controller = _serviceProvider.GetService<IFormularioContratoController>();
         }
 
         private void cmdGerarContrato_Click(object sender, EventArgs e)
@@ -28,7 +27,7 @@ namespace GeracaoContratoLocacao
                     txtRGLocatario.Text,
                     txtDataInicio.Text,
                     txtPrazo.Text,
-                    (int)cmbNumeroCasa.SelectedIndex +1,
+                    (int)cmbNumeroCasa.SelectedIndex + 1,
                     txtValorAluguel.Text);
 
                 _controller.GerarContrato(contratoViewModel);
@@ -55,6 +54,11 @@ namespace GeracaoContratoLocacao
         private void txtValorAluguel_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBoxMasks.ApplyMoneyMask(sender, e);
+        }
+
+        private void txtPrazo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxKeyPress.OnlyDigits(sender, e);
         }
     }
 }
