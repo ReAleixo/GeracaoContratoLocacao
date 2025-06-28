@@ -46,7 +46,7 @@
             txtDataInicio = new TextBox();
             lblPrazo = new Label();
             lblDataInicio = new Label();
-            button1 = new Button();
+            cmdGerarContrato = new Button();
             grbLocatario.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -245,28 +245,29 @@
             lblDataInicio.TabIndex = 6;
             lblDataInicio.Text = "DATA DE INÍCIO";
             // 
-            // button1
+            // cmdGerarContrato
             // 
-            button1.Font = new Font("Arial", 9F);
-            button1.Location = new Point(11, 253);
-            button1.Name = "button1";
-            button1.Size = new Size(310, 43);
-            button1.TabIndex = 8;
-            button1.Text = "GERAR CONTRATO";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += cmdGerarContrato_Click;
+            cmdGerarContrato.Font = new Font("Arial", 9F);
+            cmdGerarContrato.Location = new Point(11, 253);
+            cmdGerarContrato.Name = "cmdGerarContrato";
+            cmdGerarContrato.Size = new Size(310, 43);
+            cmdGerarContrato.TabIndex = 8;
+            cmdGerarContrato.Text = "GERAR CONTRATO";
+            cmdGerarContrato.UseVisualStyleBackColor = true;
+            cmdGerarContrato.Click += cmdGerarContrato_Click;
             // 
             // FormularioContrato
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(333, 306);
-            ControlBox = false;
-            Controls.Add(button1);
+            Controls.Add(cmdGerarContrato);
             Controls.Add(groupBox1);
             Controls.Add(grbLocatario);
             Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FormularioContrato";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
@@ -298,6 +299,6 @@
         private Label label4;
         private ComboBox cmbNumeroCasa;
         private Label label2;
-        private Button button1;
+        private Button cmdGerarContrato;
     }
 }

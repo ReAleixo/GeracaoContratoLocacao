@@ -1,4 +1,8 @@
-﻿namespace GeracaoContratoLocacao.Presentation.ViewModels
+﻿using GeracaoContratoLocacao.CrossCutting.Utils;
+using GeracaoContratoLocacao.Domain.Utils;
+using System.Diagnostics;
+
+namespace GeracaoContratoLocacao.Presentation.ViewModels
 {
     public class ContratoViewModel
     {
@@ -49,18 +53,8 @@
 
         private string ValidaCPF(string cpf)
         {
-            if (string.IsNullOrEmpty(cpf))
-            {
-                throw new ArgumentException("O CPF não pode ser nulo.");
-            }
-
-            string cpfSemMascara = new string(cpf.Where(char.IsDigit).ToArray());
-
-            if (long.TryParse(cpfSemMascara, out long cpfConvertido))
-            {
-                return Convert.ToUInt64(cpfConvertido).ToString(@"000\.000\.000\-00");
-            }
-            throw new ArgumentException("O CPF inserido é inválido.");
+            Validacoes.ValidarCPF(cpf);
+            return Formatacoes.FormatarCPF(cpf);
         }
 
         private string ValidaRG(string rg)
@@ -68,6 +62,10 @@
             if (string.IsNullOrEmpty(rg))
             {
                 throw new ArgumentException("O RG não pode ser nulo.");
+            }
+            if (rg.Length < 5)
+            {
+                throw new ArgumentException("RG inválido");
             }
             return rg;
         }
@@ -79,9 +77,14 @@
                 throw new ArgumentException("A data de início do contrato não pode ser nula.");
             }
 
+            if (data.Length < Lengths.Data)
+            {
+                throw new ArgumentException("A data de início do contrato é inválida.");
+            }
+
             if (DateTime.TryParse(data, out DateTime dataInicio))
             {
-                if (dataInicio < DateTime.Now)
+                if (dataInicio < DateTime.Now.Date)
                 {
                     throw new ArgumentException("A data de início do contrato não pode ser anterior à data atual.");
                 }
@@ -111,7 +114,7 @@
         {
             if (numeroCasa <= 0)
             {
-                throw new ArgumentException("O número da casa deve ser um valor positivo.");
+                throw new ArgumentException("Casa inválida");
             }
             return numeroCasa;
         }

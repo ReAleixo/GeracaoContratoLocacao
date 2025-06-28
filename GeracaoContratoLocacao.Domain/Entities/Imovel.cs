@@ -1,4 +1,6 @@
-﻿namespace GeracaoContratoLocacao.Domain.Entities
+﻿using GeracaoContratoLocacao.Domain.ValueObjects;
+
+namespace GeracaoContratoLocacao.Domain.Entities
 {
     public class Imovel
     {

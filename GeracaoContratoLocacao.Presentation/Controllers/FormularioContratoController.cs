@@ -1,4 +1,5 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
+using GeracaoContratoLocacao.Domain.ValueObjects;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Service.Interfaces;
@@ -38,14 +39,13 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
         {
             return new ContratoLocacao
             {
-                Locatario = new Pessoa
+                Locatario = new Locatario
                 {
                     Nome = contratoViewModel.NomeLocatario,
                     CPF = contratoViewModel.CPFLocatario,
                     RG = contratoViewModel.RGLocatario,
                 },
                 DataInicioLocacao = contratoViewModel.DataInicioContrato,
-                DataFimLocacao = contratoViewModel.DataInicioContrato.AddMonths(contratoViewModel.PrazoContrato),
                 PrazoLocacao = contratoViewModel.PrazoContrato,
                 Imovel = new Imovel
                 {
@@ -55,7 +55,6 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                     }
                 },
                 ValorAluguel = contratoViewModel.ValorAluguel,
-                DataVencimentoPagamento = contratoViewModel.DataInicioContrato,
                 DataGeracao = DateTime.Now
             };
         }

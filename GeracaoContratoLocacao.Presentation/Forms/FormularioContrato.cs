@@ -14,7 +14,7 @@ namespace GeracaoContratoLocacao
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _controller = _serviceProvider.GetService<IFormularioContratoController>();
+            _controller = _serviceProvider.GetRequiredService<IFormularioContratoController>();
         }
 
         private void cmdGerarContrato_Click(object sender, EventArgs e)
@@ -36,7 +36,7 @@ namespace GeracaoContratoLocacao
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao gerar contrato:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao gerar contrato:\n\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }

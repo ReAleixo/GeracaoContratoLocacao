@@ -1,7 +1,9 @@
-﻿using GeracaoContratoLocacao.Domain.Entities;
+﻿using GeracaoContratoLocacao.CrossCutting.Utils;
+using GeracaoContratoLocacao.Domain.Entities;
 using GeracaoContratoLocacao.Domain.Utils;
 using GeracaoContratoLocacao.Service.Interfaces;
 using Spire.Doc;
+using System.Globalization;
 
 namespace GeracaoContratoLocacao.Service.Services
 {
@@ -48,11 +50,11 @@ namespace GeracaoContratoLocacao.Service.Services
             contrato.Replace("#CASA#", contratoLocacao.Imovel.Endereco.Complemento, true, true);
             contrato.Replace("#PRAZO#", contratoLocacao.PrazoLocacao.ToString(), true, true);
             contrato.Replace("#INICIO_CONTRATO#", contratoLocacao.DataInicioLocacao.ToShortDateString(), true, true);
-            contrato.Replace("#TERMINO_CONTRATO#", contratoLocacao.DataFimLocacao.ToShortDateString(), true, true);
-            contrato.Replace("#VALOR#", contratoLocacao.ValorAluguel.ToString("C", System.Globalization.CultureInfo.CurrentCulture), true, true);
-            contrato.Replace("#VALOR_EXTENSO#", contratoLocacao.ValorAluguel.ToString("C", System.Globalization.CultureInfo.CurrentCulture), true, true);
-            contrato.Replace("#VENCIMENTO#", contratoLocacao.DataVencimentoPagamento.Day.ToString(), true, true);
-            contrato.Replace("#DATA_GERACAO_CONTRATO#", contratoLocacao.DataGeracao.ToShortDateString(), true, true);
+            contrato.Replace("#TERMINO_CONTRATO#", contratoLocacao.DataInicioLocacao.AddMonths(contratoLocacao.PrazoLocacao).ToShortDateString(), true, true);
+            contrato.Replace("#VALOR#", contratoLocacao.ValorAluguel.ToString("C", CultureInfo.CurrentCulture), true, true);
+            contrato.Replace("#VALOR_EXTENSO#", DinheiroPorExtenso.Converter(contratoLocacao.ValorAluguel), true, true);
+            contrato.Replace("#VENCIMENTO#", contratoLocacao.DataInicioLocacao.Day.ToString(), true, true);
+            contrato.Replace("#DATA_GERACAO_CONTRATO#", contratoLocacao.DataGeracao.ToString(@"dd \de MMMM \de yyyy"), true, true);
         }
     }
 }

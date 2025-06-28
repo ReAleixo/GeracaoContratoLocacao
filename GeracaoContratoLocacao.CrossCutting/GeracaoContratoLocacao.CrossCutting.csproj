@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeracaoContratoLocacao.CrossCutting\GeracaoContratoLocacao.CrossCutting.csproj" />
+    <PackageReference Include="Caelum.Stella.CSharp" Version="1.4.7" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace GeracaoContratoLocacao.Domain.Entities
+﻿namespace GeracaoContratoLocacao.Domain.ValueObjects
 {
     public class Endereco
     {
