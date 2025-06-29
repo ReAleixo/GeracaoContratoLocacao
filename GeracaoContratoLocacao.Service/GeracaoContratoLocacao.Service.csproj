@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GeracaoContratoLocacao.CrossCutting\GeracaoContratoLocacao.CrossCutting.csproj" />
     <ProjectReference Include="..\GeracaoContratoLocacao.Domain\GeracaoContratoLocacao.Domain.csproj" />
+    <ProjectReference Include="..\GeracaoContratoLocacao.Repository\GeracaoContratoLocacao.Repository.csproj" />
   </ItemGroup>
 
 </Project>

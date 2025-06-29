@@ -4,6 +4,7 @@ namespace GeracaoContratoLocacao.Domain.Entities
 {
     public abstract class Pessoa
     {
+        public Guid Id { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
