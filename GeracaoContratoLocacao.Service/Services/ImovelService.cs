@@ -1,4 +1,5 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
+using GeracaoContratoLocacao.Domain.Enums;
 using GeracaoContratoLocacao.Repository.Interfaces;
 using GeracaoContratoLocacao.Service.Interfaces;
 
@@ -13,29 +14,40 @@ namespace GeracaoContratoLocacao.Service.Services
             _repository = imovelRepository;
         }
 
-        public Task<Guid> CadastrarNovoImovel(Imovel imovel, Locador locador)
+        public async Task<Guid> CadastrarNovoImovel(Imovel imovel)
         {
-            throw new NotImplementedException();
+            VerificaSeImovelEstaNulo(imovel);
+            return await _repository.CadastrarNovoImovel(imovel);
         }
 
-        public Task ExcluirImovel(int idImovel)
+        public async Task ExcluirImovel(Imovel imovel)
         {
-            throw new NotImplementedException();
+            VerificaSeImovelEstaNulo(imovel);
+            imovel.StatusLogico = StatusLogico.Inativo;
+            await _repository.SalvarAlteracoes(imovel);
         }
 
-        public Task<Imovel> GetImovelById(Guid idImovel)
+        public async Task<Imovel> ObterImovelViaId(Guid idImovel)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Locador>> ObterLocadores()
-        {
-            throw new NotImplementedException();
+            if (idImovel == default)
+            {
+                throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(idImovel));
+            }
+            return await _repository.ObterImovelViaId(idImovel);
         }
 
         public Task SalvarAlteracoes(Imovel imovel)
         {
-            throw new NotImplementedException();
+            VerificaSeImovelEstaNulo(imovel);
+            return _repository.SalvarAlteracoes(imovel);
+        }
+
+        private void VerificaSeImovelEstaNulo(Imovel imovel)
+        {
+            if (imovel.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException(nameof(imovel), "O imóvel não pode ser nulo.");
+            }
         }
     }
 }

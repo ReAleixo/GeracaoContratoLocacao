@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.66" />
+    <ProjectReference Include="..\GeracaoContratoLocacao.Domain\GeracaoContratoLocacao.Domain.csproj" />
   </ItemGroup>
 
 </Project>

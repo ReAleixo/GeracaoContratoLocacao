@@ -8,49 +8,28 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
 {
     public class ImovelController : IImovelController
     {
-        private readonly IImovelService _imovelService;
+        private readonly IImovelService _service;
 
         public ImovelController(IImovelService imovelService)
         {
-            _imovelService = imovelService;
+            _service = imovelService;
         }
 
         public async Task<Guid> CadastrarNovoImovel(ImovelViewModel viewModel)
         {
-            if (viewModel.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException("A ViewModel não possui nenhuma informação.");
-            }
-
-            var imovel = new Imovel
-            {
-                Id = viewModel.IdImovel,
-                Endereco = new Endereco
-                {
-                    Rua = viewModel.Rua,
-                    Numero = viewModel.Numero,
-                    Complemento = viewModel.Complemento,
-                    Bairro = viewModel.Bairro,
-                    Cidade = viewModel.Cidade,
-                    Estado = viewModel.Estado,
-                    CEP = viewModel.CEP
-                },
-                ValorAluguel = viewModel.ValorAluguel,
-                Locado = viewModel.ImovelLocado,
-                NumeroComodos = viewModel.NumeroComodos
-            };
-
-            var locador = new Locador
-            {
-                Id = viewModel.IdLocadorProprietario
-            };
-
-            return await _imovelService.CadastrarNovoImovel(imovel, locador);
+            Imovel imovel = TransformaViewModelEmImovel(viewModel);
+            return await _service.CadastrarNovoImovel(imovel);
         }
 
-        public Task ExcluirImovel(Guid idImovel)
+        public async Task ExcluirImovel(Guid idImovel)
         {
-            throw new NotImplementedException();
+            if (idImovel == default)
+            {
+                throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(idImovel));
+            }
+
+            Imovel imovel = await _service.ObterImovelViaId(idImovel);
+            await _service.ExcluirImovel(imovel);
         }
 
         public async Task<ImovelViewModel> GetImovelViewModel(Guid idImovel)
@@ -60,12 +39,12 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(idImovel));
             }
 
-            Imovel imovel = await _imovelService.GetImovelById(idImovel);
+            Imovel imovel = await _service.ObterImovelViaId(idImovel);
 
             return new ImovelViewModel
             {
                 IdImovel = imovel.Id,
-                NumeroComodos = imovel.NumeroComodos, 
+                NumeroComodos = imovel.NumeroComodos,
                 ValorAluguel = imovel.ValorAluguel,
                 ImovelLocado = imovel.Locado,
                 Rua = imovel.Endereco.Rua,
@@ -78,14 +57,45 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public Task<IEnumerable<Locador>> ObterLocadores()
+        public async Task<IEnumerable<Locador>> ObterLocadores()
         {
             throw new NotImplementedException();
         }
 
-        public Task SalvarAlteracoes(ImovelViewModel viewModel)
+        public async Task SalvarAlteracoes(ImovelViewModel viewModel)
         {
-            throw new NotImplementedException();
+            Imovel imovel = TransformaViewModelEmImovel(viewModel);
+            await _service.SalvarAlteracoes(imovel);
+        }
+
+        private Imovel TransformaViewModelEmImovel(ImovelViewModel viewModel)
+        {
+            if (viewModel.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException("A ViewModel não possui nenhuma informação.");
+            }
+
+            return new Imovel
+            {
+                Id = viewModel.IdImovel,
+                Proprietario = new Locador
+                {
+                    Id = viewModel.IdLocadorProprietario
+                },
+                NumeroComodos = viewModel.NumeroComodos,
+                ValorAluguel = viewModel.ValorAluguel,
+                Locado = viewModel.ImovelLocado,
+                Endereco = new Endereco
+                {
+                    Rua = viewModel.Rua,
+                    Numero = viewModel.Numero,
+                    Complemento = viewModel.Complemento,
+                    Bairro = viewModel.Bairro,
+                    Cidade = viewModel.Cidade,
+                    Estado = viewModel.Estado,
+                    CEP = viewModel.CEP
+                }
+            };
         }
     }
 }
