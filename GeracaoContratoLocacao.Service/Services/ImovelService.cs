@@ -14,20 +14,25 @@ namespace GeracaoContratoLocacao.Service.Services
             _repository = imovelRepository;
         }
 
-        public async Task<Guid> CadastrarNovoImovel(Imovel imovel)
+        public async Task<Guid> CadastrarNovoImovel(House imovel)
         {
             VerificaSeImovelEstaNulo(imovel);
             return await _repository.CadastrarNovoImovel(imovel);
         }
 
-        public async Task ExcluirImovel(Imovel imovel)
+        public async Task DeleteHouse(House imovel)
         {
             VerificaSeImovelEstaNulo(imovel);
             imovel.StatusLogico = StatusLogico.Inativo;
             await _repository.SalvarAlteracoes(imovel);
         }
 
-        public async Task<Imovel> ObterImovelViaId(Guid idImovel)
+        public async Task<IEnumerable<House>> GetAllHouses()
+        {
+            return await _repository.GetAllHouses();
+        }
+
+        public async Task<House> GetHouseById(Guid idImovel)
         {
             if (idImovel == default)
             {
@@ -36,13 +41,13 @@ namespace GeracaoContratoLocacao.Service.Services
             return await _repository.ObterImovelViaId(idImovel);
         }
 
-        public Task SalvarAlteracoes(Imovel imovel)
+        public Task SaveChanges(House imovel)
         {
             VerificaSeImovelEstaNulo(imovel);
             return _repository.SalvarAlteracoes(imovel);
         }
 
-        private void VerificaSeImovelEstaNulo(Imovel imovel)
+        private void VerificaSeImovelEstaNulo(House imovel)
         {
             if (imovel.IsNullOrEmpty())
             {

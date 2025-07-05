@@ -4,9 +4,10 @@ namespace GeracaoContratoLocacao.Service.Interfaces
 {
     public interface IImovelService
     {
-        Task SalvarAlteracoes(Imovel imovel);
-        Task ExcluirImovel(Imovel imovel);
-        Task<Guid> CadastrarNovoImovel(Imovel imovel);
-        Task<Imovel> ObterImovelViaId(Guid idImovel);
+        Task SaveChanges(House imovel);
+        Task DeleteHouse(House imovel);
+        Task<Guid> CadastrarNovoImovel(House imovel);
+        Task<House> GetHouseById(Guid idImovel);
+        Task<IEnumerable<House>> GetAllHouses();
     }
 }

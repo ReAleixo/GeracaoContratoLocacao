@@ -14,17 +14,22 @@ namespace GeracaoContratoLocacao.Repository.Repositories
         {
         }
 
-        public Task<Guid> CadastrarNovoImovel(Imovel imovel)
+        public Task<Guid> CadastrarNovoImovel(House imovel)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Imovel> ObterImovelViaId(Guid idImovel)
+        public Task<IEnumerable<House>> GetAllHouses()
         {
             throw new NotImplementedException();
         }
 
-        public Task SalvarAlteracoes(Imovel imovel)
+        public Task<House> ObterImovelViaId(Guid idImovel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SalvarAlteracoes(House imovel)
         {
             throw new NotImplementedException();
         }

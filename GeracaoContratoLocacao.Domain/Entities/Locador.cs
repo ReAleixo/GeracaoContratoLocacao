@@ -2,6 +2,6 @@
 {
     public class Locador : Pessoa
     {
-        public List<Imovel> Imoveis { get; set; }
+        public List<House> Houses { get; set; }
     }
 }

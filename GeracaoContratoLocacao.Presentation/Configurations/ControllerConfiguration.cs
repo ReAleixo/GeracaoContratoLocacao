@@ -12,6 +12,7 @@ namespace GeracaoContratoLocacao.Presentation.Configurations
         {
             var services = new ServiceCollection();
             services.AddSingleton<IFormularioContratoController, FormularioContratoController>();
+            services.AddSingleton<IHouseController, ImovelController>();
             services.AddSingleton<IGeracaoContratoService, GeracaoContratoService>();
 
             return services.BuildServiceProvider();

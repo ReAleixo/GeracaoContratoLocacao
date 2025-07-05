@@ -30,9 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CadastroImovel));
             toolStrip1 = new ToolStrip();
-            cmdVoltar = new ToolStripButton();
-            toolStripSeparator1 = new ToolStripSeparator();
-            cmdAlterar = new ToolStripButton();
             cmdSalvar = new ToolStripButton();
             cmdCancelar = new ToolStripButton();
             groupBox1 = new GroupBox();
@@ -68,39 +65,12 @@
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { cmdVoltar, toolStripSeparator1, cmdAlterar, cmdSalvar, cmdCancelar });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { cmdSalvar, cmdCancelar });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(446, 73);
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
-            // 
-            // cmdVoltar
-            // 
-            cmdVoltar.AutoSize = false;
-            cmdVoltar.Image = (Image)resources.GetObject("cmdVoltar.Image");
-            cmdVoltar.ImageTransparentColor = Color.Magenta;
-            cmdVoltar.Name = "cmdVoltar";
-            cmdVoltar.Size = new Size(70, 70);
-            cmdVoltar.Text = "&VOLTAR";
-            cmdVoltar.TextImageRelation = TextImageRelation.ImageAboveText;
-            cmdVoltar.Click += cmdVoltar_Click;
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 73);
-            // 
-            // cmdAlterar
-            // 
-            cmdAlterar.AutoSize = false;
-            cmdAlterar.Image = (Image)resources.GetObject("cmdAlterar.Image");
-            cmdAlterar.ImageTransparentColor = Color.Magenta;
-            cmdAlterar.Name = "cmdAlterar";
-            cmdAlterar.Size = new Size(70, 70);
-            cmdAlterar.Text = "&ALTERAR";
-            cmdAlterar.TextImageRelation = TextImageRelation.ImageAboveText;
-            cmdAlterar.Click += cmdAlterar_Click;
             // 
             // cmdSalvar
             // 
@@ -383,9 +353,6 @@
         #endregion
 
         private ToolStrip toolStrip1;
-        private ToolStripButton cmdVoltar;
-        private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton cmdAlterar;
         private ToolStripButton cmdSalvar;
         private ToolStripButton cmdCancelar;
         private GroupBox groupBox1;

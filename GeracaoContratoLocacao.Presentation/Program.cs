@@ -1,4 +1,5 @@
 using GeracaoContratoLocacao.Presentation.Configurations;
+using GeracaoContratoLocacao.Presentation.Forms;
 
 namespace GeracaoContratoLocacao
 {
@@ -10,7 +11,7 @@ namespace GeracaoContratoLocacao
             ApplicationConfiguration.Initialize();
 
             var serviceProvider = ControllerConfiguration.Configure();
-            Application.Run(new FormularioContrato(serviceProvider));
+            Application.Run(new Menu(serviceProvider));
         }
     }
 }

@@ -47,7 +47,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 },
                 DataInicioLocacao = contratoViewModel.DataInicioContrato,
                 PrazoLocacao = contratoViewModel.PrazoContrato,
-                Imovel = new Imovel
+                Imovel = new House
                 {
                     Endereco = new Endereco
                     {

@@ -3,7 +3,7 @@ using GeracaoContratoLocacao.Domain.ValueObjects;
 
 namespace GeracaoContratoLocacao.Domain.Entities
 {
-    public class Imovel
+    public class House
     {
         public Guid Id { get; set; }
         public Locador Proprietario { get; set; }

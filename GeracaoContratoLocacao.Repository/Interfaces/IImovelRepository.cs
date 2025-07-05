@@ -6,8 +6,9 @@ namespace GeracaoContratoLocacao.Repository.Interfaces
 {
     public interface IImovelRepository : IRepositoryBase<ImoveisDTO>
     {
-        Task<Guid> CadastrarNovoImovel(Imovel imovel);
-        Task<Imovel> ObterImovelViaId(Guid idImovel);
-        Task SalvarAlteracoes(Imovel imovel);
+        Task<Guid> CadastrarNovoImovel(House imovel);
+        Task<House> ObterImovelViaId(Guid idImovel);
+        Task SalvarAlteracoes(House imovel);
+        Task<IEnumerable<House>> GetAllHouses();
     }
 }
