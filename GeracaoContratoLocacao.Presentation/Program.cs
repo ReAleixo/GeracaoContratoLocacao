@@ -1,6 +1,8 @@
 using GeracaoContratoLocacao.Presentation.Configurations;
+using GeracaoContratoLocacao.Service.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace GeracaoContratoLocacao
+namespace GeracaoContratoLocacao.Presentation
 {
     internal static class Program
     {
@@ -9,8 +11,16 @@ namespace GeracaoContratoLocacao
         {
             ApplicationConfiguration.Initialize();
 
-            var serviceProvider = ControllerConfiguration.Configure();
+            var serviceProvider = ConfigureDependencyInjection(new ServiceCollection());
             Application.Run(new FormularioContrato(serviceProvider));
+        }
+
+        public static ServiceProvider ConfigureDependencyInjection(IServiceCollection services)
+        {
+            services.ControllerConfig();
+            services.ServiceConfig();
+
+            return services.BuildServiceProvider();
         }
     }
 }
