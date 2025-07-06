@@ -1,7 +1,9 @@
 using GeracaoContratoLocacao.Presentation.Configurations;
-using GeracaoContratoLocacao.Presentation.Forms;
+using GeracaoContratoLocacao.Service.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using static System.Net.Mime.MediaTypeNames;
 
-namespace GeracaoContratoLocacao
+namespace GeracaoContratoLocacao.Presentation
 {
     internal static class Program
     {
@@ -10,8 +12,16 @@ namespace GeracaoContratoLocacao
         {
             ApplicationConfiguration.Initialize();
 
-            var serviceProvider = ControllerConfiguration.Configure();
+            var serviceProvider = ConfigureDependencyInjection(new ServiceCollection());
             Application.Run(new Menu(serviceProvider));
+        }
+
+        public static ServiceProvider ConfigureDependencyInjection(IServiceCollection services)
+        {
+            services.ControllerConfig();
+            services.ServiceConfig();
+
+            return services.BuildServiceProvider();
         }
     }
 }
