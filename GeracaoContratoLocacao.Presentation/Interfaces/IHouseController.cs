@@ -7,7 +7,7 @@ namespace GeracaoContratoLocacao.Presentation.Interfaces
     {
         Task<HouseViewModel> GetHouseViewModelByHouseId(Guid idImovel);
         Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null);
-        Task<IEnumerable<Locador>> ObterLocadores();
+        Task<IEnumerable<Lessor>> ObterLocadores();
         Task SaveChanges(HouseViewModel viewModel);
         Task DeleteHouse(Guid idImovel);
         Task<Guid> CadastrarNovoImovel(HouseViewModel viewModel);

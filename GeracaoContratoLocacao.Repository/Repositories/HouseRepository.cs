@@ -28,7 +28,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             House house1 = new House()
             {
                 Id = Guid.NewGuid(),
-                Proprietario = new Locador
+                Proprietario = new Lessor
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Mayck Henrique da Silva",
@@ -59,7 +59,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             House house2 = new House()
             {
                 Id = Guid.NewGuid(),
-                Proprietario = new Locador
+                Proprietario = new Lessor
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Mateus Henrique da Silva",

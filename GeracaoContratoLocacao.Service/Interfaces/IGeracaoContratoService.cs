@@ -4,6 +4,6 @@ namespace GeracaoContratoLocacao.Service.Interfaces
 {
     public interface IGeracaoContratoService
     {
-        void GerarContratoLocacao(ContratoLocacao contratoLocacao, string pathDestino);
+        void GerarContratoLocacao(RentalContract contratoLocacao, string pathDestino);
     }
 }

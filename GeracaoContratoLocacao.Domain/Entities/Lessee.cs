@@ -1,6 +1,6 @@
 ﻿namespace GeracaoContratoLocacao.Domain.Entities
 {
-    public class Locatario : Pessoa
+    public class Lessee : Person
     {
     }
 }
