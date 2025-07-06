@@ -8,6 +8,7 @@ namespace GeracaoContratoLocacao.Repository.DTOs
     {
         [Key]
         public Guid id_Imovel { get; set; }
+        public Guid id_Proprietario { get; set; }
         public int nr_Comodos { get; set; }
         public decimal vl_Aluguel { get; set; }
         public bool bt_Locado { get; set; }
