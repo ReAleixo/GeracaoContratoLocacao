@@ -9,6 +9,7 @@ namespace GeracaoContratoLocacao.Service.Configuration
         public static IServiceCollection ServiceConfig(this IServiceCollection services)
         {
             services.AddSingleton<IGeracaoContratoService, GeracaoContratoService>();
+            services.AddSingleton<IImovelService, ImovelService>();
 
             return services;
         }
