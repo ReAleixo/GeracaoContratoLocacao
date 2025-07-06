@@ -37,11 +37,20 @@
             cmdRemover = new ToolStripButton();
             dgvHouses = new DataGridView();
             HouseId = new DataGridViewTextBoxColumn();
+            Locado = new DataGridViewTextBoxColumn();
+            OwnerId = new DataGridViewTextBoxColumn();
             NomeLocador = new DataGridViewTextBoxColumn();
             Imovel = new DataGridViewTextBoxColumn();
             ImovelStatus = new DataGridViewTextBoxColumn();
             NumeroComodos = new DataGridViewTextBoxColumn();
             ValorAluguel = new DataGridViewTextBoxColumn();
+            Rua = new DataGridViewTextBoxColumn();
+            Numero = new DataGridViewTextBoxColumn();
+            Complemento = new DataGridViewTextBoxColumn();
+            Bairro = new DataGridViewTextBoxColumn();
+            Cidade = new DataGridViewTextBoxColumn();
+            Estado = new DataGridViewTextBoxColumn();
+            CEP = new DataGridViewTextBoxColumn();
             groupBox4 = new GroupBox();
             panel1 = new Panel();
             chkFiltroExibirLocados = new CheckBox();
@@ -118,7 +127,7 @@
             dgvHouses.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvHouses.BackgroundColor = SystemColors.ScrollBar;
             dgvHouses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvHouses.Columns.AddRange(new DataGridViewColumn[] { HouseId, NomeLocador, Imovel, ImovelStatus, NumeroComodos, ValorAluguel });
+            dgvHouses.Columns.AddRange(new DataGridViewColumn[] { HouseId, Locado, OwnerId, NomeLocador, Imovel, ImovelStatus, NumeroComodos, ValorAluguel, Rua, Numero, Complemento, Bairro, Cidade, Estado, CEP });
             dgvHouses.Location = new Point(13, 64);
             dgvHouses.Name = "dgvHouses";
             dgvHouses.ReadOnly = true;
@@ -134,13 +143,29 @@
             HouseId.ReadOnly = true;
             HouseId.Visible = false;
             // 
+            // Locado
+            // 
+            Locado.DataPropertyName = "ImovelLocado";
+            Locado.HeaderText = "Locado";
+            Locado.Name = "Locado";
+            Locado.ReadOnly = true;
+            Locado.Visible = false;
+            // 
+            // OwnerId
+            // 
+            OwnerId.DataPropertyName = "IdProprietario";
+            OwnerId.HeaderText = "OwnerId";
+            OwnerId.Name = "OwnerId";
+            OwnerId.ReadOnly = true;
+            OwnerId.Visible = false;
+            // 
             // NomeLocador
             // 
             NomeLocador.DataPropertyName = "NomeProprietario";
             NomeLocador.HeaderText = "Nome do Locador";
             NomeLocador.Name = "NomeLocador";
             NomeLocador.ReadOnly = true;
-            NomeLocador.Width = 280;
+            NomeLocador.Width = 230;
             // 
             // Imovel
             // 
@@ -174,6 +199,62 @@
             ValorAluguel.ReadOnly = true;
             ValorAluguel.Width = 120;
             // 
+            // Rua
+            // 
+            Rua.DataPropertyName = "Rua";
+            Rua.HeaderText = "Rua";
+            Rua.Name = "Rua";
+            Rua.ReadOnly = true;
+            Rua.Visible = false;
+            // 
+            // Numero
+            // 
+            Numero.DataPropertyName = "Numero";
+            Numero.HeaderText = "Número";
+            Numero.Name = "Numero";
+            Numero.ReadOnly = true;
+            Numero.Visible = false;
+            // 
+            // Complemento
+            // 
+            Complemento.DataPropertyName = "Complemento";
+            Complemento.HeaderText = "Complemento";
+            Complemento.Name = "Complemento";
+            Complemento.ReadOnly = true;
+            Complemento.Visible = false;
+            // 
+            // Bairro
+            // 
+            Bairro.DataPropertyName = "Bairro";
+            Bairro.HeaderText = "Bairro";
+            Bairro.Name = "Bairro";
+            Bairro.ReadOnly = true;
+            Bairro.Visible = false;
+            // 
+            // Cidade
+            // 
+            Cidade.DataPropertyName = "Cidade";
+            Cidade.HeaderText = "Cidade";
+            Cidade.Name = "Cidade";
+            Cidade.ReadOnly = true;
+            Cidade.Visible = false;
+            // 
+            // Estado
+            // 
+            Estado.DataPropertyName = "Estado";
+            Estado.HeaderText = "Estado";
+            Estado.Name = "Estado";
+            Estado.ReadOnly = true;
+            Estado.Visible = false;
+            // 
+            // CEP
+            // 
+            CEP.DataPropertyName = "CEP";
+            CEP.HeaderText = "CEP";
+            CEP.Name = "CEP";
+            CEP.ReadOnly = true;
+            CEP.Visible = false;
+            // 
             // groupBox4
             // 
             groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -201,6 +282,8 @@
             // chkFiltroExibirLocados
             // 
             chkFiltroExibirLocados.AutoSize = true;
+            chkFiltroExibirLocados.Checked = true;
+            chkFiltroExibirLocados.CheckState = CheckState.Checked;
             chkFiltroExibirLocados.Location = new Point(426, 15);
             chkFiltroExibirLocados.Name = "chkFiltroExibirLocados";
             chkFiltroExibirLocados.RightToLeft = RightToLeft.Yes;
@@ -208,6 +291,7 @@
             chkFiltroExibirLocados.TabIndex = 4;
             chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADAS";
             chkFiltroExibirLocados.UseVisualStyleBackColor = true;
+            chkFiltroExibirLocados.CheckedChanged += FilterHousesGrid;
             // 
             // txtFiltroLocador
             // 
@@ -215,6 +299,7 @@
             txtFiltroLocador.Name = "txtFiltroLocador";
             txtFiltroLocador.Size = new Size(260, 23);
             txtFiltroLocador.TabIndex = 3;
+            txtFiltroLocador.TextChanged += FilterHousesGrid;
             // 
             // label11
             // 
@@ -262,10 +347,19 @@
         private TextBox txtFiltroLocador;
         private CheckBox chkFiltroExibirLocados;
         private DataGridViewTextBoxColumn HouseId;
+        private DataGridViewTextBoxColumn Locado;
+        private DataGridViewTextBoxColumn OwnerId;
         private DataGridViewTextBoxColumn NomeLocador;
         private DataGridViewTextBoxColumn Imovel;
         private DataGridViewTextBoxColumn ImovelStatus;
         private DataGridViewTextBoxColumn NumeroComodos;
         private DataGridViewTextBoxColumn ValorAluguel;
+        private DataGridViewTextBoxColumn Rua;
+        private DataGridViewTextBoxColumn Numero;
+        private DataGridViewTextBoxColumn Complemento;
+        private DataGridViewTextBoxColumn Bairro;
+        private DataGridViewTextBoxColumn Cidade;
+        private DataGridViewTextBoxColumn Estado;
+        private DataGridViewTextBoxColumn CEP;
     }
 }

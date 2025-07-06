@@ -7,9 +7,9 @@ namespace GeracaoContratoLocacao.Service.Services
 {
     public class ImovelService : IImovelService
     {
-        private readonly IImovelRepository _repository;
+        private readonly IHouseRepository _repository;
 
-        public ImovelService(IImovelRepository imovelRepository)
+        public ImovelService(IHouseRepository imovelRepository)
         {
             _repository = imovelRepository;
         }
@@ -29,7 +29,7 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public async Task<IEnumerable<House>> GetAllHouses()
         {
-            return await _repository.GetAllHouses();
+            return _repository.GetAllHouses();
         }
 
         public async Task<House> GetHouseById(Guid idImovel)

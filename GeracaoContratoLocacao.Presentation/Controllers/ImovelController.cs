@@ -33,11 +33,16 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             await _houseService.DeleteHouse(house);
         }
 
-        public async Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList()
+        public async Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
         {
             List<House> houses = (await _houseService.GetAllHouses()).ToList();
 
-            return houses.Select(h => new HouseViewModel
+            if (houses == null || !houses.Any())
+            {
+                throw new InvalidOperationException("Nenhum imóvel encontrado.");
+            }
+
+            var housesViewModelList = houses.Select(h => new HouseViewModel
             {
                 HouseId = h.Id,
                 IdProprietario = h.Proprietario.Id,
@@ -53,6 +58,18 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 Estado = h.Endereco.Estado,
                 CEP = h.Endereco.CEP
             }).ToList();
+
+            if (!string.IsNullOrEmpty(lessorNameFilter))
+            {
+                housesViewModelList = housesViewModelList.Where(h => h.NomeProprietario.Contains(lessorNameFilter, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            if (showHouseRentedFilter.HasValue && !showHouseRentedFilter.Value)
+            {
+                housesViewModelList = housesViewModelList.Where(h => !h.ImovelLocado).ToList();
+            }
+
+            return housesViewModelList;
         }
 
         public async Task<HouseViewModel> GetHouseViewModelByHouseId(Guid houseId)

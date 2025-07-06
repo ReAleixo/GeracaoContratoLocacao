@@ -1,7 +1,8 @@
 using GeracaoContratoLocacao.Presentation.Configurations;
+using GeracaoContratoLocacao.Presentation.Forms;
+using GeracaoContratoLocacao.Repository.Configuration;
 using GeracaoContratoLocacao.Service.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace GeracaoContratoLocacao.Presentation
 {
@@ -20,6 +21,7 @@ namespace GeracaoContratoLocacao.Presentation
         {
             services.ControllerConfig();
             services.ServiceConfig();
+            services.RepositoryConfig();
 
             return services.BuildServiceProvider();
         }

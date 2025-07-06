@@ -46,5 +46,15 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             Guid houseId = Guid.Parse(dgvHouses.CurrentRow.Cells["HouseId"].Value.ToString());
             await _imovelController.DeleteHouse(houseId);
         }
+
+        private void FilterHousesGrid(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtFiltroLocador.Text))
+            {
+                dgvHouses.DataSource = _imovelController.GetAllHouseViewModelList(txtFiltroLocador.Text, chkFiltroExibirLocados.Checked).Result;
+                return;
+            }
+            dgvHouses.DataSource = _imovelController.GetAllHouseViewModelList(showHouseRentedFilter: chkFiltroExibirLocados.Checked).Result;
+        }
     }
 }

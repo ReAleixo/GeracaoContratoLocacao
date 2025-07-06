@@ -6,7 +6,7 @@ namespace GeracaoContratoLocacao.Presentation.Interfaces
     public interface IHouseController
     {
         Task<HouseViewModel> GetHouseViewModelByHouseId(Guid idImovel);
-        Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList();
+        Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null);
         Task<IEnumerable<Locador>> ObterLocadores();
         Task SaveChanges(HouseViewModel viewModel);
         Task DeleteHouse(Guid idImovel);
