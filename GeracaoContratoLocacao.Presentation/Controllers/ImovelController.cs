@@ -45,8 +45,8 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             var housesViewModelList = houses.Select(h => new HouseViewModel
             {
                 HouseId = h.Id,
-                IdProprietario = h.Proprietario.Id,
-                NomeProprietario = h.Proprietario.Nome,
+                IdProprietario = h.Owner.Id,
+                NomeProprietario = h.Owner.Nome,
                 NumeroComodos = h.NumeroComodos,
                 ValorAluguel = h.ValorAluguel,
                 ImovelLocado = h.Locado,
@@ -97,7 +97,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public async Task<IEnumerable<Lessor>> ObterLocadores()
+        public async Task<IEnumerable<Person>> ObterLocadores()
         {
             throw new NotImplementedException();
         }
@@ -118,7 +118,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             return new House
             {
                 Id = viewModel.HouseId,
-                Proprietario = new Lessor
+                Owner = new Person
                 {
                     Id = viewModel.IdProprietario
                 },
@@ -135,7 +135,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                     Estado = viewModel.Estado,
                     CEP = viewModel.CEP
                 },
-                StatusLogico = StatusLogico.Ativo,
+                LogicalStatus = LogicalStatus.Active,
             };
         }
     }

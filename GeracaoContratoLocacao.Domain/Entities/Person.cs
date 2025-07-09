@@ -2,7 +2,7 @@
 
 namespace GeracaoContratoLocacao.Domain.Entities
 {
-    public abstract class Person
+    public class Person
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
@@ -10,7 +10,9 @@ namespace GeracaoContratoLocacao.Domain.Entities
         public string RG { get; set; }
         public DateTime DataNascimento { get; set; }
         public EstadoCivil EstadoCivil { get; set; }
-        public StatusLogico StatusLogico { get; set; }
+        public LogicalStatus LogicalStatus { get; set; }
+        public bool IsLessor { get; set; }
+        public List<House> Houses { get; set; }
 
         public bool IsNullOrEmpty()
         {
@@ -20,7 +22,7 @@ namespace GeracaoContratoLocacao.Domain.Entities
                 && string.IsNullOrEmpty(RG)
                 && DataNascimento == default
                 && EstadoCivil == null
-                && StatusLogico == null;
+                && LogicalStatus == null;
         }
     }
 }
