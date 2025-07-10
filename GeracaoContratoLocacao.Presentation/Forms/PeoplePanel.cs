@@ -85,7 +85,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             object[] SourceToGrid = peopleViewModel.Select(it => new
             {
                 PersonId = it.Id,
-                Name = it.Name,
+                PersonName = it.Name,
                 Document = it.Document,
                 Category = it.Category,
             }).ToArray();

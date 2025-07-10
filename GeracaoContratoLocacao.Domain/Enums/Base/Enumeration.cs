@@ -14,14 +14,14 @@
             Name = name;
         }
 
-        protected IEnumerable<T> GetAll<T>() where T : Enumeration
+        public static IEnumerable<T> GetAll<T>() where T : Enumeration
         {
             return typeof(T).GetFields()
                 .Where(f => f.FieldType == typeof(T))
                 .Select(f => (T)f.GetValue(null));
         }
 
-        protected T GetById<T>(int id) where T : Enumeration
+        public static T GetById<T>(int id) where T : Enumeration
         {
             return GetAll<T>().FirstOrDefault(e => e.Id == id);
         }

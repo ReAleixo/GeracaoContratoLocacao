@@ -1,5 +1,4 @@
-﻿using GeracaoContratoLocacao.Domain.Entities;
-using GeracaoContratoLocacao.Presentation.ViewModels;
+﻿using GeracaoContratoLocacao.Presentation.ViewModels;
 
 namespace GeracaoContratoLocacao.Presentation.Interfaces
 {
