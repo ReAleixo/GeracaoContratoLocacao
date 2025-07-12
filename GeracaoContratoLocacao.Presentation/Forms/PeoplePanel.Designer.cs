@@ -39,16 +39,16 @@
             txtNameFilter = new TextBox();
             label11 = new Label();
             dtgPeople = new DataGridView();
-            toolStrip1 = new ToolStrip();
-            cmdVoltar = new ToolStripButton();
-            toolStripSeparator1 = new ToolStripSeparator();
-            cmdAlterar = new ToolStripButton();
-            cmdAdicionar = new ToolStripButton();
-            cmdRemover = new ToolStripButton();
             PersonId = new DataGridViewTextBoxColumn();
             PersonName = new DataGridViewTextBoxColumn();
             Document = new DataGridViewTextBoxColumn();
             Category = new DataGridViewTextBoxColumn();
+            toolStrip1 = new ToolStrip();
+            cmdClose = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            cmdAlter = new ToolStripButton();
+            cmdAdd = new ToolStripButton();
+            cmdRemove = new ToolStripButton();
             groupBox4.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgPeople).BeginInit();
@@ -97,6 +97,8 @@
             // chkShowLesseeFilter
             // 
             chkShowLesseeFilter.AutoSize = true;
+            chkShowLesseeFilter.Checked = true;
+            chkShowLesseeFilter.CheckState = CheckState.Checked;
             chkShowLesseeFilter.Location = new Point(83, 122);
             chkShowLesseeFilter.Name = "chkShowLesseeFilter";
             chkShowLesseeFilter.RightToLeft = RightToLeft.Yes;
@@ -108,6 +110,8 @@
             // chkShowLessorFilter
             // 
             chkShowLessorFilter.AutoSize = true;
+            chkShowLessorFilter.Checked = true;
+            chkShowLessorFilter.CheckState = CheckState.Checked;
             chkShowLessorFilter.Location = new Point(91, 147);
             chkShowLessorFilter.Name = "chkShowLessorFilter";
             chkShowLessorFilter.RightToLeft = RightToLeft.Yes;
@@ -120,9 +124,11 @@
             // 
             txtCPFFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtCPFFilter.Location = new Point(13, 87);
+            txtCPFFilter.MaxLength = 14;
             txtCPFFilter.Name = "txtCPFFilter";
             txtCPFFilter.Size = new Size(195, 23);
             txtCPFFilter.TabIndex = 5;
+            txtCPFFilter.KeyPress += txtCPFFilter_KeyPress;
             // 
             // label1
             // 
@@ -137,9 +143,11 @@
             // 
             txtNameFilter.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             txtNameFilter.Location = new Point(13, 34);
+            txtNameFilter.MaxLength = 150;
             txtNameFilter.Name = "txtNameFilter";
             txtNameFilter.Size = new Size(195, 23);
             txtNameFilter.TabIndex = 3;
+            txtNameFilter.KeyPress += txtNameFilter_KeyPress;
             // 
             // label11
             // 
@@ -165,64 +173,6 @@
             dtgPeople.Size = new Size(838, 377);
             dtgPeople.TabIndex = 5;
             // 
-            // toolStrip1
-            // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { cmdVoltar, toolStripSeparator1, cmdAlterar, cmdAdicionar, cmdRemover });
-            toolStrip1.Location = new Point(0, 0);
-            toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(1114, 73);
-            toolStrip1.TabIndex = 7;
-            toolStrip1.Text = "toolStrip1";
-            // 
-            // cmdVoltar
-            // 
-            cmdVoltar.AutoSize = false;
-            cmdVoltar.Image = (Image)resources.GetObject("cmdVoltar.Image");
-            cmdVoltar.ImageTransparentColor = Color.Magenta;
-            cmdVoltar.Name = "cmdVoltar";
-            cmdVoltar.Size = new Size(70, 70);
-            cmdVoltar.Text = "&VOLTAR";
-            cmdVoltar.TextImageRelation = TextImageRelation.ImageAboveText;
-            cmdVoltar.Click += cmdVoltar_Click;
-            // 
-            // toolStripSeparator1
-            // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 73);
-            // 
-            // cmdAlterar
-            // 
-            cmdAlterar.Image = (Image)resources.GetObject("cmdAlterar.Image");
-            cmdAlterar.ImageTransparentColor = Color.Magenta;
-            cmdAlterar.Name = "cmdAlterar";
-            cmdAlterar.Size = new Size(59, 70);
-            cmdAlterar.Text = "AL&TERAR";
-            cmdAlterar.TextImageRelation = TextImageRelation.ImageAboveText;
-            cmdAlterar.Visible = false;
-            cmdAlterar.Click += cmdAlterar_Click;
-            // 
-            // cmdAdicionar
-            // 
-            cmdAdicionar.AutoSize = false;
-            cmdAdicionar.Image = (Image)resources.GetObject("cmdAdicionar.Image");
-            cmdAdicionar.ImageTransparentColor = Color.Magenta;
-            cmdAdicionar.Name = "cmdAdicionar";
-            cmdAdicionar.Size = new Size(74, 70);
-            cmdAdicionar.Text = "&ADICIONAR";
-            cmdAdicionar.TextImageRelation = TextImageRelation.ImageAboveText;
-            cmdAdicionar.Click += cmdAdicionar_Click;
-            // 
-            // cmdRemover
-            // 
-            cmdRemover.Image = (Image)resources.GetObject("cmdRemover.Image");
-            cmdRemover.ImageTransparentColor = Color.Magenta;
-            cmdRemover.Name = "cmdRemover";
-            cmdRemover.Size = new Size(64, 70);
-            cmdRemover.Text = "&REMOVER";
-            cmdRemover.TextImageRelation = TextImageRelation.ImageAboveText;
-            cmdRemover.Visible = false;
-            cmdRemover.Click += cmdRemover_Click;
-            // 
             // PersonId
             // 
             PersonId.DataPropertyName = "PersonId";
@@ -231,12 +181,12 @@
             PersonId.ReadOnly = true;
             PersonId.Visible = false;
             // 
-            // Name
+            // PersonName
             // 
             PersonName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            PersonName.DataPropertyName = "Name";
+            PersonName.DataPropertyName = "PersonName";
             PersonName.HeaderText = "Nome";
-            PersonName.Name = "Name";
+            PersonName.Name = "PersonName";
             PersonName.ReadOnly = true;
             // 
             // Document
@@ -254,6 +204,64 @@
             Category.Name = "Category";
             Category.ReadOnly = true;
             Category.Width = 200;
+            // 
+            // toolStrip1
+            // 
+            toolStrip1.Items.AddRange(new ToolStripItem[] { cmdClose, toolStripSeparator1, cmdAlter, cmdAdd, cmdRemove });
+            toolStrip1.Location = new Point(0, 0);
+            toolStrip1.Name = "toolStrip1";
+            toolStrip1.Size = new Size(1114, 73);
+            toolStrip1.TabIndex = 7;
+            toolStrip1.Text = "toolStrip1";
+            // 
+            // cmdClose
+            // 
+            cmdClose.AutoSize = false;
+            cmdClose.Image = (Image)resources.GetObject("cmdClose.Image");
+            cmdClose.ImageTransparentColor = Color.Magenta;
+            cmdClose.Name = "cmdClose";
+            cmdClose.Size = new Size(70, 70);
+            cmdClose.Text = "&VOLTAR";
+            cmdClose.TextImageRelation = TextImageRelation.ImageAboveText;
+            cmdClose.Click += cmdClose_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 73);
+            // 
+            // cmdAlter
+            // 
+            cmdAlter.Image = (Image)resources.GetObject("cmdAlter.Image");
+            cmdAlter.ImageTransparentColor = Color.Magenta;
+            cmdAlter.Name = "cmdAlter";
+            cmdAlter.Size = new Size(59, 70);
+            cmdAlter.Text = "AL&TERAR";
+            cmdAlter.TextImageRelation = TextImageRelation.ImageAboveText;
+            cmdAlter.Visible = false;
+            cmdAlter.Click += cmdAlter_Click;
+            // 
+            // cmdAdd
+            // 
+            cmdAdd.AutoSize = false;
+            cmdAdd.Image = (Image)resources.GetObject("cmdAdd.Image");
+            cmdAdd.ImageTransparentColor = Color.Magenta;
+            cmdAdd.Name = "cmdAdd";
+            cmdAdd.Size = new Size(74, 70);
+            cmdAdd.Text = "&ADICIONAR";
+            cmdAdd.TextImageRelation = TextImageRelation.ImageAboveText;
+            cmdAdd.Click += cmdAdd_Click;
+            // 
+            // cmdRemove
+            // 
+            cmdRemove.Image = (Image)resources.GetObject("cmdRemove.Image");
+            cmdRemove.ImageTransparentColor = Color.Magenta;
+            cmdRemove.Name = "cmdRemove";
+            cmdRemove.Size = new Size(64, 70);
+            cmdRemove.Text = "&REMOVER";
+            cmdRemove.TextImageRelation = TextImageRelation.ImageAboveText;
+            cmdRemove.Visible = false;
+            cmdRemove.Click += cmdRemove_Click;
             // 
             // PeoplePanel
             // 
@@ -284,11 +292,11 @@
         private Label label11;
         private DataGridView dtgPeople;
         private ToolStrip toolStrip1;
-        private ToolStripButton cmdVoltar;
+        private ToolStripButton cmdClose;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton cmdAlterar;
-        private ToolStripButton cmdAdicionar;
-        private ToolStripButton cmdRemover;
+        private ToolStripButton cmdAlter;
+        private ToolStripButton cmdAdd;
+        private ToolStripButton cmdRemove;
         private TextBox txtCPFFilter;
         private Label label1;
         private CheckBox chkShowLesseeFilter;

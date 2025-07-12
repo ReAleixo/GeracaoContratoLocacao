@@ -1,4 +1,5 @@
 ﻿using GeracaoContratoLocacao.Presentation.Interfaces;
+using GeracaoContratoLocacao.Presentation.Utils;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,7 +19,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             _peopleController = _serviceProvider.GetRequiredService<IPeopleController>();
         }
 
-        private void cmdVoltar_Click(object sender, EventArgs e)
+        private void cmdClose_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -34,7 +35,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                     chkShowLessorFilter.Checked);
 
                 await SetDataGridViewDataSource();
-                cmdAlterar.Visible = cmdRemover.Visible =
+                cmdAlter.Visible = cmdRemove.Visible =
                     dtgPeople.Rows.Count > 0;
             }
             catch (Exception ex)
@@ -43,20 +44,20 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             }
         }
 
-        private void cmdAlterar_Click(object sender, EventArgs e)
+        private void cmdAlter_Click(object sender, EventArgs e)
         {
             Guid personId = Guid.Parse(dtgPeople.CurrentRow.Cells["PersonId"].Value.ToString());
             EditPerson editPerson = new EditPerson(_serviceProvider, personId);
             editPerson.ShowDialog();
         }
 
-        private void cmdAdicionar_Click(object sender, EventArgs e)
+        private void cmdAdd_Click(object sender, EventArgs e)
         {
             EditPerson editPerson = new EditPerson(_serviceProvider);
             editPerson.ShowDialog();
         }
 
-        private async void cmdRemover_Click(object sender, EventArgs e)
+        private async void cmdRemove_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Confirma a remoção do registro?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
@@ -69,7 +70,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 await _peopleController.RemovePerson(personId);
 
                 await SetDataGridViewDataSource();
-                cmdAlterar.Visible = cmdRemover.Visible =
+                cmdAlter.Visible = cmdRemove.Visible =
                     dtgPeople.Rows.Count > 0;
             }
             catch (Exception ex)
@@ -91,6 +92,16 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             }).ToArray();
 
             dtgPeople.DataSource = SourceToGrid;
+        }
+
+        private void txtNameFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxKeyPress.OnlyLetters(sender, e);
+        }
+
+        private void txtCPFFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyCPFMask(sender, e);
         }
     }
 }

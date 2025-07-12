@@ -1,4 +1,6 @@
-﻿namespace GeracaoContratoLocacao.Presentation.ViewModels
+﻿using GeracaoContratoLocacao.CrossCutting.Utils;
+
+namespace GeracaoContratoLocacao.Presentation.ViewModels
 {
     public class FiltersPersonViewModel
     {
@@ -30,10 +32,23 @@
             {
                 throw new ArgumentException("Pelo menos um filtro deve ser declarado.");
             }
-            if ((ShowLessee == null || !ShowLessee.Value) 
+            if ((ShowLessee == null || !ShowLessee.Value)
                 && (ShowLessor == null || !ShowLessor.Value))
             {
                 throw new ArgumentException("Pelo menos um tipo de pessoa deve ser selecionado.");
+            }
+            if (string.IsNullOrEmpty(Name) 
+                && string.IsNullOrEmpty(Document))
+            {
+                throw new ArgumentException("Pelo menos um filtro de nome ou documento deve ser declarado.");
+            }
+            if (!string.IsNullOrEmpty(Document))
+            {
+                if (!Validacoes.DocumentIsValid(Document))
+                {
+                    throw new ArgumentException("Documento inválido.");
+                }
+                Document = Formatacoes.FormatarCPF(Document);
             }
         }
     }

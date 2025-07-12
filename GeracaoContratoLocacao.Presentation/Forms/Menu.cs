@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace GeracaoContratoLocacao.Presentation.Forms
+﻿namespace GeracaoContratoLocacao.Presentation.Forms
 {
     public partial class Menu : Form
     {
@@ -21,8 +11,24 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private void Menu_Load(object sender, EventArgs e)
         {
-            PainelImoveis painelImoveis = new PainelImoveis(_serviceProvider);
-            painelImoveis.ShowDialog();
+
+        }
+
+        private void cmdClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void cmdHousesPanel_Click(object sender, EventArgs e)
+        {
+            PainelImoveis housesPanel = new PainelImoveis(_serviceProvider);
+            housesPanel.ShowDialog();
+        }
+
+        private void cmdPeoplePanel_Click(object sender, EventArgs e)
+        {
+            PeoplePanel peoplePanel = new PeoplePanel(_serviceProvider);
+            peoplePanel.ShowDialog();
         }
     }
 }
