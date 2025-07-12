@@ -12,5 +12,19 @@
         {
 
         }
+
+        private void cmdCancelar_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void cmdSalvar_Click(object sender, EventArgs e)
+        {
+
+
+
+
+            Close();
+        }
     }
 }
