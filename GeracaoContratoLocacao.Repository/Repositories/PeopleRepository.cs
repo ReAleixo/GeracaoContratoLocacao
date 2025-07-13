@@ -111,7 +111,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             existingPerson.LogicalStatus = LogicalStatus.Inactive;
         }
 
-        public Task SavePerson(Person person, Person? spouse = null)
+        public Task SavePerson(Person person)
         {
             if (person.IsNullOrEmpty())
             {
@@ -129,17 +129,17 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 existingPerson.EstadoCivil = person.EstadoCivil;
                 existingPerson.PersonType = person.PersonType;
 
-                if (spouse != null
-                    && !spouse.IsNullOrEmpty())
+                if (person.Spouse != null
+                    && !person.Spouse.IsNullOrEmpty())
                 {
                     existingPerson.Spouse = new Person
                     {
-                        Id = spouse.Id,
-                        Nome = spouse.Nome,
-                        CPF = spouse.CPF,
-                        RG = spouse.RG,
-                        DataNascimento = spouse.DataNascimento,
-                        Gender = spouse.Gender,
+                        Id = person.Spouse.Id,
+                        Nome = person.Spouse.Nome,
+                        CPF = person.Spouse.CPF,
+                        RG = person.Spouse.RG,
+                        DataNascimento = person.Spouse.DataNascimento,
+                        Gender = person.Spouse.Gender,
                         LogicalStatus = LogicalStatus.Active,
                         PersonType = PersonType.Spouse
                     };
@@ -149,16 +149,16 @@ namespace GeracaoContratoLocacao.Repository.Repositories
 
             person.LogicalStatus = LogicalStatus.Active;
 
-            if (spouse != null
-                && !spouse.IsNullOrEmpty())
+            if (person.Spouse != null
+                && !person.Spouse.IsNullOrEmpty())
             {
                 person.Spouse = new Person
                 {
-                    Id = spouse.Id,
-                    Nome = spouse.Nome,
-                    CPF = spouse.CPF,
-                    RG = spouse.RG,
-                    DataNascimento = spouse.DataNascimento,
+                    Id = person.Spouse.Id,
+                    Nome = person.Spouse.Nome,
+                    CPF = person.Spouse.CPF,
+                    RG = person.Spouse.RG,
+                    DataNascimento = person.Spouse.DataNascimento,
                     LogicalStatus = LogicalStatus.Active,
                     PersonType = PersonType.Spouse
                 };

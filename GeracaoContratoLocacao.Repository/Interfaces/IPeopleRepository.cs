@@ -10,6 +10,6 @@ namespace GeracaoContratoLocacao.Repository.Interfaces
             string? name = null, string? document = null, bool? isLessor = null, bool? isLessee = null);
         Task<Person> GetPersonById(Guid personId);
         Task RemovePerson(Person person);
-        Task SavePerson(Person person, Person? spouse = null);
+        Task SavePerson(Person person);
     }
 }

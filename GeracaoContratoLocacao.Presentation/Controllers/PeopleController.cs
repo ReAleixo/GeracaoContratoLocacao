@@ -103,9 +103,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 };
 
                 person.Spouse = spouse;
-                await _peopleService.SavePerson(person, spouse);
             }
-
             await _peopleService.SavePerson(person);
         }
     }
