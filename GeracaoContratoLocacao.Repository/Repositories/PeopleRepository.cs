@@ -22,7 +22,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 DataNascimento = new DateTime(1990, 1, 1),
                 EstadoCivil = EstadoCivil.Solteiro,
                 LogicalStatus = LogicalStatus.Active,
-                IsLessor = true,
+                PersonType = PersonType.Lessor,
                 Houses = new List<House>()
             });
             peopleDB.Add(new Person
@@ -34,7 +34,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 DataNascimento = new DateTime(1976, 11, 7),
                 EstadoCivil = EstadoCivil.UniaoEstavel,
                 LogicalStatus = LogicalStatus.Active,
-                IsLessor = true,
+                PersonType = PersonType.Lessor,
                 Houses = new List<House>()
             });
             peopleDB.Add(new Person
@@ -46,7 +46,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 DataNascimento = new DateTime(1985, 5, 15),
                 EstadoCivil = EstadoCivil.Casado,
                 LogicalStatus = LogicalStatus.Active,
-                IsLessor = false
+                PersonType = PersonType.Lessee,
             });
             peopleDB.Add(new Person
             {
@@ -57,7 +57,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 DataNascimento = new DateTime(2001, 2, 18),
                 EstadoCivil = EstadoCivil.Casado,
                 LogicalStatus = LogicalStatus.Active,
-                IsLessor = false
+                PersonType = PersonType.Lessee,
             });
         }
 
@@ -76,13 +76,13 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 && (!showLessee.HasValue
                     || (showLessee.HasValue && !showLessee.Value)))
             {
-                filteredPeople = filteredPeople.Where(p => p.IsLessor).ToList();
+                filteredPeople = filteredPeople.Where(p => p.PersonType == PersonType.Lessor).ToList();
             }
             else if (showLessee.HasValue && showLessee.Value
                      && (!showLessor.HasValue
                          || (showLessor.HasValue && !showLessor.Value)))
             {
-                filteredPeople = filteredPeople.Where(p => !p.IsLessor).ToList();
+                filteredPeople = filteredPeople.Where(p => p.PersonType == PersonType.Lessee).ToList();
             }
             return filteredPeople;
         }
@@ -109,6 +109,63 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 throw new KeyNotFoundException($"Person with ID {person.Id} not found.");
             }
             existingPerson.LogicalStatus = LogicalStatus.Inactive;
+        }
+
+        public Task SavePerson(Person person, Person? spouse = null)
+        {
+            if (person.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException(nameof(person), "Person cannot be null or empty.");
+            }
+
+            var existingPerson = peopleDB.FirstOrDefault(p => p.Id == person.Id);
+            if (existingPerson != null)
+            {
+                existingPerson.Nome = person.Nome;
+                existingPerson.CPF = person.CPF;
+                existingPerson.RG = person.RG;
+                existingPerson.DataNascimento = person.DataNascimento;
+                existingPerson.Gender = person.Gender;
+                existingPerson.EstadoCivil = person.EstadoCivil;
+                existingPerson.PersonType = person.PersonType;
+
+                if (spouse != null
+                    && !spouse.IsNullOrEmpty())
+                {
+                    existingPerson.Spouse = new Person
+                    {
+                        Id = spouse.Id,
+                        Nome = spouse.Nome,
+                        CPF = spouse.CPF,
+                        RG = spouse.RG,
+                        DataNascimento = spouse.DataNascimento,
+                        Gender = spouse.Gender,
+                        LogicalStatus = LogicalStatus.Active,
+                        PersonType = PersonType.Spouse
+                    };
+                }
+                return Task.CompletedTask;
+            }
+
+            person.LogicalStatus = LogicalStatus.Active;
+
+            if (spouse != null
+                && !spouse.IsNullOrEmpty())
+            {
+                person.Spouse = new Person
+                {
+                    Id = spouse.Id,
+                    Nome = spouse.Nome,
+                    CPF = spouse.CPF,
+                    RG = spouse.RG,
+                    DataNascimento = spouse.DataNascimento,
+                    LogicalStatus = LogicalStatus.Active,
+                    PersonType = PersonType.Spouse
+                };
+            }
+            peopleDB.Add(person);
+
+            return Task.CompletedTask;
         }
     }
 }

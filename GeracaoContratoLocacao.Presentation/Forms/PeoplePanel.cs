@@ -88,7 +88,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 PersonId = it.Id,
                 PersonName = it.Name,
                 Document = it.Document,
-                Category = it.Category,
+                Category = it.PersonType,
             }).ToArray();
 
             dtgPeople.DataSource = SourceToGrid;

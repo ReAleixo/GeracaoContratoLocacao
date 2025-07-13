@@ -1,4 +1,6 @@
-﻿namespace GeracaoContratoLocacao.Domain.Enums.Base
+﻿using System.Runtime.CompilerServices;
+
+namespace GeracaoContratoLocacao.Domain.Enums.Base
 {
     public class Enumeration
     {
@@ -7,6 +9,8 @@
 
         public static string ValueMemberAttribute = "Id";
         public static string DisplayMemberAttribute = "Name";
+
+        public static Enumeration Empty = new(default, default);
 
         protected Enumeration(int id, string name)
         {
@@ -24,6 +28,11 @@
         public static T GetById<T>(int id) where T : Enumeration
         {
             return GetAll<T>().FirstOrDefault(e => e.Id == id);
+        }
+
+        public static T GetByName<T>(string name) where T : Enumeration
+        {
+            return GetAll<T>().FirstOrDefault(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

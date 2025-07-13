@@ -11,7 +11,14 @@ namespace GeracaoContratoLocacao.Domain.Enums
         public static readonly EstadoCivil Separado = new EstadoCivil(5, "Separado");
         public static readonly EstadoCivil UniaoEstavel = new EstadoCivil(6, "União Estável");
 
-        protected EstadoCivil(int id, string name) : base(id, name)
+        public static readonly List<EstadoCivil> PossuiConjuge = new List<EstadoCivil>
+        {
+            Casado,
+            Viuvo,
+            UniaoEstavel
+        };
+
+        public EstadoCivil(int id, string name) : base(id, name)
         {
         }
     }

@@ -8,5 +8,6 @@ namespace GeracaoContratoLocacao.Service.Interfaces
             string? personName = null, string? personDocument = null, bool? showLessee = null, bool? showLessor = null);
         Task<Person> GetPersonById(Guid personId);
         Task RemovePerson(Person person);
+        Task SavePerson(Person person, Person? spouse = null);
     }
 }

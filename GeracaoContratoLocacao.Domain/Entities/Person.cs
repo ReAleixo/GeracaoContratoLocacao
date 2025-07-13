@@ -9,20 +9,24 @@ namespace GeracaoContratoLocacao.Domain.Entities
         public string CPF { get; set; }
         public string RG { get; set; }
         public DateTime DataNascimento { get; set; }
+        public Gender Gender { get; set; }
         public EstadoCivil EstadoCivil { get; set; }
+        public Person? Spouse { get; set; }
         public LogicalStatus LogicalStatus { get; set; }
-        public bool IsLessor { get; set; }
+        public PersonType PersonType { get; set; }
         public List<House> Houses { get; set; }
 
         public bool IsNullOrEmpty()
         {
-            return Id == default
+            return this == null
+                || (Id == default
                 && string.IsNullOrEmpty(Nome)
                 && string.IsNullOrEmpty(CPF)
                 && string.IsNullOrEmpty(RG)
                 && DataNascimento == default
+                && Gender == default
                 && EstadoCivil == null
-                && LogicalStatus == null;
+                && LogicalStatus == null);
         }
     }
 }

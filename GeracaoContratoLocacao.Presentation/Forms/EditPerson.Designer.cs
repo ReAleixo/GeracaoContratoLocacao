@@ -32,9 +32,11 @@
             toolStrip1 = new ToolStrip();
             cmdSave = new ToolStripButton();
             cmdCancel = new ToolStripButton();
-            tabControl1 = new TabControl();
+            tabPessoas = new TabControl();
             tabLocadorLocatario = new TabPage();
             groupBox2 = new GroupBox();
+            cmbGender = new ComboBox();
+            label11 = new Label();
             picDocument = new PictureBox();
             rdbLessee = new RadioButton();
             rdbLessor = new RadioButton();
@@ -51,24 +53,20 @@
             label1 = new Label();
             tabConjuge = new TabPage();
             groupBox1 = new GroupBox();
-            picSpouseDocument = new PictureBox();
-            cmdAttachSpouseDocument = new Button();
-            cmbMarriageRegime = new ComboBox();
-            label6 = new Label();
-            txtSpouseBirthDate = new TextBox();
-            label7 = new Label();
-            txtSpouseName = new TextBox();
-            label10 = new Label();
-            cmbGender = new ComboBox();
-            label11 = new Label();
             cmbSpouseGender = new ComboBox();
             label8 = new Label();
             txtSpouseRG = new TextBox();
             label9 = new Label();
             txtSpouseDocument = new TextBox();
             label12 = new Label();
+            picSpouseDocument = new PictureBox();
+            cmdAttachSpouseDocument = new Button();
+            txtSpouseBirthDate = new TextBox();
+            label7 = new Label();
+            txtSpouseName = new TextBox();
+            label10 = new Label();
             toolStrip1.SuspendLayout();
-            tabControl1.SuspendLayout();
+            tabPessoas.SuspendLayout();
             tabLocadorLocatario.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picDocument).BeginInit();
@@ -108,15 +106,15 @@
             cmdCancel.TextImageRelation = TextImageRelation.ImageAboveText;
             cmdCancel.Click += cmdCancelar_Click;
             // 
-            // tabControl1
+            // tabPessoas
             // 
-            tabControl1.Controls.Add(tabLocadorLocatario);
-            tabControl1.Controls.Add(tabConjuge);
-            tabControl1.Location = new Point(0, 76);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(377, 371);
-            tabControl1.TabIndex = 2;
+            tabPessoas.Controls.Add(tabLocadorLocatario);
+            tabPessoas.Controls.Add(tabConjuge);
+            tabPessoas.Location = new Point(0, 76);
+            tabPessoas.Name = "tabPessoas";
+            tabPessoas.SelectedIndex = 0;
+            tabPessoas.Size = new Size(377, 371);
+            tabPessoas.TabIndex = 2;
             // 
             // tabLocadorLocatario
             // 
@@ -153,6 +151,23 @@
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "INFORMAÇÕES DO CADASTRO";
+            // 
+            // cmbGender
+            // 
+            cmbGender.FormattingEnabled = true;
+            cmbGender.Location = new Point(259, 81);
+            cmbGender.Name = "cmbGender";
+            cmbGender.Size = new Size(82, 23);
+            cmbGender.TabIndex = 33;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(256, 63);
+            label11.Name = "label11";
+            label11.Size = new Size(52, 15);
+            label11.TabIndex = 32;
+            label11.Text = "GÊNERO";
             // 
             // picDocument
             // 
@@ -298,8 +313,6 @@
             groupBox1.Controls.Add(label12);
             groupBox1.Controls.Add(picSpouseDocument);
             groupBox1.Controls.Add(cmdAttachSpouseDocument);
-            groupBox1.Controls.Add(cmbMarriageRegime);
-            groupBox1.Controls.Add(label6);
             groupBox1.Controls.Add(txtSpouseBirthDate);
             groupBox1.Controls.Add(label7);
             groupBox1.Controls.Add(txtSpouseName);
@@ -310,90 +323,6 @@
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "INFORMAÇÕES DO CADASTRO";
-            // 
-            // picSpouseDocument
-            // 
-            picSpouseDocument.BorderStyle = BorderStyle.FixedSingle;
-            picSpouseDocument.Location = new Point(13, 183);
-            picSpouseDocument.Name = "picSpouseDocument";
-            picSpouseDocument.Size = new Size(328, 142);
-            picSpouseDocument.TabIndex = 31;
-            picSpouseDocument.TabStop = false;
-            // 
-            // cmdAttachSpouseDocument
-            // 
-            cmdAttachSpouseDocument.Location = new Point(13, 154);
-            cmdAttachSpouseDocument.Name = "cmdAttachSpouseDocument";
-            cmdAttachSpouseDocument.Size = new Size(328, 23);
-            cmdAttachSpouseDocument.TabIndex = 28;
-            cmdAttachSpouseDocument.Text = "ANEXAR DOCUMENTO";
-            cmdAttachSpouseDocument.UseVisualStyleBackColor = true;
-            // 
-            // cmbMarriageRegime
-            // 
-            cmbMarriageRegime.FormattingEnabled = true;
-            cmbMarriageRegime.Location = new Point(182, 125);
-            cmbMarriageRegime.Name = "cmbMarriageRegime";
-            cmbMarriageRegime.Size = new Size(159, 23);
-            cmbMarriageRegime.TabIndex = 27;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(179, 107);
-            label6.Name = "label6";
-            label6.Size = new Size(128, 15);
-            label6.TabIndex = 26;
-            label6.Text = "REGIME CASAMENTO  ";
-            // 
-            // txtSpouseBirthDate
-            // 
-            txtSpouseBirthDate.Location = new Point(13, 125);
-            txtSpouseBirthDate.Name = "txtSpouseBirthDate";
-            txtSpouseBirthDate.Size = new Size(163, 23);
-            txtSpouseBirthDate.TabIndex = 25;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(10, 107);
-            label7.Name = "label7";
-            label7.Size = new Size(131, 15);
-            label7.TabIndex = 24;
-            label7.Text = "DATA DE NASCIMENTO";
-            // 
-            // txtSpouseName
-            // 
-            txtSpouseName.Location = new Point(13, 37);
-            txtSpouseName.Name = "txtSpouseName";
-            txtSpouseName.Size = new Size(328, 23);
-            txtSpouseName.TabIndex = 19;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(10, 19);
-            label10.Name = "label10";
-            label10.Size = new Size(42, 15);
-            label10.TabIndex = 1;
-            label10.Text = "NOME";
-            // 
-            // cmbGender
-            // 
-            cmbGender.FormattingEnabled = true;
-            cmbGender.Location = new Point(259, 81);
-            cmbGender.Name = "cmbGender";
-            cmbGender.Size = new Size(82, 23);
-            cmbGender.TabIndex = 33;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(256, 63);
-            label11.Name = "label11";
-            label11.Size = new Size(52, 15);
-            label11.TabIndex = 32;
-            label11.Text = "GÊNERO";
             // 
             // cmbSpouseGender
             // 
@@ -444,13 +373,63 @@
             label12.TabIndex = 34;
             label12.Text = "CPF";
             // 
+            // picSpouseDocument
+            // 
+            picSpouseDocument.BorderStyle = BorderStyle.FixedSingle;
+            picSpouseDocument.Location = new Point(13, 154);
+            picSpouseDocument.Name = "picSpouseDocument";
+            picSpouseDocument.Size = new Size(328, 171);
+            picSpouseDocument.TabIndex = 31;
+            picSpouseDocument.TabStop = false;
+            // 
+            // cmdAttachSpouseDocument
+            // 
+            cmdAttachSpouseDocument.Location = new Point(182, 125);
+            cmdAttachSpouseDocument.Name = "cmdAttachSpouseDocument";
+            cmdAttachSpouseDocument.Size = new Size(159, 23);
+            cmdAttachSpouseDocument.TabIndex = 28;
+            cmdAttachSpouseDocument.Text = "ANEXAR DOCUMENTO";
+            cmdAttachSpouseDocument.UseVisualStyleBackColor = true;
+            // 
+            // txtSpouseBirthDate
+            // 
+            txtSpouseBirthDate.Location = new Point(13, 125);
+            txtSpouseBirthDate.Name = "txtSpouseBirthDate";
+            txtSpouseBirthDate.Size = new Size(163, 23);
+            txtSpouseBirthDate.TabIndex = 25;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(10, 107);
+            label7.Name = "label7";
+            label7.Size = new Size(131, 15);
+            label7.TabIndex = 24;
+            label7.Text = "DATA DE NASCIMENTO";
+            // 
+            // txtSpouseName
+            // 
+            txtSpouseName.Location = new Point(13, 37);
+            txtSpouseName.Name = "txtSpouseName";
+            txtSpouseName.Size = new Size(328, 23);
+            txtSpouseName.TabIndex = 19;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(10, 19);
+            label10.Name = "label10";
+            label10.Size = new Size(42, 15);
+            label10.TabIndex = 1;
+            label10.Text = "NOME";
+            // 
             // EditPerson
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(377, 450);
             ControlBox = false;
-            Controls.Add(tabControl1);
+            Controls.Add(tabPessoas);
             Controls.Add(toolStrip1);
             Name = "EditPerson";
             ShowIcon = false;
@@ -458,7 +437,7 @@
             Load += EditPerson_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
-            tabControl1.ResumeLayout(false);
+            tabPessoas.ResumeLayout(false);
             tabLocadorLocatario.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
@@ -476,7 +455,7 @@
         private ToolStrip toolStrip1;
         private ToolStripButton cmdSave;
         private ToolStripButton cmdCancel;
-        private TabControl tabControl1;
+        private TabControl tabPessoas;
         private TabPage tabLocadorLocatario;
         private TabPage tabConjuge;
         private GroupBox groupBox2;
@@ -497,8 +476,6 @@
         private GroupBox groupBox1;
         private PictureBox picSpouseDocument;
         private Button cmdAttachSpouseDocument;
-        private ComboBox cmbMarriageRegime;
-        private Label label6;
         private TextBox txtSpouseBirthDate;
         private Label label7;
         private TextBox txtSpouseName;

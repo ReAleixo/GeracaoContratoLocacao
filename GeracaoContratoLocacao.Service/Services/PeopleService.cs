@@ -41,5 +41,14 @@ namespace GeracaoContratoLocacao.Service.Services
             }
             return _peopleRepository.RemovePerson(person);
         }
+
+        public Task SavePerson(Person person, Person? spouse = null)
+        {
+            if (person == null)
+            {
+                throw new ArgumentNullException(nameof(person), "A pessoa não pode ser nula.");
+            }
+            return _peopleRepository.SavePerson(person, spouse);
+        }
     }
 }
