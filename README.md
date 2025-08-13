@@ -31,7 +31,7 @@ dotnet run
 
 Algumas ideias que pretendo implementar nas próximas versões:
 
-- [x] Separação de telas para criação de Locador, Locatário, Imóvel, etc.
+- [ ] Separação de telas para criação de Locador, Locatário, Imóvel, etc.
 - [ ] Armazenamento em banco de dados dos contratos gerados 
 - [ ] Armazenamento em banco de dados das pessoas/imóveis cadastrados
 - [ ] Envio automático de contratos por e-mail
