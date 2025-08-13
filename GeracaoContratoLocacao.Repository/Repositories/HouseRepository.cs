@@ -28,7 +28,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             House house1 = new House()
             {
                 Id = Guid.NewGuid(),
-                Proprietario = new Lessor
+                Owner = new Person
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Mayck Henrique da Silva",
@@ -36,7 +36,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     RG = "12.123.123-X",
                     DataNascimento = new DateTime(2001, 10, 15),
                     EstadoCivil = EstadoCivil.Casado,
-                    StatusLogico = StatusLogico.Ativo,
+                    LogicalStatus = LogicalStatus.Active,
                     Houses = new List<House>()
                 },
                 Endereco = new Endereco
@@ -50,7 +50,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     CEP = "09260-680"
                 },
                 NumeroComodos = 5,
-                StatusLogico = StatusLogico.Ativo,
+                LogicalStatus = LogicalStatus.Active,
                 ValorAluguel = 2300,
                 Locado = false
             };
@@ -59,7 +59,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             House house2 = new House()
             {
                 Id = Guid.NewGuid(),
-                Proprietario = new Lessor
+                Owner = new Person
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Mateus Henrique da Silva",
@@ -67,7 +67,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     RG = "12.123.123-3",
                     DataNascimento = new DateTime(2000, 04, 25),
                     EstadoCivil = EstadoCivil.Viuvo,
-                    StatusLogico = StatusLogico.Ativo,
+                    LogicalStatus = LogicalStatus.Active,
                     Houses = new List<House>()
                 },
                 Endereco = new Endereco
@@ -81,7 +81,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     CEP = "09260-000"
                 },
                 NumeroComodos = 4,
-                StatusLogico = StatusLogico.Ativo,
+                LogicalStatus = LogicalStatus.Active,
                 ValorAluguel = 1600,
                 Locado = true
             };

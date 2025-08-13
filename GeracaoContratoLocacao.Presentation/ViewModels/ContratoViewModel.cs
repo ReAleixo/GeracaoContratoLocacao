@@ -53,8 +53,11 @@ namespace GeracaoContratoLocacao.Presentation.ViewModels
 
         private string ValidaCPF(string cpf)
         {
-            Validacoes.ValidarCPF(cpf);
-            return Formatacoes.FormatarCPF(cpf);
+            if (Validacoes.DocumentIsValid(cpf))
+            {
+                return Formatacoes.FormatarCPF(cpf);
+            }
+            throw new ArgumentException("CPF inválido.");
         }
 
         private string ValidaRG(string rg)

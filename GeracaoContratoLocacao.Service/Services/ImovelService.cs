@@ -23,7 +23,7 @@ namespace GeracaoContratoLocacao.Service.Services
         public async Task DeleteHouse(House imovel)
         {
             VerificaSeImovelEstaNulo(imovel);
-            imovel.StatusLogico = StatusLogico.Inativo;
+            imovel.LogicalStatus = LogicalStatus.Inactive;
             await _repository.SalvarAlteracoes(imovel);
         }
 

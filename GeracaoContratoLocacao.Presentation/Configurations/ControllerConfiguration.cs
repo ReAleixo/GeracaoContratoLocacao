@@ -10,6 +10,7 @@ namespace GeracaoContratoLocacao.Presentation.Configurations
         {
             services.AddSingleton<IFormularioContratoController, FormularioContratoController>();
             services.AddSingleton<IHouseController, ImovelController>();
+            services.AddSingleton<IPeopleController, PeopleController>();
 
             return services;
         }

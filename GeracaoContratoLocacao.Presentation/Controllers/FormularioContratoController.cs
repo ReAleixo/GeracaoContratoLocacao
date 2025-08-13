@@ -39,7 +39,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
         {
             return new RentalContract
             {
-                Lessee = new Lessee
+                Lessee = new Person
                 {
                     Nome = contratoViewModel.NomeLocatario,
                     CPF = contratoViewModel.CPFLocatario,

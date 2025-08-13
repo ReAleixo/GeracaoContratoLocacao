@@ -2,25 +2,31 @@
 
 namespace GeracaoContratoLocacao.Domain.Entities
 {
-    public abstract class Person
+    public class Person
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
         public DateTime DataNascimento { get; set; }
+        public Gender Gender { get; set; }
         public EstadoCivil EstadoCivil { get; set; }
-        public StatusLogico StatusLogico { get; set; }
+        public Person? Spouse { get; set; }
+        public LogicalStatus LogicalStatus { get; set; }
+        public PersonType PersonType { get; set; }
+        public List<House> Houses { get; set; }
 
         public bool IsNullOrEmpty()
         {
-            return Id == default
+            return this == null
+                || (Id == default
                 && string.IsNullOrEmpty(Nome)
                 && string.IsNullOrEmpty(CPF)
                 && string.IsNullOrEmpty(RG)
                 && DataNascimento == default
+                && Gender == default
                 && EstadoCivil == null
-                && StatusLogico == null;
+                && LogicalStatus == null);
         }
     }
 }
