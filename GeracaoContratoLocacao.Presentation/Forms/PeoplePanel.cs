@@ -1,4 +1,5 @@
-﻿using GeracaoContratoLocacao.Presentation.Interfaces;
+﻿using GeracaoContratoLocacao.Domain.Enums;
+using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.Utils;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,11 +45,25 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             }
         }
 
-        private void cmdAlter_Click(object sender, EventArgs e)
+        private async void cmdAlter_Click(object sender, EventArgs e)
         {
-            Guid personId = Guid.Parse(dtgPeople.CurrentRow.Cells["PersonId"].Value.ToString());
-            EditPerson editPerson = new EditPerson(_serviceProvider, personId);
-            editPerson.ShowDialog();
+            try
+            {
+                Guid personId = Guid.Parse(dtgPeople.CurrentRow.Cells["PersonId"].Value.ToString());
+
+                if (dtgPeople.CurrentRow.Cells["Category"].Value.ToString().Equals(PersonType.Spouse.Name))
+                {
+                    PersonViewModel personViewModel = await _peopleController.GetLesseeOrLessorBySpouseId(personId);
+                    personId = personViewModel.Id;  
+                }
+
+                EditPerson editPerson = new EditPerson(_serviceProvider, personId);
+                editPerson.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao tentar alterar pessoa:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void cmdAdd_Click(object sender, EventArgs e)
@@ -75,7 +90,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao remover pessoa:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao tentar remover pessoa:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

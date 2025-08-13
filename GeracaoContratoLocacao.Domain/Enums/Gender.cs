@@ -10,5 +10,14 @@ namespace GeracaoContratoLocacao.Domain.Enums
         public Gender(int id, string name) : base(id, name)
         {
         }
+
+        public static List<Gender> GetAllToFillComboBox()
+        {
+            List<Gender> GenderList =
+            [
+                new Gender(default, default), .. Gender.GetAll<Gender>().ToList()
+            ];
+            return GenderList;
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace GeracaoContratoLocacao.Service.Interfaces
         Task<Person> GetPersonById(Guid personId);
         Task RemovePerson(Person person);
         Task SavePerson(Person person);
+        Task<Person> GetLesseeOrLessorBySpouseId(Guid spouseId);
     }
 }

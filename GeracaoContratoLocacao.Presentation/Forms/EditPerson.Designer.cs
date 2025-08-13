@@ -218,6 +218,7 @@
             cmbMaritalStatus.Name = "cmbMaritalStatus";
             cmbMaritalStatus.Size = new Size(159, 23);
             cmbMaritalStatus.TabIndex = 27;
+            cmbMaritalStatus.SelectedIndexChanged += cmbMaritalStatus_SelectedIndexChanged;
             // 
             // label5
             // 
@@ -231,9 +232,11 @@
             // txtBirthDate
             // 
             txtBirthDate.Location = new Point(13, 125);
+            txtBirthDate.MaxLength = 10;
             txtBirthDate.Name = "txtBirthDate";
             txtBirthDate.Size = new Size(163, 23);
             txtBirthDate.TabIndex = 25;
+            txtBirthDate.KeyPress += Date_KeyPress;
             // 
             // label4
             // 
@@ -247,6 +250,7 @@
             // txtRG
             // 
             txtRG.Location = new Point(136, 81);
+            txtRG.MaxLength = 14;
             txtRG.Name = "txtRG";
             txtRG.Size = new Size(117, 23);
             txtRG.TabIndex = 23;
@@ -263,9 +267,11 @@
             // txtDocument
             // 
             txtDocument.Location = new Point(13, 81);
+            txtDocument.MaxLength = 14;
             txtDocument.Name = "txtDocument";
             txtDocument.Size = new Size(117, 23);
             txtDocument.TabIndex = 21;
+            txtDocument.KeyPress += Document_KeyPress;
             // 
             // label2
             // 
@@ -279,6 +285,7 @@
             // txtName
             // 
             txtName.Location = new Point(13, 37);
+            txtName.MaxLength = 200;
             txtName.Name = "txtName";
             txtName.Size = new Size(328, 23);
             txtName.TabIndex = 19;
@@ -344,6 +351,7 @@
             // txtSpouseRG
             // 
             txtSpouseRG.Location = new Point(136, 81);
+            txtSpouseRG.MaxLength = 14;
             txtSpouseRG.Name = "txtSpouseRG";
             txtSpouseRG.Size = new Size(117, 23);
             txtSpouseRG.TabIndex = 37;
@@ -360,9 +368,11 @@
             // txtSpouseDocument
             // 
             txtSpouseDocument.Location = new Point(13, 81);
+            txtSpouseDocument.MaxLength = 14;
             txtSpouseDocument.Name = "txtSpouseDocument";
             txtSpouseDocument.Size = new Size(117, 23);
             txtSpouseDocument.TabIndex = 35;
+            txtSpouseDocument.KeyPress += Document_KeyPress;
             // 
             // label12
             // 
@@ -394,9 +404,11 @@
             // txtSpouseBirthDate
             // 
             txtSpouseBirthDate.Location = new Point(13, 125);
+            txtSpouseBirthDate.MaxLength = 10;
             txtSpouseBirthDate.Name = "txtSpouseBirthDate";
             txtSpouseBirthDate.Size = new Size(163, 23);
             txtSpouseBirthDate.TabIndex = 25;
+            txtSpouseBirthDate.KeyPress += Date_KeyPress;
             // 
             // label7
             // 
@@ -410,6 +422,7 @@
             // txtSpouseName
             // 
             txtSpouseName.Location = new Point(13, 37);
+            txtSpouseName.MaxLength = 200;
             txtSpouseName.Name = "txtSpouseName";
             txtSpouseName.Size = new Size(328, 23);
             txtSpouseName.TabIndex = 19;

@@ -1,6 +1,7 @@
 ﻿using GeracaoContratoLocacao.Domain.Enums;
 using GeracaoContratoLocacao.Domain.Enums.Base;
 using GeracaoContratoLocacao.Presentation.Interfaces;
+using GeracaoContratoLocacao.Presentation.Utils;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,8 +11,8 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IPeopleController _peopleController;
-        private Guid _personId;
-        private Guid _spouseId = default;
+
+        private Guid _personId = default, _spouseId = default;
 
         public EditPerson(IServiceProvider serviceProvider,
                           Guid personId = default)
@@ -24,23 +25,20 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private async void EditPerson_Load(object sender, EventArgs e)
         {
-            List<Gender> GenderList =
-            [
-                new Gender(default, default), .. Gender.GetAll<Gender>().ToList()
-            ];
-            cmbGender.DataSource = GenderList;
+            cmbGender.DataSource = Gender.GetAllToFillComboBox();
             cmbGender.DisplayMember = Enumeration.DisplayMemberAttribute;
             cmbGender.ValueMember = Enumeration.ValueMemberAttribute;
+            cmbSpouseGender.DataSource = Gender.GetAllToFillComboBox();
+            cmbSpouseGender.DisplayMember = Enumeration.DisplayMemberAttribute;
+            cmbSpouseGender.ValueMember = Enumeration.ValueMemberAttribute;
 
-            List<EstadoCivil> MaritalStatusList =
-            [
-                new EstadoCivil(default, default), .. EstadoCivil.GetAll<EstadoCivil>().ToList()
-            ];
-            cmbMaritalStatus.DataSource = MaritalStatusList;
+            cmbMaritalStatus.DataSource = EstadoCivil.GetAllToFillComboBox();
             cmbMaritalStatus.DisplayMember = Enumeration.DisplayMemberAttribute;
             cmbMaritalStatus.ValueMember = Enumeration.ValueMemberAttribute;
 
+
             tabPessoas.TabPages.Remove(tabConjuge);
+
             if (_personId == default)
             {
                 return;
@@ -65,29 +63,43 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private async void cmdSalvar_Click(object sender, EventArgs e)
         {
+            if (!rdbLessor.Checked && !rdbLessee.Checked)
+            {
+                MessageBox.Show($"Erro ao salvar:\nNão foi informado se essa pessoa é locador ou locatário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            PersonViewModel personViewModel = new PersonViewModel
+            {
+                Id = _personId == default ? Guid.NewGuid() : _personId,
+                Name = txtName.Text,
+                Document = txtDocument.Text,
+                RG = txtRG.Text,
+                BirthDate = txtBirthDate.Text,
+                Gender = cmbGender.Text,
+                PersonType = rdbLessor.Checked ? PersonType.Lessor.Name : PersonType.Lessee.Name,
+                MaritalStatus = cmbMaritalStatus.Text
+            };
+
             try
             {
-                PersonViewModel personViewModel = new PersonViewModel
-                {
-                    Id = _personId == default ? Guid.NewGuid() : _personId,
-                    Name = txtName.Text,
-                    Document = txtDocument.Text,
-                    RG = txtRG.Text,
-                    BirthDate = txtBirthDate.Text,
-                    Gender = cmbGender.Text,
-                    PersonType = rdbLessor.Checked ? PersonType.Lessor.Name : PersonType.Lessee.Name,
-                    MaritalStatus = cmbMaritalStatus.Text
-                };
-
-                if (!EstadoCivil.PossuiConjuge.Any(e => e.Name.Equals(personViewModel.MaritalStatus)))
+                if (personViewModel.IsValid()
+                    && !EstadoCivil.PossuiConjuge.Any(e => e.Name.Equals(personViewModel.MaritalStatus)))
                 {
                     await _peopleController.SavePerson(personViewModel);
                     Close();
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            try
+            {
                 personViewModel.SpouseId = _spouseId == default ? Guid.NewGuid() : _spouseId;
-
                 PersonViewModel spouseViewModel = new PersonViewModel
                 {
                     Id = personViewModel.SpouseId.Value,
@@ -99,13 +111,15 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                     PersonType = PersonType.Spouse.Name,
                 };
 
-                await _peopleController.SavePerson(personViewModel, spouseViewModel);
-
-                Close();
+                if (spouseViewModel.IsValid())
+                {
+                    await _peopleController.SavePerson(personViewModel, spouseViewModel);
+                    Close();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro ao salvar:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao salvar cônjuge:\n{ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -132,23 +146,52 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
                 _spouseId = SpouseViewModel.Id;
 
-                tabPessoas.TabPages.Add(tabConjuge);
-
-                List<Gender> GenderList = new List<Gender>
+                if (!tabPessoas.TabPages.Contains(tabConjuge))
                 {
-                    new Gender(default, default)
-                };
-                GenderList.AddRange(Gender.GetAll<Gender>().ToList());
-                cmbSpouseGender.DataSource = GenderList;
-                cmbSpouseGender.DisplayMember = Enumeration.DisplayMemberAttribute;
-                cmbSpouseGender.ValueMember = Enumeration.ValueMemberAttribute;
+                    tabPessoas.TabPages.Add(tabConjuge);
+                }
 
                 txtSpouseName.Text = SpouseViewModel.Name;
                 txtSpouseDocument.Text = SpouseViewModel.Document;
                 txtSpouseRG.Text = SpouseViewModel.RG;
-                cmbGender.Text = SpouseViewModel.Gender;
+                cmbSpouseGender.Text = SpouseViewModel.Gender;
                 txtSpouseBirthDate.Text = SpouseViewModel.BirthDate;
             }
+        }
+
+        private void Document_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyCPFMask(sender, e);
+        }
+
+        private void Date_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyDateMask(sender, e);
+        }
+
+        private void cmbMaritalStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ClearSpouseFields();
+
+            if (int.TryParse(cmbMaritalStatus.SelectedValue.ToString(), out int idMaritalStatus))
+            {
+                if (EstadoCivil.PossuiConjuge.Any(ms => ms.Id == idMaritalStatus)
+                    && !tabPessoas.TabPages.Contains(tabConjuge))
+                {
+                    tabPessoas.TabPages.Add(tabConjuge);
+                    return;
+                }
+                tabPessoas.TabPages.Remove(tabConjuge);
+            }
+        }
+
+        private void ClearSpouseFields()
+        {
+            txtSpouseName.Clear();
+            txtSpouseDocument.Clear();
+            txtSpouseRG.Clear();
+            txtSpouseBirthDate.Clear();
+            cmbSpouseGender.SelectedIndex = -1;
         }
     }
 }

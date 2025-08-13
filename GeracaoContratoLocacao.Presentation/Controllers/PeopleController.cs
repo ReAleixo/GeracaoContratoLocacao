@@ -3,6 +3,7 @@ using GeracaoContratoLocacao.Domain.Enums;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Service.Interfaces;
+using Microsoft.VisualBasic;
 
 namespace GeracaoContratoLocacao.Presentation.Controllers
 {
@@ -28,8 +29,30 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 RG = person.RG,
                 BirthDate = person.DataNascimento.ToShortDateString(),
                 PersonType = person.PersonType.Name,
-                MaritalStatus = person.EstadoCivil.Name,
+                MaritalStatus = person.EstadoCivil?.Name,
             });
+        }
+
+        public async Task<PersonViewModel> GetLesseeOrLessorBySpouseId(Guid spouseId)
+        {
+            if (spouseId == default)
+            {
+                throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
+            }
+
+            Person person = await _peopleService.GetLesseeOrLessorBySpouseId(spouseId);
+            return new PersonViewModel
+            {
+                Id = person.Id,
+                Name = person.Nome,
+                Document = person.CPF,
+                RG = person.RG,
+                BirthDate = person.DataNascimento.ToShortDateString(),
+                Gender = person.Gender.Name,
+                PersonType = person.PersonType.Name,
+                MaritalStatus = person.EstadoCivil?.Name,
+                SpouseId = person.Spouse.Id,
+            };
         }
 
         public async Task<PersonViewModel> GetPersonViewModelByPersonId(Guid personId)
@@ -54,7 +77,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 BirthDate = person.DataNascimento.ToShortDateString(),
                 Gender = person.Gender.Name,
                 PersonType = person.PersonType.Name,
-                MaritalStatus = person.EstadoCivil.Name,
+                MaritalStatus = person.EstadoCivil?.Name,
                 SpouseId = person.Spouse?.Id ?? Guid.Empty,
             };
         }
@@ -89,7 +112,8 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 PersonType = PersonType.GetByName<PersonType>(personViewModel.PersonType),
             };
 
-            if (spouseViewModel != null)
+            if (spouseViewModel != null
+                && spouseViewModel.IsValid())
             {
                 Person spouse = new Person
                 {

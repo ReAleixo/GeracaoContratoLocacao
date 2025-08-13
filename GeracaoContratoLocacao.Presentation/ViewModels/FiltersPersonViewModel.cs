@@ -44,10 +44,6 @@ namespace GeracaoContratoLocacao.Presentation.ViewModels
             }
             if (!string.IsNullOrEmpty(Document))
             {
-                if (!Validacoes.DocumentIsValid(Document))
-                {
-                    throw new ArgumentException("Documento inválido.");
-                }
                 Document = Formatacoes.FormatarCPF(Document);
             }
         }

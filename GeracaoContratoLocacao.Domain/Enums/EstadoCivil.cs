@@ -21,5 +21,14 @@ namespace GeracaoContratoLocacao.Domain.Enums
         public EstadoCivil(int id, string name) : base(id, name)
         {
         }
+
+        public static IEnumerable<EstadoCivil> GetAllToFillComboBox()
+        {
+            IEnumerable<EstadoCivil> estadoCivilList =
+            [
+                new EstadoCivil(default, default), .. EstadoCivil.GetAll<EstadoCivil>().ToList()
+            ];
+            return estadoCivilList;
+        }
     }
 }

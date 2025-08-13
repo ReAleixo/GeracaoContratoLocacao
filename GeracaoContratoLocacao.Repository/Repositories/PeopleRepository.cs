@@ -43,6 +43,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 Nome = "Jane Smith",
                 CPF = "10987654321",
                 RG = "87654321",
+                Gender = Gender.Female,
                 DataNascimento = new DateTime(1985, 5, 15),
                 EstadoCivil = EstadoCivil.Casado,
                 LogicalStatus = LogicalStatus.Active,
@@ -64,6 +65,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
         public async Task<IEnumerable<Person>> GetFilteredPeopleAsync(string? name = null, string? document = null, bool? showLessor = null, bool? showLessee = null)
         {
             List<Person> filteredPeople = peopleDB.Where(p => p.LogicalStatus == LogicalStatus.Active).ToList();
+            filteredPeople.AddRange(peopleDB.Where(p => p.Spouse != null).Select(p => p.Spouse));
             if (!string.IsNullOrEmpty(name))
             {
                 filteredPeople = filteredPeople.Where(p => p.Nome.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -89,21 +91,22 @@ namespace GeracaoContratoLocacao.Repository.Repositories
 
         public async Task<Person> GetPersonById(Guid personId)
         {
-            var person = peopleDB.FirstOrDefault(p => p.Id == personId && p.LogicalStatus == LogicalStatus.Active);
+            Person person = peopleDB.FirstOrDefault(p => p.Id == personId && p.LogicalStatus == LogicalStatus.Active);
             if (person == null || person.IsNullOrEmpty())
             {
-                throw new KeyNotFoundException($"Person with ID {personId} not found.");
+                person = peopleDB.FirstOrDefault(p => p.Spouse?.Id == personId && p.LogicalStatus == LogicalStatus.Active);
+                if (person != null)
+                {
+                    return person.Spouse;
+                }
+                return default;
             }
             return person;
         }
 
         public async Task RemovePerson(Person person)
         {
-            if (person == null || person.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(person), "Person cannot be null or empty.");
-            }
-            var existingPerson = peopleDB.FirstOrDefault(p => p.Id == person.Id);
+            Person existingPerson = peopleDB.FirstOrDefault(p => p.Id == person.Id);
             if (existingPerson == null)
             {
                 throw new KeyNotFoundException($"Person with ID {person.Id} not found.");
@@ -111,61 +114,21 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             existingPerson.LogicalStatus = LogicalStatus.Inactive;
         }
 
-        public Task SavePerson(Person person)
+        public Task AddPerson(Person person)
         {
-            if (person.IsNullOrEmpty())
-            {
-                throw new ArgumentNullException(nameof(person), "Person cannot be null or empty.");
-            }
-
-            var existingPerson = peopleDB.FirstOrDefault(p => p.Id == person.Id);
-            if (existingPerson != null)
-            {
-                existingPerson.Nome = person.Nome;
-                existingPerson.CPF = person.CPF;
-                existingPerson.RG = person.RG;
-                existingPerson.DataNascimento = person.DataNascimento;
-                existingPerson.Gender = person.Gender;
-                existingPerson.EstadoCivil = person.EstadoCivil;
-                existingPerson.PersonType = person.PersonType;
-
-                if (person.Spouse != null
-                    && !person.Spouse.IsNullOrEmpty())
-                {
-                    existingPerson.Spouse = new Person
-                    {
-                        Id = person.Spouse.Id,
-                        Nome = person.Spouse.Nome,
-                        CPF = person.Spouse.CPF,
-                        RG = person.Spouse.RG,
-                        DataNascimento = person.Spouse.DataNascimento,
-                        Gender = person.Spouse.Gender,
-                        LogicalStatus = LogicalStatus.Active,
-                        PersonType = PersonType.Spouse
-                    };
-                }
-                return Task.CompletedTask;
-            }
-
-            person.LogicalStatus = LogicalStatus.Active;
-
-            if (person.Spouse != null
-                && !person.Spouse.IsNullOrEmpty())
-            {
-                person.Spouse = new Person
-                {
-                    Id = person.Spouse.Id,
-                    Nome = person.Spouse.Nome,
-                    CPF = person.Spouse.CPF,
-                    RG = person.Spouse.RG,
-                    DataNascimento = person.Spouse.DataNascimento,
-                    LogicalStatus = LogicalStatus.Active,
-                    PersonType = PersonType.Spouse
-                };
-            }
             peopleDB.Add(person);
-
             return Task.CompletedTask;
+        }
+
+        public async Task UpdatePerson(Person person)
+        {
+            peopleDB.Remove(await GetPersonById(person.Id));
+            await AddPerson(person);
+        }
+
+        public async Task<Person> GetLesseeOrLessorBySpouseId(Guid spouseId)
+        {
+            return peopleDB.FirstOrDefault(p => p.Spouse?.Id == spouseId && p.LogicalStatus == LogicalStatus.Active);
         }
     }
 }

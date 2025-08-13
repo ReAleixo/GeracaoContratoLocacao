@@ -34,15 +34,16 @@
             toolStripSeparator1 = new ToolStripSeparator();
             cmdHousesPanel = new ToolStripButton();
             cmdPeoplePanel = new ToolStripButton();
+            toolStripButton1 = new ToolStripButton();
             toolStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // toolStrip1
             // 
-            toolStrip1.Items.AddRange(new ToolStripItem[] { cmdClose, toolStripSeparator1, cmdHousesPanel, cmdPeoplePanel });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { cmdClose, toolStripSeparator1, cmdHousesPanel, cmdPeoplePanel, toolStripButton1 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(443, 73);
+            toolStrip1.Size = new Size(565, 73);
             toolStrip1.TabIndex = 8;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -68,7 +69,7 @@
             cmdHousesPanel.ImageTransparentColor = Color.Magenta;
             cmdHousesPanel.Name = "cmdHousesPanel";
             cmdHousesPanel.Size = new Size(121, 70);
-            cmdHousesPanel.Text = "&PAINEL DE CASAS";
+            cmdHousesPanel.Text = "PAINEL DE &CASAS";
             cmdHousesPanel.Click += cmdHousesPanel_Click;
             // 
             // cmdPeoplePanel
@@ -77,14 +78,22 @@
             cmdPeoplePanel.ImageTransparentColor = Color.Magenta;
             cmdPeoplePanel.Name = "cmdPeoplePanel";
             cmdPeoplePanel.Size = new Size(133, 70);
-            cmdPeoplePanel.Text = "&PAINEL DE PESSOAS";
+            cmdPeoplePanel.Text = "PAINEL DE &PESSOAS";
             cmdPeoplePanel.Click += cmdPeoplePanel_Click;
+            // 
+            // toolStripButton1
+            // 
+            toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
+            toolStripButton1.ImageTransparentColor = Color.Magenta;
+            toolStripButton1.Name = "toolStripButton1";
+            toolStripButton1.Size = new Size(221, 70);
+            toolStripButton1.Text = "PAINEL DE &GERAÇÃO DE CONTRATO";
             // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(443, 320);
+            ClientSize = new Size(565, 265);
             ControlBox = false;
             Controls.Add(toolStrip1);
             Name = "Menu";
@@ -105,5 +114,6 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton cmdHousesPanel;
         private ToolStripButton cmdPeoplePanel;
+        private ToolStripButton toolStripButton1;
     }
 }
