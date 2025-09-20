@@ -35,27 +35,27 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             return folderBrowser.SelectedPath;
         }
 
-        private ContratoLocacao MapFromViewModelToDomain(ContratoViewModel contratoViewModel)
+        private RentalContract MapFromViewModelToDomain(ContratoViewModel contratoViewModel)
         {
-            return new ContratoLocacao
+            return new RentalContract
             {
-                Locatario = new Locatario
+                Lessee = new Person
                 {
                     Nome = contratoViewModel.NomeLocatario,
                     CPF = contratoViewModel.CPFLocatario,
                     RG = contratoViewModel.RGLocatario,
                 },
-                DataInicioLocacao = contratoViewModel.DataInicioContrato,
-                PrazoLocacao = contratoViewModel.PrazoContrato,
-                Imovel = new Imovel
+                RentalStartDate = contratoViewModel.DataInicioContrato,
+                MonthsRent = contratoViewModel.PrazoContrato,
+                House = new House
                 {
                     Endereco = new Endereco
                     {
                         Complemento = contratoViewModel.NumeroCasa.ToString()
                     }
                 },
-                ValorAluguel = contratoViewModel.ValorAluguel,
-                DataGeracao = DateTime.Now
+                RentalValue = contratoViewModel.ValorAluguel,
+                ContractGenerationDate = DateTime.Now
             };
         }
     }

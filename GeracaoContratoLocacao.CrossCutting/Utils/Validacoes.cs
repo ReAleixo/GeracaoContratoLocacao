@@ -4,7 +4,7 @@ namespace GeracaoContratoLocacao.CrossCutting.Utils
 {
     public class Validacoes
     {
-        public static string ValidarCPF(string cpf)
+        public static bool DocumentIsValid(string cpf)
         {
             if (string.IsNullOrWhiteSpace(cpf))
             {
@@ -12,12 +12,7 @@ namespace GeracaoContratoLocacao.CrossCutting.Utils
             }
 
             CPFValidator cpfValidator = new CPFValidator();
-            if (!cpfValidator.IsValid(cpf))
-            {
-                throw new ArgumentException("CPF inválido.");
-            }
-
-            return cpf;
+            return cpfValidator.IsValid(cpf);
         }
     }
 }

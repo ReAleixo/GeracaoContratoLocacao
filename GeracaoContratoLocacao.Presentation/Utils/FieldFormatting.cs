@@ -11,7 +11,7 @@ namespace GeracaoContratoLocacao.Presentation.Utils
 
         public static void OnlyLetters(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar);
+            e.Handled = !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar);
         }
 
         public static void OnlyLettersAndDigits(object sender, KeyPressEventArgs e)
