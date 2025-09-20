@@ -2,7 +2,7 @@
 using GeracaoContratoLocacao.Service.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GeracaoContratoLocacao.Service.Configuration
+namespace GeracaoContratoLocacao.Service
 {
     public static class ServiceConfiguration
     {

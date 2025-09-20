@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="Caelum.Stella.CSharp" Version="1.4.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mapper\Profiles\" />
   </ItemGroup>
 
 </Project>

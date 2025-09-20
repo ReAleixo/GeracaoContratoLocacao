@@ -2,7 +2,7 @@
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GeracaoContratoLocacao.Presentation.Configurations
+namespace GeracaoContratoLocacao.Presentation
 {
     public static class ControllerConfiguration
     {

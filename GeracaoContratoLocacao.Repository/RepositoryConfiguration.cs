@@ -2,7 +2,7 @@
 using GeracaoContratoLocacao.Repository.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GeracaoContratoLocacao.Repository.Configuration
+namespace GeracaoContratoLocacao.Repository
 {
     public static class RepositoryConfiguration
     {

@@ -10,4 +10,8 @@
     <ProjectReference Include="..\GeracaoContratoLocacao.CrossCutting\GeracaoContratoLocacao.CrossCutting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 </Project>

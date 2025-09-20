@@ -1,7 +1,6 @@
-using GeracaoContratoLocacao.Presentation.Configurations;
 using GeracaoContratoLocacao.Presentation.Forms;
-using GeracaoContratoLocacao.Repository.Configuration;
-using GeracaoContratoLocacao.Service.Configuration;
+using GeracaoContratoLocacao.Repository;
+using GeracaoContratoLocacao.Service;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GeracaoContratoLocacao.Presentation
