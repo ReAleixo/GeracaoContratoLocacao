@@ -30,5 +30,11 @@
             PeoplePanel peoplePanel = new PeoplePanel(_serviceProvider);
             peoplePanel.ShowDialog();
         }
+
+        private void cmdFormularioContrato_Click(object sender, EventArgs e)
+        {
+            FormularioContrato formularioContrato = new FormularioContrato(_serviceProvider);
+            formularioContrato.ShowDialog();
+        }
     }
 }
