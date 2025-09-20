@@ -14,7 +14,7 @@ namespace GeracaoContratoLocacao.Service.Services
 
         }
 
-        public void GerarContratoLocacao(ContratoLocacao contratoLocacao, string pathDestino)
+        public void GerarContratoLocacao(RentalContract contratoLocacao, string pathDestino)
         {
             if (contratoLocacao == null)
             {
@@ -32,7 +32,7 @@ namespace GeracaoContratoLocacao.Service.Services
                 documentoContratoModelo.LoadFromFile(Paths.pathModeloContrato);
                 EditDocument(documentoContratoModelo, contratoLocacao);
 
-                string nomeNovoArquivo = $"Contrato de locação - Locatário {contratoLocacao.Locatario.Nome}.pdf";
+                string nomeNovoArquivo = $"Contrato de locação - Locatário {contratoLocacao.Lessee.Nome}.pdf";
                 string fullPath = Path.Combine(pathDestino, nomeNovoArquivo);
                 documentoContratoModelo.SaveToFile(fullPath);
             }
@@ -42,19 +42,19 @@ namespace GeracaoContratoLocacao.Service.Services
             }
         }
 
-        private void EditDocument(Document contrato, ContratoLocacao contratoLocacao)
+        private void EditDocument(Document contrato, RentalContract contratoLocacao)
         {
-            contrato.Replace("#NOME_LOCATARIO#", contratoLocacao.Locatario.Nome.ToUpper(), true, true);
-            contrato.Replace("#CPF_LOCATARIO#", contratoLocacao.Locatario.CPF, true, true);
-            contrato.Replace("#RG_LOCATARIO#", contratoLocacao.Locatario.RG, true, true);
-            contrato.Replace("#CASA#", contratoLocacao.Imovel.Endereco.Complemento, true, true);
-            contrato.Replace("#PRAZO#", contratoLocacao.PrazoLocacao.ToString(), true, true);
-            contrato.Replace("#INICIO_CONTRATO#", contratoLocacao.DataInicioLocacao.ToShortDateString(), true, true);
-            contrato.Replace("#TERMINO_CONTRATO#", contratoLocacao.DataInicioLocacao.AddMonths(contratoLocacao.PrazoLocacao).ToShortDateString(), true, true);
-            contrato.Replace("#VALOR#", contratoLocacao.ValorAluguel.ToString("C", CultureInfo.CurrentCulture), true, true);
-            contrato.Replace("#VALOR_EXTENSO#", DinheiroPorExtenso.Converter(contratoLocacao.ValorAluguel), true, true);
-            contrato.Replace("#VENCIMENTO#", contratoLocacao.DataInicioLocacao.Day.ToString(), true, true);
-            contrato.Replace("#DATA_GERACAO_CONTRATO#", contratoLocacao.DataGeracao.ToString(@"dd \de MMMM \de yyyy"), true, true);
+            contrato.Replace("#NOME_LOCATARIO#", contratoLocacao.Lessee.Nome.ToUpper(), true, true);
+            contrato.Replace("#CPF_LOCATARIO#", contratoLocacao.Lessee.CPF, true, true);
+            contrato.Replace("#RG_LOCATARIO#", contratoLocacao.Lessee.RG, true, true);
+            contrato.Replace("#CASA#", contratoLocacao.House.Endereco.Complemento, true, true);
+            contrato.Replace("#PRAZO#", contratoLocacao.MonthsRent.ToString(), true, true);
+            contrato.Replace("#INICIO_CONTRATO#", contratoLocacao.RentalStartDate.ToShortDateString(), true, true);
+            contrato.Replace("#TERMINO_CONTRATO#", contratoLocacao.RentalStartDate.AddMonths(contratoLocacao.MonthsRent).ToShortDateString(), true, true);
+            contrato.Replace("#VALOR#", contratoLocacao.RentalValue.ToString("C", CultureInfo.CurrentCulture), true, true);
+            contrato.Replace("#VALOR_EXTENSO#", DinheiroPorExtenso.Converter(contratoLocacao.RentalValue), true, true);
+            contrato.Replace("#VENCIMENTO#", contratoLocacao.RentalStartDate.Day.ToString(), true, true);
+            contrato.Replace("#DATA_GERACAO_CONTRATO#", contratoLocacao.ContractGenerationDate.ToString(@"dd \de MMMM \de yyyy"), true, true);
         }
     }
 }

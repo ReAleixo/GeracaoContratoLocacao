@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeracaoContratoLocacao.Pres
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeracaoContratoLocacao.CrossCutting", "GeracaoContratoLocacao.CrossCutting\GeracaoContratoLocacao.CrossCutting.csproj", "{2ED45D4F-120B-4FEB-AB3A-83AAA5FF3604}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeracaoContratoLocacao.Repository", "GeracaoContratoLocacao.Repository\GeracaoContratoLocacao.Repository.csproj", "{663BB64A-4193-47A0-B1B7-2565D5283B95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2ED45D4F-120B-4FEB-AB3A-83AAA5FF3604}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ED45D4F-120B-4FEB-AB3A-83AAA5FF3604}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ED45D4F-120B-4FEB-AB3A-83AAA5FF3604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{663BB64A-4193-47A0-B1B7-2565D5283B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{663BB64A-4193-47A0-B1B7-2565D5283B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{663BB64A-4193-47A0-B1B7-2565D5283B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{663BB64A-4193-47A0-B1B7-2565D5283B95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
