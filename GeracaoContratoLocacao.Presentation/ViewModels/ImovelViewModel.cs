@@ -1,8 +1,8 @@
 ﻿namespace GeracaoContratoLocacao.Presentation.ViewModels
 {
-    public class HouseViewModel
+    public class ImovelViewModel
     {
-        public Guid HouseId { get; set; }
+        public Guid Id { get; set; }
         public Guid IdProprietario { get; set; }
         public string? NomeProprietario { get; set; }
         public int NumeroComodos { get; set; }
@@ -34,7 +34,7 @@
 
         public bool IsNullOrEmpty()
         {
-            return HouseId == default
+            return Id == default
                 && IdProprietario == default
                 && string.IsNullOrEmpty(NomeProprietario)
                 && NumeroComodos == default
@@ -42,7 +42,6 @@
                 && !ImovelLocado
                 && string.IsNullOrEmpty(Rua)
                 && Numero == default
-                && string.IsNullOrEmpty(Rua)
                 && string.IsNullOrEmpty(Complemento)
                 && string.IsNullOrEmpty(Bairro)
                 && string.IsNullOrEmpty(Cidade)

@@ -1,6 +1,6 @@
 ﻿namespace GeracaoContratoLocacao.Presentation.Forms
 {
-    partial class PeoplePanel
+    partial class PainelPessoas
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PeoplePanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PainelPessoas));
             groupBox4 = new GroupBox();
             panel1 = new Panel();
             cmdFilter = new Button();

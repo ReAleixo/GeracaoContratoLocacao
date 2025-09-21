@@ -9,17 +9,20 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     public partial class CadastroImovel : Form
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IHouseController _controller;
+        private readonly IImovelController _controller;
         private readonly Guid _idImovel;
-        private HouseViewModel viewModel;
+        private readonly Guid _idProprietario;
+        private ImovelViewModel viewModel;
 
         public CadastroImovel(IServiceProvider serviceProvider,
-                              Guid idImovel = default)
+                              Guid idImovel = default,
+                              Guid idProprietario = default)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _controller = _serviceProvider.GetRequiredService<IHouseController>();
+            _controller = _serviceProvider.GetRequiredService<IImovelController>();
             _idImovel = idImovel; 
+            _idProprietario = idProprietario;
         }
 
         private async void CadastroImovel_Load(object sender, EventArgs e)
@@ -28,9 +31,15 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             cmbLocadorProprietario.DisplayMember = Enumeration.DisplayMemberAttribute;
             cmbLocadorProprietario.ValueMember = Enumeration.ValueMemberAttribute;
 
+            if (!_idProprietario.Equals(default))
+            {
+                cmbLocadorProprietario.SelectedValue = _idProprietario;
+                grbLocador.Enabled = false;
+            }
+
             if (_idImovel.Equals(default))
             {
-                viewModel = new HouseViewModel();
+                viewModel = new ImovelViewModel();
                 return;
             }
 
@@ -73,11 +82,11 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             txtCEP.Text = viewModel.CEP;
         }
 
-        private HouseViewModel AtualizaViewModel()
+        private ImovelViewModel AtualizaViewModel()
         {
-            HouseViewModel viewModelAtualizada = new HouseViewModel
+            ImovelViewModel viewModelAtualizada = new ImovelViewModel
             {
-                HouseId = _idImovel,
+                Id = _idImovel,
                 IdProprietario = (Guid)cmbLocadorProprietario.SelectedValue,
                 NumeroComodos = int.Parse(txtNumeroComodos.Text),
                 ValorAluguel = decimal.Parse(txtValorAluguel.Text, NumberStyles.Currency, CultureInfo.CurrentCulture),

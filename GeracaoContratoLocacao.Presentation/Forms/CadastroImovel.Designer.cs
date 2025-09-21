@@ -32,7 +32,7 @@
             toolStrip1 = new ToolStrip();
             cmdSalvar = new ToolStripButton();
             cmdCancelar = new ToolStripButton();
-            groupBox1 = new GroupBox();
+            grbLocador = new GroupBox();
             cmdAdicionarLocador = new Button();
             cmbLocadorProprietario = new ComboBox();
             label1 = new Label();
@@ -58,7 +58,7 @@
             label10 = new Label();
             txtNumeroComodos = new TextBox();
             toolStrip1.SuspendLayout();
-            groupBox1.SuspendLayout();
+            grbLocador.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
             SuspendLayout();
@@ -94,17 +94,17 @@
             cmdCancelar.TextImageRelation = TextImageRelation.ImageAboveText;
             cmdCancelar.Click += cmdCancelar_Click;
             // 
-            // groupBox1
+            // grbLocador
             // 
-            groupBox1.Controls.Add(cmdAdicionarLocador);
-            groupBox1.Controls.Add(cmbLocadorProprietario);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(12, 73);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(421, 76);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "LOCADOR";
+            grbLocador.Controls.Add(cmdAdicionarLocador);
+            grbLocador.Controls.Add(cmbLocadorProprietario);
+            grbLocador.Controls.Add(label1);
+            grbLocador.Location = new Point(12, 73);
+            grbLocador.Name = "grbLocador";
+            grbLocador.Size = new Size(421, 76);
+            grbLocador.TabIndex = 1;
+            grbLocador.TabStop = false;
+            grbLocador.Text = "LOCADOR";
             // 
             // cmdAdicionarLocador
             // 
@@ -332,7 +332,7 @@
             ClientSize = new Size(446, 450);
             ControlBox = false;
             Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
+            Controls.Add(grbLocador);
             Controls.Add(toolStrip1);
             Name = "CadastroImovel";
             ShowIcon = false;
@@ -340,8 +340,8 @@
             Load += CadastroImovel_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            grbLocador.ResumeLayout(false);
+            grbLocador.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
@@ -355,7 +355,7 @@
         private ToolStrip toolStrip1;
         private ToolStripButton cmdSalvar;
         private ToolStripButton cmdCancelar;
-        private GroupBox groupBox1;
+        private GroupBox grbLocador;
         private ComboBox cmbLocadorProprietario;
         private Label label1;
         private GroupBox groupBox2;

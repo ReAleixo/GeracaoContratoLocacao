@@ -16,7 +16,7 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public async Task<IEnumerable<Pessoa>> BuscarPessoasPorFiltro(FiltroPessoas filtro)
         {
-            return await _peopleRepository.GetFilteredPeopleAsync(filtro.Nome, filtro.Documento, filtro.ExibirLocador, filtro.ExibirLocatario);
+            return await _peopleRepository.BuscarPessoaPorFiltro(filtro);
         }
 
         public async Task<Pessoa> BuscarPessoaViaIdConjuge(Guid spouseId)
@@ -108,11 +108,6 @@ namespace GeracaoContratoLocacao.Service.Services
             }
 
             await _peopleRepository.CadastrarPessoa(person);
-        }
-
-        public async Task<Pessoa> BuscarUltimaPessoaCadastrada()
-        {
-            return await _peopleRepository.BuscarUltimaPessoaCadastrada();
         }
     }
 }

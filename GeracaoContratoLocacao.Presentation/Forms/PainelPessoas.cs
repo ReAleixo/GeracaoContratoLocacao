@@ -6,14 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GeracaoContratoLocacao.Presentation.Forms
 {
-    public partial class PeoplePanel : Form
+    public partial class PainelPessoas : Form
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IPessoaController _peopleController;
 
         private FiltrosPessoaViewModel filtersPersonViewModel;
 
-        public PeoplePanel(IServiceProvider serviceProvider)
+        public PainelPessoas(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
@@ -57,7 +57,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                     personId = personViewModel.Id;  
                 }
 
-                EditPerson editPerson = new EditPerson(_serviceProvider, personId);
+                CadastroPessoa editPerson = new CadastroPessoa(_serviceProvider, personId);
                 editPerson.ShowDialog();
             }
             catch (Exception ex)
@@ -68,7 +68,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private void cmdAdd_Click(object sender, EventArgs e)
         {
-            EditPerson editPerson = new EditPerson(_serviceProvider);
+            CadastroPessoa editPerson = new CadastroPessoa(_serviceProvider);
             editPerson.ShowDialog();
         }
 

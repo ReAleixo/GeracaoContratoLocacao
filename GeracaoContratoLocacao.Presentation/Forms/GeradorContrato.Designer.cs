@@ -39,7 +39,7 @@
             cmdAdicionarLocatario = new Button();
             cmbLocatario = new ComboBox();
             label1 = new Label();
-            groupBox1 = new GroupBox();
+            grbImovel = new GroupBox();
             cmdAdicionarImovel = new Button();
             cmbImoveisLocador = new ComboBox();
             label4 = new Label();
@@ -56,7 +56,7 @@
             label2 = new Label();
             toolStrip1.SuspendLayout();
             groupBox2.SuspendLayout();
-            groupBox1.SuspendLayout();
+            grbImovel.SuspendLayout();
             groupBox3.SuspendLayout();
             SuspendLayout();
             // 
@@ -106,6 +106,7 @@
             cmbLocador.Name = "cmbLocador";
             cmbLocador.Size = new Size(284, 23);
             cmbLocador.TabIndex = 1;
+            cmbLocador.SelectedValueChanged += cmbLocador_SelectedValueChanged;
             // 
             // cmdAdicionarLocador
             // 
@@ -159,17 +160,18 @@
             label1.TabIndex = 3;
             label1.Text = "LOCATÁRIO";
             // 
-            // groupBox1
+            // grbImovel
             // 
-            groupBox1.Controls.Add(cmdAdicionarImovel);
-            groupBox1.Controls.Add(cmbImoveisLocador);
-            groupBox1.Controls.Add(label4);
-            groupBox1.Location = new Point(12, 204);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(421, 77);
-            groupBox1.TabIndex = 6;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "IMÓVEL";
+            grbImovel.Controls.Add(cmdAdicionarImovel);
+            grbImovel.Controls.Add(cmbImoveisLocador);
+            grbImovel.Controls.Add(label4);
+            grbImovel.Enabled = false;
+            grbImovel.Location = new Point(12, 204);
+            grbImovel.Name = "grbImovel";
+            grbImovel.Size = new Size(421, 77);
+            grbImovel.TabIndex = 6;
+            grbImovel.TabStop = false;
+            grbImovel.Text = "IMÓVEL";
             // 
             // cmdAdicionarImovel
             // 
@@ -179,6 +181,7 @@
             cmdAdicionarImovel.TabIndex = 2;
             cmdAdicionarImovel.Text = "ADICIONAR";
             cmdAdicionarImovel.UseVisualStyleBackColor = true;
+            cmdAdicionarImovel.Click += AdicionarImovel;
             // 
             // cmbImoveisLocador
             // 
@@ -306,7 +309,7 @@
             ClientSize = new Size(446, 450);
             ControlBox = false;
             Controls.Add(groupBox3);
-            Controls.Add(groupBox1);
+            Controls.Add(grbImovel);
             Controls.Add(groupBox2);
             Controls.Add(toolStrip1);
             Name = "frmGeradorContrato";
@@ -317,8 +320,8 @@
             toolStrip1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            grbImovel.ResumeLayout(false);
+            grbImovel.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ResumeLayout(false);
@@ -336,7 +339,7 @@
         private Button cmdAdicionarLocatario;
         private ComboBox cmbLocatario;
         private Label label1;
-        private GroupBox groupBox1;
+        private GroupBox grbImovel;
         private Button cmdAdicionarImovel;
         private ComboBox cmbImoveisLocador;
         private Label label4;

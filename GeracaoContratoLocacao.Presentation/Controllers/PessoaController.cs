@@ -1,5 +1,6 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
 using GeracaoContratoLocacao.Domain.Enums;
+using GeracaoContratoLocacao.Domain.ValueObjects;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Service.Interfaces;
@@ -18,8 +19,15 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
 
         public async Task<IEnumerable<PessoaViewModel>> BuscarPessoasPorFiltro(FiltrosPessoaViewModel filters)
         {
-            List<Pessoa> people = (await _pessoaService.BuscarPessoasPorFiltro(
-                                        filters.Name, filters.Document, filters.ShowLessee, filters.ShowLessor)).ToList();
+            FiltroPessoas filtro = new FiltroPessoas
+            {
+                Nome = filters.Name,
+                Documento = filters.Document,
+                ExibirLocatario = filters.ShowLessee,
+                ExibirLocador = filters.ShowLessor
+            };
+
+            List<Pessoa> people = (await _pessoaService.BuscarPessoasPorFiltro(filtro)).ToList();
 
             return people.Select(person => new PessoaViewModel
             {
@@ -129,23 +137,6 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 person.Spouse = spouse;
             }
             await _pessoaService.CadastrarPessoa(person);
-        }
-
-        public async Task<PessoaViewModel> BuscarUltimaPessoaCadastrada()
-        {
-            Pessoa pessoa = await _pessoaService.BuscarUltimaPessoaCadastrada();
-            return new PessoaViewModel
-            {
-                Id = pessoa.Id,
-                Name = pessoa.Nome,
-                Document = pessoa.CPF,
-                RG = pessoa.RG,
-                BirthDate = pessoa.DataNascimento.ToShortDateString(),
-                Gender = pessoa.Gender.Name,
-                PersonType = pessoa.PersonType.Name,
-                MaritalStatus = pessoa.EstadoCivil?.Name,
-                SpouseId = pessoa.Spouse?.Id ?? Guid.Empty,
-            };
         }
     }
 }

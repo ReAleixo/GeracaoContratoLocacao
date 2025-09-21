@@ -7,14 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GeracaoContratoLocacao.Presentation.Forms
 {
-    public partial class EditPerson : Form
+    public partial class CadastroPessoa : Form
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IPessoaController _peopleController;
 
         private Guid _personId = default, _spouseId = default;
 
-        public EditPerson(IServiceProvider serviceProvider,
+        public CadastroPessoa(IServiceProvider serviceProvider,
                           Guid personId = default)
         {
             InitializeComponent();

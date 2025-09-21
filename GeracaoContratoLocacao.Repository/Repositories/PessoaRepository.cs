@@ -8,11 +8,11 @@ using System.Data;
 
 namespace GeracaoContratoLocacao.Repository.Repositories
 {
-    public class PeopleRepository : RepositoryBase<PessoaDTO>, IPessoaRepository
+    public class PessoaRepository : RepositoryBase<PessoaDTO>, IPessoaRepository
     {
         private List<Pessoa> peopleDB = new List<Pessoa>();
 
-        public PeopleRepository()
+        public PessoaRepository()
         {
             peopleDB.Add(new Pessoa
             {
@@ -130,11 +130,6 @@ namespace GeracaoContratoLocacao.Repository.Repositories
         public async Task<Pessoa> BuscarPessoaViaIdConjuge(Guid spouseId)
         {
             return peopleDB.FirstOrDefault(p => p.Spouse?.Id == spouseId && p.LogicalStatus == LogicalStatus.Active);
-        }
-
-        public async Task<Pessoa> BuscarUltimaPessoaCadastrada()
-        {
-            return peopleDB.LastOrDefault();
         }
     }
 }

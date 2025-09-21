@@ -7,7 +7,7 @@ using GeracaoContratoLocacao.Domain.Enums;
 
 namespace GeracaoContratoLocacao.Presentation.Controllers
 {
-    public class ImovelController : IHouseController
+    public class ImovelController : IImovelController
     {
         private readonly IImovelService _houseService;
 
@@ -16,7 +16,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             _houseService = imovelService;
         }
 
-        public async Task<Guid> CadastrarNovoImovel(HouseViewModel viewModel)
+        public async Task<Guid> CadastrarNovoImovel(ImovelViewModel viewModel)
         {
             House house = TransformaViewModelEmImovel(viewModel);
             return await _houseService.CadastrarNovoImovel(house);
@@ -33,7 +33,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             await _houseService.DeleteHouse(house);
         }
 
-        public async Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
+        public async Task<IEnumerable<ImovelViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
         {
             List<House> houses = (await _houseService.GetAllHouses()).ToList();
 
@@ -42,9 +42,9 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new InvalidOperationException("Nenhum imóvel encontrado.");
             }
 
-            var housesViewModelList = houses.Select(h => new HouseViewModel
+            var housesViewModelList = houses.Select(h => new ImovelViewModel
             {
-                HouseId = h.Id,
+                Id = h.Id,
                 IdProprietario = h.Owner.Id,
                 NomeProprietario = h.Owner.Nome,
                 NumeroComodos = h.NumeroComodos,
@@ -72,7 +72,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             return housesViewModelList;
         }
 
-        public async Task<HouseViewModel> GetHouseViewModelByHouseId(Guid houseId)
+        public async Task<ImovelViewModel> GetHouseViewModelByHouseId(Guid houseId)
         {
             if (houseId == default)
             {
@@ -81,9 +81,9 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
 
             House house = await _houseService.GetHouseById(houseId);
 
-            return new HouseViewModel
+            return new ImovelViewModel
             {
-                HouseId = house.Id,
+                Id = house.Id,
                 NumeroComodos = house.NumeroComodos,
                 ValorAluguel = house.ValorAluguel,
                 ImovelLocado = house.Locado,
@@ -102,13 +102,13 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             throw new NotImplementedException();
         }
 
-        public async Task SaveChanges(HouseViewModel viewModel)
+        public async Task SaveChanges(ImovelViewModel viewModel)
         {
             House imovel = TransformaViewModelEmImovel(viewModel);
             await _houseService.SaveChanges(imovel);
         }
 
-        private House TransformaViewModelEmImovel(HouseViewModel viewModel)
+        private House TransformaViewModelEmImovel(ImovelViewModel viewModel)
         {
             if (viewModel.IsNullOrEmpty())
             {
@@ -117,7 +117,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
 
             return new House
             {
-                Id = viewModel.HouseId,
+                Id = viewModel.Id,
                 Owner = new Pessoa
                 {
                     Id = viewModel.IdProprietario

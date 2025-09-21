@@ -27,7 +27,7 @@
 
         private void cmdPeoplePanel_Click(object sender, EventArgs e)
         {
-            PeoplePanel peoplePanel = new PeoplePanel(_serviceProvider);
+            PainelPessoas peoplePanel = new PainelPessoas(_serviceProvider);
             peoplePanel.ShowDialog();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace GeracaoContratoLocacao.Presentation.Forms
 {
-    partial class EditPerson
+    partial class CadastroPessoa
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditPerson));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CadastroPessoa));
             toolStrip1 = new ToolStrip();
             cmdSave = new ToolStripButton();
             cmdCancel = new ToolStripButton();

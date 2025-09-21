@@ -10,6 +10,5 @@ namespace GeracaoContratoLocacao.Service.Interfaces
         Task RemoverPessoa(Pessoa pessoa);
         Task CadastrarPessoa(Pessoa pessoa);
         Task<Pessoa> BuscarPessoaViaIdConjuge(Guid idConjuge);
-        Task<Pessoa> BuscarUltimaPessoaCadastrada();
     }
 }

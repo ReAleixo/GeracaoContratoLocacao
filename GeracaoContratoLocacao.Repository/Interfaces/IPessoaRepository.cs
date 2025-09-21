@@ -13,6 +13,5 @@ namespace GeracaoContratoLocacao.Repository.Interfaces
         Task CadastrarPessoa(Pessoa pessoa);
         Task AtualizarPessoa(Pessoa pessoa);
         Task<Pessoa> BuscarPessoaViaIdConjuge(Guid idConjgue);
-        Task<Pessoa> BuscarUltimaPessoaCadastrada();
     }
 }

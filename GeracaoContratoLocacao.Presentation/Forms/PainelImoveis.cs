@@ -6,13 +6,13 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     public partial class PainelImoveis : Form
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IHouseController _imovelController;
+        private readonly IImovelController _imovelController;
 
         public PainelImoveis(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _imovelController = _serviceProvider.GetRequiredService<IHouseController>();
+            _imovelController = _serviceProvider.GetRequiredService<IImovelController>();
         }
 
         private void cmdVoltar_Click(object sender, EventArgs e)
