@@ -31,10 +31,10 @@
             peoplePanel.ShowDialog();
         }
 
-        private void cmdFormularioContrato_Click(object sender, EventArgs e)
+        private void cmdGeradorContrato_Click(object sender, EventArgs e)
         {
-            FormularioContrato formularioContrato = new FormularioContrato(_serviceProvider);
-            formularioContrato.ShowDialog();
+            frmGeradorContrato geradorContrato = new frmGeradorContrato(_serviceProvider);
+            geradorContrato.ShowDialog();
         }
     }
 }

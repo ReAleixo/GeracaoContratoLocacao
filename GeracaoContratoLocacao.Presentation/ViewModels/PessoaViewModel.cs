@@ -2,7 +2,7 @@
 
 namespace GeracaoContratoLocacao.Presentation.ViewModels
 {
-    public class PersonViewModel
+    public class PessoaViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

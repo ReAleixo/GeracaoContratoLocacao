@@ -2,14 +2,14 @@
 
 namespace GeracaoContratoLocacao.Presentation.ViewModels
 {
-    public class FiltersPersonViewModel
+    public class FiltrosPessoaViewModel
     {
         public string? Name { get; set; }
         public string? Document { get; set; }
         public bool? ShowLessee { get; set; }
         public bool? ShowLessor { get; set; }
 
-        public FiltersPersonViewModel(string? name = null, string? document = null, bool? showLessee = null, bool? showLessor = null)
+        public FiltrosPessoaViewModel(string? name = null, string? document = null, bool? showLessee = null, bool? showLessor = null)
         {
             Name = name;
             Document = document;

@@ -1,41 +1,41 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
 using GeracaoContratoLocacao.Domain.Enums;
+using GeracaoContratoLocacao.Domain.ValueObjects;
 using GeracaoContratoLocacao.Repository.Interfaces;
 using GeracaoContratoLocacao.Service.Interfaces;
 
 namespace GeracaoContratoLocacao.Service.Services
 {
-    public class PeopleService : IPeopleService
+    public class PessoaService : IPessoaService
     {
-        private readonly IPeopleRepository _peopleRepository;
-        public PeopleService(IPeopleRepository peopleRepository)
+        private readonly IPessoaRepository _peopleRepository;
+        public PessoaService(IPessoaRepository peopleRepository)
         {
             _peopleRepository = peopleRepository;
         }
 
-        public async Task<IEnumerable<Person>> GetFilteredListOfPeople(
-            string? personName = null, string? personDocument = null, bool? showLessee = null, bool? showLessor = null)
+        public async Task<IEnumerable<Pessoa>> BuscarPessoasPorFiltro(FiltroPessoas filtro)
         {
-            return await _peopleRepository.GetFilteredPeopleAsync(personName, personDocument, showLessor, showLessee);
+            return await _peopleRepository.GetFilteredPeopleAsync(filtro.Nome, filtro.Documento, filtro.ExibirLocador, filtro.ExibirLocatario);
         }
 
-        public async Task<Person> GetLesseeOrLessorBySpouseId(Guid spouseId)
+        public async Task<Pessoa> BuscarPessoaViaIdConjuge(Guid spouseId)
         {
             if (spouseId == default)
             {
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
-            return await _peopleRepository.GetLesseeOrLessorBySpouseId(spouseId);
+            return await _peopleRepository.BuscarPessoaViaIdConjuge(spouseId);
         }
 
-        public async Task<Person> GetPersonById(Guid personId)
+        public async Task<Pessoa> BuscarPessoaViaId(Guid personId)
         {
             if (personId == default)
             {
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
 
-            Person person = await _peopleRepository.GetPersonById(personId);
+            Pessoa person = await _peopleRepository.BuscarPessoaViaId(personId);
             if (person == null)
             {
                 throw new KeyNotFoundException($"Pessoa com ID {personId} não encontrada.");
@@ -43,23 +43,23 @@ namespace GeracaoContratoLocacao.Service.Services
             return person;
         }
 
-        public Task RemovePerson(Person person)
+        public Task RemoverPessoa(Pessoa person)
         {
             if (person == null)
             {
                 throw new ArgumentNullException(nameof(person), "A pessoa não pode ser nula.");
             }
-            return _peopleRepository.RemovePerson(person);
+            return _peopleRepository.RemoverPessoa(person);
         }
 
-        public async Task SavePerson(Person person)
+        public async Task CadastrarPessoa(Pessoa person)
         {
             if (person == null)
             {
                 throw new ArgumentNullException(nameof(person), "A pessoa não pode ser nula.");
             }
 
-            var existingPerson = await _peopleRepository.GetPersonById(person.Id);
+            var existingPerson = await _peopleRepository.BuscarPessoaViaId(person.Id);
             if (existingPerson != null)
             {
                 existingPerson.Nome = person.Nome;
@@ -73,7 +73,7 @@ namespace GeracaoContratoLocacao.Service.Services
                 if (person.Spouse != null
                     && !person.Spouse.IsNullOrEmpty())
                 {
-                    existingPerson.Spouse = new Person
+                    existingPerson.Spouse = new Pessoa
                     {
                         Id = person.Spouse.Id,
                         Nome = person.Spouse.Nome,
@@ -85,7 +85,7 @@ namespace GeracaoContratoLocacao.Service.Services
                         PersonType = PersonType.Spouse
                     };
                 }
-                await _peopleRepository.UpdatePerson(existingPerson);
+                await _peopleRepository.AtualizarPessoa(existingPerson);
                 return;
             }
 
@@ -94,7 +94,7 @@ namespace GeracaoContratoLocacao.Service.Services
             if (person.Spouse != null
                 && !person.Spouse.IsNullOrEmpty())
             {
-                person.Spouse = new Person
+                person.Spouse = new Pessoa
                 {
                     Id = person.Spouse.Id,
                     Nome = person.Spouse.Nome,
@@ -107,7 +107,12 @@ namespace GeracaoContratoLocacao.Service.Services
                 };
             }
 
-            await _peopleRepository.AddPerson(person);
+            await _peopleRepository.CadastrarPessoa(person);
+        }
+
+        public async Task<Pessoa> BuscarUltimaPessoaCadastrada()
+        {
+            return await _peopleRepository.BuscarUltimaPessoaCadastrada();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace GeracaoContratoLocacao.Domain.Entities
 {
-    public class Person
+    public class Pessoa
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
@@ -11,7 +11,7 @@ namespace GeracaoContratoLocacao.Domain.Entities
         public DateTime DataNascimento { get; set; }
         public Gender Gender { get; set; }
         public EstadoCivil EstadoCivil { get; set; }
-        public Person? Spouse { get; set; }
+        public Pessoa? Spouse { get; set; }
         public LogicalStatus LogicalStatus { get; set; }
         public PersonType PersonType { get; set; }
         public List<House> Houses { get; set; }

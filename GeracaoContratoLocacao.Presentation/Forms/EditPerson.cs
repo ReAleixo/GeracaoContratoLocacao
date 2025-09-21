@@ -10,7 +10,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     public partial class EditPerson : Form
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IPeopleController _peopleController;
+        private readonly IPessoaController _peopleController;
 
         private Guid _personId = default, _spouseId = default;
 
@@ -19,7 +19,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _peopleController = _serviceProvider.GetRequiredService<IPeopleController>();
+            _peopleController = _serviceProvider.GetRequiredService<IPessoaController>();
             _personId = personId;
         }
 
@@ -44,7 +44,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 return;
             }
 
-            PersonViewModel personViewModel = await _peopleController.GetPersonViewModelByPersonId(_personId);
+            PessoaViewModel personViewModel = await _peopleController.BuscarPessoaViaId(_personId);
 
             if (personViewModel.IsNullOrEmpty())
             {
@@ -69,7 +69,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 return;
             }
 
-            PersonViewModel personViewModel = new PersonViewModel
+            PessoaViewModel personViewModel = new PessoaViewModel
             {
                 Id = _personId == default ? Guid.NewGuid() : _personId,
                 Name = txtName.Text,
@@ -86,7 +86,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 if (personViewModel.IsValid()
                     && !EstadoCivil.PossuiConjuge.Any(e => e.Name.Equals(personViewModel.MaritalStatus)))
                 {
-                    await _peopleController.SavePerson(personViewModel);
+                    await _peopleController.CadastrarPessoa(personViewModel);
                     Close();
                     return;
                 }
@@ -100,7 +100,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             try
             {
                 personViewModel.SpouseId = _spouseId == default ? Guid.NewGuid() : _spouseId;
-                PersonViewModel spouseViewModel = new PersonViewModel
+                PessoaViewModel spouseViewModel = new PessoaViewModel
                 {
                     Id = personViewModel.SpouseId.Value,
                     Name = txtSpouseName.Text,
@@ -113,7 +113,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
                 if (spouseViewModel.IsValid())
                 {
-                    await _peopleController.SavePerson(personViewModel, spouseViewModel);
+                    await _peopleController.CadastrarPessoa(personViewModel, spouseViewModel);
                     Close();
                 }
             }
@@ -123,7 +123,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             }
         }
 
-        private async Task AlimentarCamposComViewModel(PersonViewModel personViewModel)
+        private async Task AlimentarCamposComViewModel(PessoaViewModel personViewModel)
         {
             txtName.Text = personViewModel.Name;
             txtDocument.Text = personViewModel.Document;
@@ -137,7 +137,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             if (personViewModel.SpouseId.HasValue
                 && personViewModel.SpouseId.Value != default)
             {
-                PersonViewModel SpouseViewModel = await _peopleController.GetPersonViewModelByPersonId(personViewModel.SpouseId.Value);
+                PessoaViewModel SpouseViewModel = await _peopleController.BuscarPessoaViaId(personViewModel.SpouseId.Value);
                 if (SpouseViewModel.IsNullOrEmpty())
                 {
                     MessageBox.Show("Cônjuge não encontrado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);

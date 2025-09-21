@@ -97,7 +97,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public async Task<IEnumerable<Person>> ObterLocadores()
+        public async Task<IEnumerable<Pessoa>> ObterLocadores()
         {
             throw new NotImplementedException();
         }
@@ -118,7 +118,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             return new House
             {
                 Id = viewModel.HouseId,
-                Owner = new Person
+                Owner = new Pessoa
                 {
                     Id = viewModel.IdProprietario
                 },

@@ -2,8 +2,8 @@
 {
     public class RentalContract
     {
-        public Person Lessor { get; set; }
-        public Person Lessee { get; set; }
+        public Pessoa Lessor { get; set; }
+        public Pessoa Lessee { get; set; }
         public House House { get; set; }
         public int MonthsRent { get; set; }
         public DateTime RentalStartDate { get; set; }

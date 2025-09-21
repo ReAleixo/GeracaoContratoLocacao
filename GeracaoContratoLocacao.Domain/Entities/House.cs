@@ -6,7 +6,7 @@ namespace GeracaoContratoLocacao.Domain.Entities
     public class House
     {
         public Guid Id { get; set; }
-        public Person Owner { get; set; }
+        public Pessoa Owner { get; set; }
         public Endereco Endereco { get; set; }
         public int NumeroComodos { get; set; }
         public decimal ValorAluguel { get; set; }

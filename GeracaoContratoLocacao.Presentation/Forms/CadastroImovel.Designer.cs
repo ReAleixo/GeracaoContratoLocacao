@@ -151,7 +151,7 @@
             // chkLocado
             // 
             chkLocado.AutoSize = true;
-            chkLocado.Location = new Point(303, 37);
+            chkLocado.Location = new Point(313, 39);
             chkLocado.Name = "chkLocado";
             chkLocado.Size = new Size(103, 19);
             chkLocado.TabIndex = 18;
@@ -162,7 +162,7 @@
             // 
             txtValorAluguel.Location = new Point(168, 37);
             txtValorAluguel.Name = "txtValorAluguel";
-            txtValorAluguel.Size = new Size(129, 23);
+            txtValorAluguel.Size = new Size(139, 23);
             txtValorAluguel.TabIndex = 17;
             // 
             // groupBox3

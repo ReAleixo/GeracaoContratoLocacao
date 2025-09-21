@@ -187,7 +187,7 @@
             rdbLessee.Size = new Size(88, 19);
             rdbLessee.TabIndex = 30;
             rdbLessee.TabStop = true;
-            rdbLessee.Text = "LOCATARIO";
+            rdbLessee.Text = "LOCATÁRIO";
             rdbLessee.UseVisualStyleBackColor = true;
             // 
             // rdbLessor

@@ -3,25 +3,25 @@ using GeracaoContratoLocacao.Domain.Enums;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Service.Interfaces;
-using Microsoft.VisualBasic;
+using System;
 
 namespace GeracaoContratoLocacao.Presentation.Controllers
 {
-    public class PeopleController : IPeopleController
+    public class PessoaController : IPessoaController
     {
-        private readonly IPeopleService _peopleService;
+        private readonly IPessoaService _pessoaService;
 
-        public PeopleController(IPeopleService peopleService)
+        public PessoaController(IPessoaService peopleService)
         {
-            _peopleService = peopleService;
+            _pessoaService = peopleService;
         }
 
-        public async Task<IEnumerable<PersonViewModel>> GetFilteredListOfAllPeopleViewModel(FiltersPersonViewModel filters)
+        public async Task<IEnumerable<PessoaViewModel>> BuscarPessoasPorFiltro(FiltrosPessoaViewModel filters)
         {
-            List<Person> people = (await _peopleService.GetFilteredListOfPeople(
+            List<Pessoa> people = (await _pessoaService.BuscarPessoasPorFiltro(
                                         filters.Name, filters.Document, filters.ShowLessee, filters.ShowLessor)).ToList();
 
-            return people.Select(person => new PersonViewModel
+            return people.Select(person => new PessoaViewModel
             {
                 Id = person.Id,
                 Name = person.Nome,
@@ -33,15 +33,15 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             });
         }
 
-        public async Task<PersonViewModel> GetLesseeOrLessorBySpouseId(Guid spouseId)
+        public async Task<PessoaViewModel> BuscarPessoaViaIdConjuge(Guid spouseId)
         {
             if (spouseId == default)
             {
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
 
-            Person person = await _peopleService.GetLesseeOrLessorBySpouseId(spouseId);
-            return new PersonViewModel
+            Pessoa person = await _pessoaService.BuscarPessoaViaIdConjuge(spouseId);
+            return new PessoaViewModel
             {
                 Id = person.Id,
                 Name = person.Nome,
@@ -55,20 +55,20 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public async Task<PersonViewModel> GetPersonViewModelByPersonId(Guid personId)
+        public async Task<PessoaViewModel> BuscarPessoaViaId(Guid personId)
         {
             if (personId == default)
             {
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
 
-            Person person = await _peopleService.GetPersonById(personId);
+            Pessoa person = await _pessoaService.BuscarPessoaViaId(personId);
             if (person == null)
             {
                 throw new KeyNotFoundException("Pessoa não encontrada.");
             }
 
-            return new PersonViewModel
+            return new PessoaViewModel
             {
                 Id = person.Id,
                 Name = person.Nome,
@@ -82,25 +82,25 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public async Task RemovePerson(Guid personId)
+        public async Task RemoverPessoa(Guid personId)
         {
             if (personId == default)
             {
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
 
-            Person person = await _peopleService.GetPersonById(personId);
-            await _peopleService.RemovePerson(person);
+            Pessoa person = await _pessoaService.BuscarPessoaViaId(personId);
+            await _pessoaService.RemoverPessoa(person);
         }
 
-        public async Task SavePerson(PersonViewModel personViewModel, PersonViewModel? spouseViewModel = null)
+        public async Task CadastrarPessoa(PessoaViewModel personViewModel, PessoaViewModel? spouseViewModel = null)
         {
             if (personViewModel.IsNullOrEmpty())
             {
                 throw new ArgumentNullException(nameof(personViewModel), "A pessoa não pode ser nula.");
             }
 
-            Person person = new Person
+            Pessoa person = new Pessoa
             {
                 Id = personViewModel.Id,
                 Nome = personViewModel.Name,
@@ -115,12 +115,12 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             if (spouseViewModel != null
                 && spouseViewModel.IsValid())
             {
-                Person spouse = new Person
+                Pessoa spouse = new Pessoa
                 {
                     Id = spouseViewModel.Id,
                     Nome = spouseViewModel.Name,
                     CPF = spouseViewModel.Document,
-                    RG = spouseViewModel.RG, 
+                    RG = spouseViewModel.RG,
                     DataNascimento = DateTime.Parse(spouseViewModel.BirthDate),
                     Gender = Gender.GetByName<Gender>(spouseViewModel.Gender),
                     PersonType = PersonType.GetByName<PersonType>(spouseViewModel.PersonType),
@@ -128,7 +128,24 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
 
                 person.Spouse = spouse;
             }
-            await _peopleService.SavePerson(person);
+            await _pessoaService.CadastrarPessoa(person);
+        }
+
+        public async Task<PessoaViewModel> BuscarUltimaPessoaCadastrada()
+        {
+            Pessoa pessoa = await _pessoaService.BuscarUltimaPessoaCadastrada();
+            return new PessoaViewModel
+            {
+                Id = pessoa.Id,
+                Name = pessoa.Nome,
+                Document = pessoa.CPF,
+                RG = pessoa.RG,
+                BirthDate = pessoa.DataNascimento.ToShortDateString(),
+                Gender = pessoa.Gender.Name,
+                PersonType = pessoa.PersonType.Name,
+                MaritalStatus = pessoa.EstadoCivil?.Name,
+                SpouseId = pessoa.Spouse?.Id ?? Guid.Empty,
+            };
         }
     }
 }

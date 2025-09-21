@@ -10,7 +10,7 @@ namespace GeracaoContratoLocacao.Service
         {
             services.AddSingleton<IGeracaoContratoService, GeracaoContratoService>();
             services.AddSingleton<IImovelService, ImovelService>();
-            services.AddSingleton<IPeopleService, PeopleService>();
+            services.AddSingleton<IPessoaService, PessoaService>();
 
             return services;
         }

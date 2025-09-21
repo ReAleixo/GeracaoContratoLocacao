@@ -287,9 +287,9 @@
             chkFiltroExibirLocados.Location = new Point(426, 15);
             chkFiltroExibirLocados.Name = "chkFiltroExibirLocados";
             chkFiltroExibirLocados.RightToLeft = RightToLeft.Yes;
-            chkFiltroExibirLocados.Size = new Size(163, 19);
+            chkFiltroExibirLocados.Size = new Size(164, 19);
             chkFiltroExibirLocados.TabIndex = 4;
-            chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADAS";
+            chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADOS";
             chkFiltroExibirLocados.UseVisualStyleBackColor = true;
             chkFiltroExibirLocados.CheckedChanged += FilterHousesGrid;
             // 

@@ -87,7 +87,7 @@
             cmdFormularioContrato.Name = "cmdFormularioContrato";
             cmdFormularioContrato.Size = new Size(221, 70);
             cmdFormularioContrato.Text = "PAINEL DE &GERAÇÃO DE CONTRATO";
-            cmdFormularioContrato.Click += cmdFormularioContrato_Click;
+            cmdFormularioContrato.Click += cmdGeradorContrato_Click;
             // 
             // Menu
             // 

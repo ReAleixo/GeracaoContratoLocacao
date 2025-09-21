@@ -9,7 +9,7 @@ namespace GeracaoContratoLocacao.Repository
         public static IServiceCollection RepositoryConfig(this IServiceCollection services)
         {
             services.AddSingleton<IHouseRepository, HouseRepository>();
-            services.AddSingleton<IPeopleRepository, PeopleRepository>();
+            services.AddSingleton<IPessoaRepository, PeopleRepository>();
 
             return services;
         }

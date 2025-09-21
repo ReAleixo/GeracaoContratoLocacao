@@ -9,15 +9,15 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     public partial class PeoplePanel : Form
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IPeopleController _peopleController;
+        private readonly IPessoaController _peopleController;
 
-        private FiltersPersonViewModel filtersPersonViewModel;
+        private FiltrosPessoaViewModel filtersPersonViewModel;
 
         public PeoplePanel(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _peopleController = _serviceProvider.GetRequiredService<IPeopleController>();
+            _peopleController = _serviceProvider.GetRequiredService<IPessoaController>();
         }
 
         private void cmdClose_Click(object sender, EventArgs e)
@@ -29,7 +29,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
         {
             try
             {
-                filtersPersonViewModel = new FiltersPersonViewModel(
+                filtersPersonViewModel = new FiltrosPessoaViewModel(
                     txtNameFilter.Text,
                     txtCPFFilter.Text,
                     chkShowLesseeFilter.Checked,
@@ -53,7 +53,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
                 if (dtgPeople.CurrentRow.Cells["Category"].Value.ToString().Equals(PersonType.Spouse.Name))
                 {
-                    PersonViewModel personViewModel = await _peopleController.GetLesseeOrLessorBySpouseId(personId);
+                    PessoaViewModel personViewModel = await _peopleController.BuscarPessoaViaIdConjuge(personId);
                     personId = personViewModel.Id;  
                 }
 
@@ -82,7 +82,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             try
             {
                 Guid personId = Guid.Parse(dtgPeople.CurrentRow.Cells["PersonId"].Value.ToString());
-                await _peopleController.RemovePerson(personId);
+                await _peopleController.RemoverPessoa(personId);
 
                 await SetDataGridViewDataSource();
                 cmdAlter.Visible = cmdRemove.Visible =
@@ -96,7 +96,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private async Task SetDataGridViewDataSource()
         {
-            List<PersonViewModel> peopleViewModel = (await _peopleController.GetFilteredListOfAllPeopleViewModel(filtersPersonViewModel)).ToList();
+            List<PessoaViewModel> peopleViewModel = (await _peopleController.BuscarPessoasPorFiltro(filtersPersonViewModel)).ToList();
 
             object[] SourceToGrid = peopleViewModel.Select(it => new
             {
