@@ -51,7 +51,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             {
                 Guid personId = Guid.Parse(dtgPeople.CurrentRow.Cells["PersonId"].Value.ToString());
 
-                if (dtgPeople.CurrentRow.Cells["Category"].Value.ToString().Equals(PersonType.Spouse.Name))
+                if (dtgPeople.CurrentRow.Cells["Category"].Value.ToString().Equals(TipoPessoa.Spouse.Name))
                 {
                     PessoaViewModel personViewModel = await _peopleController.BuscarPessoaViaIdConjuge(personId);
                     personId = personViewModel.Id;  

@@ -15,24 +15,41 @@ namespace GeracaoContratoLocacao.Presentation.Forms
         private Guid _personId = default, _spouseId = default;
 
         public CadastroPessoa(IServiceProvider serviceProvider,
-                          Guid personId = default)
+                              Guid personId = default,
+                              TipoPessoa? tipoPessoa = default)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
             _peopleController = _serviceProvider.GetRequiredService<IPessoaController>();
             _personId = personId;
+
+            if (tipoPessoa == default)
+            {
+                return;
+            }
+
+            if (tipoPessoa.Equals(TipoPessoa.Locador))
+            {
+                rdbLocador.Checked = true;
+            }
+            else if (tipoPessoa.Equals(TipoPessoa.Locatario))
+            {
+                rdbLocatario.Checked = true;
+            }
+
+            rdbLocador.Enabled = rdbLocatario.Enabled = false;
         }
 
-        private async void EditPerson_Load(object sender, EventArgs e)
+        private async void CadastroPessoa_Load(object sender, EventArgs e)
         {
-            cmbGender.DataSource = Gender.GetAllToFillComboBox();
+            cmbGender.DataSource = Gender.PreencherComboBox<Gender>();
             cmbGender.DisplayMember = Enumeration.DisplayMemberAttribute;
             cmbGender.ValueMember = Enumeration.ValueMemberAttribute;
-            cmbSpouseGender.DataSource = Gender.GetAllToFillComboBox();
+            cmbSpouseGender.DataSource = Gender.PreencherComboBox<Gender>();
             cmbSpouseGender.DisplayMember = Enumeration.DisplayMemberAttribute;
             cmbSpouseGender.ValueMember = Enumeration.ValueMemberAttribute;
 
-            cmbMaritalStatus.DataSource = EstadoCivil.GetAllToFillComboBox();
+            cmbMaritalStatus.DataSource = EstadoCivil.PreencherComboBox<EstadoCivil>();
             cmbMaritalStatus.DisplayMember = Enumeration.DisplayMemberAttribute;
             cmbMaritalStatus.ValueMember = Enumeration.ValueMemberAttribute;
 
@@ -63,7 +80,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private async void cmdSalvar_Click(object sender, EventArgs e)
         {
-            if (!rdbLessor.Checked && !rdbLessee.Checked)
+            if (!rdbLocador.Checked && !rdbLocatario.Checked)
             {
                 MessageBox.Show($"Erro ao salvar:\nNão foi informado se essa pessoa é locador ou locatário.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -77,7 +94,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 RG = txtRG.Text,
                 BirthDate = txtBirthDate.Text,
                 Gender = cmbGender.Text,
-                PersonType = rdbLessor.Checked ? PersonType.Lessor.Name : PersonType.Lessee.Name,
+                PersonType = rdbLocador.Checked ? TipoPessoa.Locador.Name : TipoPessoa.Locatario.Name,
                 MaritalStatus = cmbMaritalStatus.Text
             };
 
@@ -108,7 +125,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                     RG = txtSpouseRG.Text,
                     BirthDate = txtSpouseBirthDate.Text,
                     Gender = cmbSpouseGender.Text,
-                    PersonType = PersonType.Spouse.Name,
+                    PersonType = TipoPessoa.Spouse.Name,
                 };
 
                 if (spouseViewModel.IsValid())
@@ -131,8 +148,8 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             txtBirthDate.Text = personViewModel.BirthDate;
             cmbGender.Text = personViewModel.Gender;
             cmbMaritalStatus.Text = personViewModel.MaritalStatus;
-            rdbLessor.Checked = personViewModel.PersonType.Equals("Locador");
-            rdbLessee.Checked = !rdbLessor.Checked;
+            rdbLocador.Checked = personViewModel.PersonType.Equals("Locador");
+            rdbLocatario.Checked = !rdbLocador.Checked;
 
             if (personViewModel.SpouseId.HasValue
                 && personViewModel.SpouseId.Value != default)

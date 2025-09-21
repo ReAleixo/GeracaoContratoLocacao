@@ -70,7 +70,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
 
-            Pessoa person = await _pessoaService.BuscarPessoaViaId(personId);
+            Pessoa person = await _pessoaService.BuscarPessoaPorId(personId);
             if (person == null)
             {
                 throw new KeyNotFoundException("Pessoa não encontrada.");
@@ -97,7 +97,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID da pessoa não pode ser o valor padrão.");
             }
 
-            Pessoa person = await _pessoaService.BuscarPessoaViaId(personId);
+            Pessoa person = await _pessoaService.BuscarPessoaPorId(personId);
             await _pessoaService.RemoverPessoa(person);
         }
 
@@ -117,7 +117,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 DataNascimento = DateTime.Parse(personViewModel.BirthDate),
                 Gender = Gender.GetByName<Gender>(personViewModel.Gender),
                 EstadoCivil = EstadoCivil.GetByName<EstadoCivil>(personViewModel.MaritalStatus),
-                PersonType = PersonType.GetByName<PersonType>(personViewModel.PersonType),
+                PersonType = TipoPessoa.GetByName<TipoPessoa>(personViewModel.PersonType),
             };
 
             if (spouseViewModel != null
@@ -131,12 +131,28 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                     RG = spouseViewModel.RG,
                     DataNascimento = DateTime.Parse(spouseViewModel.BirthDate),
                     Gender = Gender.GetByName<Gender>(spouseViewModel.Gender),
-                    PersonType = PersonType.GetByName<PersonType>(spouseViewModel.PersonType),
+                    PersonType = TipoPessoa.GetByName<TipoPessoa>(spouseViewModel.PersonType),
                 };
 
                 person.Spouse = spouse;
             }
             await _pessoaService.CadastrarPessoa(person);
+        }
+
+        public async Task<IEnumerable<PessoaViewModel>> BuscarLocadores()
+        {
+            return new List<PessoaViewModel>
+            {
+                new PessoaViewModel()
+            }.Concat(await BuscarPessoasPorFiltro(new FiltrosPessoaViewModel(showLessor: true)));
+        }
+
+        public async Task<IEnumerable<PessoaViewModel>> BuscarLocatarios()
+        {
+            return new List<PessoaViewModel>
+            {
+                new PessoaViewModel()
+            }.Concat(await BuscarPessoasPorFiltro(new FiltrosPessoaViewModel(showLessee: true)));
         }
     }
 }

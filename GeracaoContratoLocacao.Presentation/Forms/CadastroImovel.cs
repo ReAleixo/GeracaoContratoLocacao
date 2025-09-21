@@ -9,7 +9,8 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     public partial class CadastroImovel : Form
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IImovelController _controller;
+        private readonly IImovelController _imovelController;
+        private readonly IPessoaController _pessoaController;
         private readonly Guid _idImovel;
         private readonly Guid _idProprietario;
         private ImovelViewModel viewModel;
@@ -20,16 +21,17 @@ namespace GeracaoContratoLocacao.Presentation.Forms
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _controller = _serviceProvider.GetRequiredService<IImovelController>();
+            _imovelController = _serviceProvider.GetRequiredService<IImovelController>();
+            _pessoaController = _serviceProvider.GetRequiredService<IPessoaController>();
             _idImovel = idImovel; 
             _idProprietario = idProprietario;
         }
 
         private async void CadastroImovel_Load(object sender, EventArgs e)
         {
-            cmbLocadorProprietario.DataSource = await _controller.ObterLocadores();
-            cmbLocadorProprietario.DisplayMember = Enumeration.DisplayMemberAttribute;
-            cmbLocadorProprietario.ValueMember = Enumeration.ValueMemberAttribute;
+            cmbLocadorProprietario.DataSource = (await _pessoaController.BuscarLocadores()).ToList();
+            cmbLocadorProprietario.DisplayMember = nameof(PessoaViewModel.Name);
+            cmbLocadorProprietario.ValueMember = nameof(PessoaViewModel.Id);
 
             if (!_idProprietario.Equals(default))
             {
@@ -43,7 +45,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
                 return;
             }
 
-            viewModel = await _controller.GetHouseViewModelByHouseId(_idImovel);
+            viewModel = await _imovelController.GetHouseViewModelByHouseId(_idImovel);
             AlimentarCamposComViewModel();
         }
 
@@ -52,8 +54,17 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             try
             {
                 viewModel = AtualizaViewModel();
-                await _controller.SaveChanges(viewModel);
-                MessageBox.Show("Imóvel alterado com sucesso.", "INFORMATIVO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (viewModel.Id.Equals(default))
+                {
+                    viewModel.Id = await _imovelController.CadastrarNovoImovel(viewModel);
+                    MessageBox.Show("Imóvel cadastrado com sucesso.", "Informativo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    await _imovelController.SaveChanges(viewModel);
+                    MessageBox.Show("Imóvel alterado com sucesso.", "Informativo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
                 Close();
             }
             catch (Exception ex)

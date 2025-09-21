@@ -68,7 +68,7 @@ namespace GeracaoContratoLocacao.Presentation.ViewModels
                 throw new ArgumentException("Tipo de pessoa não informado.");
             }
 
-            if (PersonType != Domain.Enums.PersonType.Spouse.Name
+            if (PersonType != Domain.Enums.TipoPessoa.Spouse.Name
                 && string.IsNullOrEmpty(MaritalStatus))
             {
                 throw new ArgumentException("Estado civil não informado.");

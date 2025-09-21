@@ -38,8 +38,8 @@
             cmbGender = new ComboBox();
             label11 = new Label();
             picDocument = new PictureBox();
-            rdbLessee = new RadioButton();
-            rdbLessor = new RadioButton();
+            rdbLocatario = new RadioButton();
+            rdbLocador = new RadioButton();
             cmdAttachDocument = new Button();
             cmbMaritalStatus = new ComboBox();
             label5 = new Label();
@@ -132,8 +132,8 @@
             groupBox2.Controls.Add(cmbGender);
             groupBox2.Controls.Add(label11);
             groupBox2.Controls.Add(picDocument);
-            groupBox2.Controls.Add(rdbLessee);
-            groupBox2.Controls.Add(rdbLessor);
+            groupBox2.Controls.Add(rdbLocatario);
+            groupBox2.Controls.Add(rdbLocador);
             groupBox2.Controls.Add(cmdAttachDocument);
             groupBox2.Controls.Add(cmbMaritalStatus);
             groupBox2.Controls.Add(label5);
@@ -180,27 +180,27 @@
             // 
             // rdbLessee
             // 
-            rdbLessee.AutoSize = true;
-            rdbLessee.Location = new Point(253, 17);
-            rdbLessee.Name = "rdbLessee";
-            rdbLessee.RightToLeft = RightToLeft.Yes;
-            rdbLessee.Size = new Size(88, 19);
-            rdbLessee.TabIndex = 30;
-            rdbLessee.TabStop = true;
-            rdbLessee.Text = "LOCATÁRIO";
-            rdbLessee.UseVisualStyleBackColor = true;
+            rdbLocatario.AutoSize = true;
+            rdbLocatario.Location = new Point(253, 17);
+            rdbLocatario.Name = "rdbLessee";
+            rdbLocatario.RightToLeft = RightToLeft.Yes;
+            rdbLocatario.Size = new Size(88, 19);
+            rdbLocatario.TabIndex = 30;
+            rdbLocatario.TabStop = true;
+            rdbLocatario.Text = "LOCATÁRIO";
+            rdbLocatario.UseVisualStyleBackColor = true;
             // 
             // rdbLessor
             // 
-            rdbLessor.AutoSize = true;
-            rdbLessor.Location = new Point(167, 17);
-            rdbLessor.Name = "rdbLessor";
-            rdbLessor.RightToLeft = RightToLeft.Yes;
-            rdbLessor.Size = new Size(80, 19);
-            rdbLessor.TabIndex = 29;
-            rdbLessor.TabStop = true;
-            rdbLessor.Text = "LOCADOR";
-            rdbLessor.UseVisualStyleBackColor = true;
+            rdbLocador.AutoSize = true;
+            rdbLocador.Location = new Point(167, 17);
+            rdbLocador.Name = "rdbLessor";
+            rdbLocador.RightToLeft = RightToLeft.Yes;
+            rdbLocador.Size = new Size(80, 19);
+            rdbLocador.TabIndex = 29;
+            rdbLocador.TabStop = true;
+            rdbLocador.Text = "LOCADOR";
+            rdbLocador.UseVisualStyleBackColor = true;
             // 
             // cmdAttachDocument
             // 
@@ -447,7 +447,7 @@
             Name = "EditPerson";
             ShowIcon = false;
             Text = "EDIT OR CREATE PERSON";
-            Load += EditPerson_Load;
+            Load += CadastroPessoa_Load;
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             tabPessoas.ResumeLayout(false);
@@ -483,8 +483,8 @@
         private Label label5;
         private ComboBox cmbMaritalStatus;
         private Button cmdAttachDocument;
-        private RadioButton rdbLessor;
-        private RadioButton rdbLessee;
+        private RadioButton rdbLocador;
+        private RadioButton rdbLocatario;
         private PictureBox picDocument;
         private GroupBox groupBox1;
         private PictureBox picSpouseDocument;

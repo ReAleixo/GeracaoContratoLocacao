@@ -1,16 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace GeracaoContratoLocacao.Domain.Enums.Base
+﻿namespace GeracaoContratoLocacao.Domain.Enums.Base
 {
     public class Enumeration
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public static string ValueMemberAttribute = "Id";
-        public static string DisplayMemberAttribute = "Name";
-
-        public static Enumeration Empty = new(default, default);
+        public static readonly string ValueMemberAttribute = "Id";
+        public static readonly string DisplayMemberAttribute = "Name";
 
         protected Enumeration(int id, string name)
         {
@@ -33,6 +29,11 @@ namespace GeracaoContratoLocacao.Domain.Enums.Base
         public static T GetByName<T>(string name) where T : Enumeration
         {
             return GetAll<T>().FirstOrDefault(e => e.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public static List<T> PreencherComboBox<T>() where T : Enumeration
+        {
+            return new List<T> { (T)Activator.CreateInstance(typeof(T), new object[] {default, default}) }.Concat(GetAll<T>()).ToList();
         }
     }
 }

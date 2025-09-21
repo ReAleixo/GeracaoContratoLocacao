@@ -9,5 +9,7 @@ namespace GeracaoContratoLocacao.Presentation.Interfaces
         Task RemoverPessoa(Guid idPessoa);
         Task CadastrarPessoa(PessoaViewModel pessoaViewModel, PessoaViewModel? conjugViewModel = null);
         Task<PessoaViewModel> BuscarPessoaViaIdConjuge(Guid idConjuge);
+        Task<IEnumerable<PessoaViewModel>> BuscarLocadores();
+        Task<IEnumerable<PessoaViewModel>> BuscarLocatarios();
     }
 }

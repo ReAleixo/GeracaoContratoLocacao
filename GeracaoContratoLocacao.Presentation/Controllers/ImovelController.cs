@@ -1,25 +1,49 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
+using GeracaoContratoLocacao.Domain.ValueObjects;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Service.Interfaces;
-using GeracaoContratoLocacao.Domain.ValueObjects;
-using GeracaoContratoLocacao.Domain.Enums;
 
 namespace GeracaoContratoLocacao.Presentation.Controllers
 {
     public class ImovelController : IImovelController
     {
-        private readonly IImovelService _houseService;
+        private readonly IImovelService _imovelService;
 
         public ImovelController(IImovelService imovelService)
         {
-            _houseService = imovelService;
+            _imovelService = imovelService;
+        }
+
+        public async Task<IEnumerable<ImovelViewModel>> BuscarImoveisPorProprietario(Guid idProprietario)
+        {
+            if (idProprietario == default)
+            {
+                throw new ArgumentException("Não foi informado o proprietário.");
+            }
+            IEnumerable<Imovel> imoveis = await _imovelService.BuscarImoveisPorProprietario(idProprietario);
+            return imoveis.Select(imovel => new ImovelViewModel
+            {
+                Id = imovel.Id,
+                IdProprietario = imovel.Proprietario.Id,
+                NomeProprietario = imovel.Proprietario.Nome,
+                NumeroComodos = imovel.NumeroComodos,
+                ValorAluguel = imovel.ValorAluguel,
+                ImovelLocado = imovel.Locado,
+                Rua = imovel.Endereco.Rua,
+                Numero = imovel.Endereco.Numero,
+                Complemento = imovel.Endereco.Complemento,
+                Bairro = imovel.Endereco.Bairro,
+                Cidade = imovel.Endereco.Cidade,
+                Estado = imovel.Endereco.Estado,
+                CEP = imovel.Endereco.CEP
+            });
         }
 
         public async Task<Guid> CadastrarNovoImovel(ImovelViewModel viewModel)
         {
-            House house = TransformaViewModelEmImovel(viewModel);
-            return await _houseService.CadastrarNovoImovel(house);
+            Imovel house = TransformaViewModelEmImovel(viewModel);
+            return await _imovelService.CadastrarNovoImovel(house);
         }
 
         public async Task DeleteHouse(Guid houseId)
@@ -29,13 +53,13 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(houseId));
             }
 
-            House house = await _houseService.GetHouseById(houseId);
-            await _houseService.DeleteHouse(house);
+            Imovel house = await _imovelService.BuscarImovelPorId(houseId);
+            await _imovelService.RemoverImovel(house);
         }
 
         public async Task<IEnumerable<ImovelViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
         {
-            List<House> houses = (await _houseService.GetAllHouses()).ToList();
+            List<Imovel> houses = (await _imovelService.BuscarTodosImoveis()).ToList();
 
             if (houses == null || !houses.Any())
             {
@@ -45,8 +69,8 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             var housesViewModelList = houses.Select(h => new ImovelViewModel
             {
                 Id = h.Id,
-                IdProprietario = h.Owner.Id,
-                NomeProprietario = h.Owner.Nome,
+                IdProprietario = h.Proprietario.Id,
+                NomeProprietario = h.Proprietario.Nome,
                 NumeroComodos = h.NumeroComodos,
                 ValorAluguel = h.ValorAluguel,
                 ImovelLocado = h.Locado,
@@ -79,7 +103,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(houseId));
             }
 
-            House house = await _houseService.GetHouseById(houseId);
+            Imovel house = await _imovelService.BuscarImovelPorId(houseId);
 
             return new ImovelViewModel
             {
@@ -97,28 +121,23 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public async Task<IEnumerable<Pessoa>> ObterLocadores()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task SaveChanges(ImovelViewModel viewModel)
         {
-            House imovel = TransformaViewModelEmImovel(viewModel);
-            await _houseService.SaveChanges(imovel);
+            Imovel imovel = TransformaViewModelEmImovel(viewModel);
+            await _imovelService.SaveChanges(imovel);
         }
 
-        private House TransformaViewModelEmImovel(ImovelViewModel viewModel)
+        private Imovel TransformaViewModelEmImovel(ImovelViewModel viewModel)
         {
             if (viewModel.IsNullOrEmpty())
             {
                 throw new ArgumentNullException("A ViewModel não possui nenhuma informação.");
             }
 
-            return new House
+            return new Imovel
             {
                 Id = viewModel.Id,
-                Owner = new Pessoa
+                Proprietario = new Pessoa
                 {
                     Id = viewModel.IdProprietario
                 },
@@ -135,7 +154,6 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                     Estado = viewModel.Estado,
                     CEP = viewModel.CEP
                 },
-                LogicalStatus = LogicalStatus.Active,
             };
         }
     }

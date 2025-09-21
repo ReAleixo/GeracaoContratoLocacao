@@ -12,21 +12,18 @@ namespace GeracaoContratoLocacao.Domain.Entities
         public Gender Gender { get; set; }
         public EstadoCivil EstadoCivil { get; set; }
         public Pessoa? Spouse { get; set; }
-        public LogicalStatus LogicalStatus { get; set; }
-        public PersonType PersonType { get; set; }
-        public List<House> Houses { get; set; }
+        public TipoPessoa PersonType { get; set; }
+        public List<Imovel> Houses { get; set; }
 
         public bool IsNullOrEmpty()
         {
-            return this == null
-                || (Id == default
+            return Id == default
                 && string.IsNullOrEmpty(Nome)
                 && string.IsNullOrEmpty(CPF)
                 && string.IsNullOrEmpty(RG)
                 && DataNascimento == default
                 && Gender == default
-                && EstadoCivil == null
-                && LogicalStatus == null);
+                && EstadoCivil == null;
         }
     }
 }

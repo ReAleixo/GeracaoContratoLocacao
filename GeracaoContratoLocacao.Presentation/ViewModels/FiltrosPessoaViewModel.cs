@@ -32,16 +32,7 @@ namespace GeracaoContratoLocacao.Presentation.ViewModels
             {
                 throw new ArgumentException("Pelo menos um filtro deve ser declarado.");
             }
-            if ((ShowLessee == null || !ShowLessee.Value)
-                && (ShowLessor == null || !ShowLessor.Value))
-            {
-                throw new ArgumentException("Pelo menos um tipo de pessoa deve ser selecionado.");
-            }
-            if (string.IsNullOrEmpty(Name) 
-                && string.IsNullOrEmpty(Document))
-            {
-                throw new ArgumentException("Pelo menos um filtro de nome ou documento deve ser declarado.");
-            }
+
             if (!string.IsNullOrEmpty(Document))
             {
                 Document = Formatacoes.FormatarCPF(Document);

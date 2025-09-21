@@ -21,10 +21,10 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 CPF = "12345678901",
                 RG = "12345678",
                 DataNascimento = new DateTime(1990, 1, 1),
+                Gender = Gender.Male,
                 EstadoCivil = EstadoCivil.Solteiro,
-                LogicalStatus = LogicalStatus.Active,
-                PersonType = PersonType.Lessor,
-                Houses = new List<House>()
+                PersonType = TipoPessoa.Locador,
+                Houses = new List<Imovel>()
             });
             peopleDB.Add(new Pessoa
             {
@@ -33,10 +33,10 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 CPF = "006.102.760-00",
                 RG = "12345678",
                 DataNascimento = new DateTime(1976, 11, 7),
+                Gender = Gender.Male,
                 EstadoCivil = EstadoCivil.UniaoEstavel,
-                LogicalStatus = LogicalStatus.Active,
-                PersonType = PersonType.Lessor,
-                Houses = new List<House>()
+                PersonType = TipoPessoa.Locador,
+                Houses = new List<Imovel>()
             });
             peopleDB.Add(new Pessoa
             {
@@ -47,8 +47,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 Gender = Gender.Female,
                 DataNascimento = new DateTime(1985, 5, 15),
                 EstadoCivil = EstadoCivil.Casado,
-                LogicalStatus = LogicalStatus.Active,
-                PersonType = PersonType.Lessee,
+                PersonType = TipoPessoa.Locatario,
             });
             peopleDB.Add(new Pessoa
             {
@@ -57,15 +56,15 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 CPF = "41522476067",
                 RG = "87654321",
                 DataNascimento = new DateTime(2001, 2, 18),
+                Gender = Gender.Male,
                 EstadoCivil = EstadoCivil.Casado,
-                LogicalStatus = LogicalStatus.Active,
-                PersonType = PersonType.Lessee,
+                PersonType = TipoPessoa.Locatario,
             });
         }
 
         public async Task<IEnumerable<Pessoa>> BuscarPessoaPorFiltro(FiltroPessoas filtro)
         {
-            List<Pessoa> filteredPeople = peopleDB.Where(p => p.LogicalStatus == LogicalStatus.Active).ToList();
+            List<Pessoa> filteredPeople = peopleDB.ToList();
             filteredPeople.AddRange(peopleDB.Where(p => p.Spouse != null).Select(p => p.Spouse));
             if (!string.IsNullOrEmpty(filtro.Nome))
             {
@@ -79,23 +78,23 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                 && (!filtro.ExibirLocatario.HasValue
                     || (filtro.ExibirLocatario.HasValue && !filtro.ExibirLocatario.Value)))
             {
-                filteredPeople = filteredPeople.Where(p => p.PersonType == PersonType.Lessor).ToList();
+                filteredPeople = filteredPeople.Where(p => p.PersonType == TipoPessoa.Locador).ToList();
             }
             else if (filtro.ExibirLocatario.HasValue && filtro.ExibirLocatario.Value
                      && (!filtro.ExibirLocador.HasValue
                          || (filtro.ExibirLocador.HasValue && !filtro.ExibirLocador.Value)))
             {
-                filteredPeople = filteredPeople.Where(p => p.PersonType == PersonType.Lessee).ToList();
+                filteredPeople = filteredPeople.Where(p => p.PersonType == TipoPessoa.Locatario).ToList();
             }
             return filteredPeople;
         }
 
         public async Task<Pessoa> BuscarPessoaViaId(Guid personId)
         {
-            Pessoa person = peopleDB.FirstOrDefault(p => p.Id == personId && p.LogicalStatus == LogicalStatus.Active);
+            Pessoa person = peopleDB.FirstOrDefault(p => p.Id == personId);
             if (person == null || person.IsNullOrEmpty())
             {
-                person = peopleDB.FirstOrDefault(p => p.Spouse?.Id == personId && p.LogicalStatus == LogicalStatus.Active);
+                person = peopleDB.FirstOrDefault(p => p.Spouse?.Id == personId);
                 if (person != null)
                 {
                     return person.Spouse;
@@ -112,7 +111,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             {
                 throw new KeyNotFoundException($"Person with ID {person.Id} not found.");
             }
-            existingPerson.LogicalStatus = LogicalStatus.Inactive;
+            peopleDB.Remove(existingPerson);
         }
 
         public Task CadastrarPessoa(Pessoa person)
@@ -129,7 +128,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
 
         public async Task<Pessoa> BuscarPessoaViaIdConjuge(Guid spouseId)
         {
-            return peopleDB.FirstOrDefault(p => p.Spouse?.Id == spouseId && p.LogicalStatus == LogicalStatus.Active);
+            return peopleDB.FirstOrDefault(p => p.Spouse?.Id == spouseId);
         }
     }
 }

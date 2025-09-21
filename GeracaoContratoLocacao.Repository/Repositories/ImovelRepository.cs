@@ -5,30 +5,20 @@ using GeracaoContratoLocacao.Repository.DTOs;
 using GeracaoContratoLocacao.Repository.Interfaces;
 using GeracaoContratoLocacao.Domain.ValueObjects;
 using System.Data;
+using System.Globalization;
 
 namespace GeracaoContratoLocacao.Repository.Repositories
 {
-    public class HouseRepository : RepositoryBase<ImoveisDTO>, IHouseRepository
+    public class ImovelRepository : RepositoryBase<ImoveisDTO>, IImovelRepository
     {
-        private readonly IDbConnection _dbConnection;
+        List<Imovel> AllHouses = new List<Imovel>();
 
-        public HouseRepository()
+        public ImovelRepository()
         {
-        }
-
-        public Task<Guid> CadastrarNovoImovel(House imovel)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<House> GetAllHouses()
-        {
-            List<House> AllHouses = new List<House>();
-
-            House house1 = new House()
+            Imovel house1 = new Imovel()
             {
                 Id = Guid.NewGuid(),
-                Owner = new Pessoa
+                Proprietario = new Pessoa
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Mayck Henrique da Silva",
@@ -36,8 +26,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     RG = "12.123.123-X",
                     DataNascimento = new DateTime(2001, 10, 15),
                     EstadoCivil = EstadoCivil.Casado,
-                    LogicalStatus = LogicalStatus.Active,
-                    Houses = new List<House>()
+                    Houses = new List<Imovel>()
                 },
                 Endereco = new Endereco
                 {
@@ -50,16 +39,15 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     CEP = "09260-680"
                 },
                 NumeroComodos = 5,
-                LogicalStatus = LogicalStatus.Active,
                 ValorAluguel = 2300,
                 Locado = false
             };
             AllHouses.Add(house1);
 
-            House house2 = new House()
+            Imovel house2 = new Imovel()
             {
                 Id = Guid.NewGuid(),
-                Owner = new Pessoa
+                Proprietario = new Pessoa
                 {
                     Id = Guid.NewGuid(),
                     Nome = "Mateus Henrique da Silva",
@@ -67,8 +55,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     RG = "12.123.123-3",
                     DataNascimento = new DateTime(2000, 04, 25),
                     EstadoCivil = EstadoCivil.Viuvo,
-                    LogicalStatus = LogicalStatus.Active,
-                    Houses = new List<House>()
+                    Houses = new List<Imovel>()
                 },
                 Endereco = new Endereco
                 {
@@ -81,22 +68,41 @@ namespace GeracaoContratoLocacao.Repository.Repositories
                     CEP = "09260-000"
                 },
                 NumeroComodos = 4,
-                LogicalStatus = LogicalStatus.Active,
                 ValorAluguel = 1600,
                 Locado = true
             };
             AllHouses.Add(house2);
+        }
+
+        public async Task<Guid> CadastrarNovoImovel(Imovel imovel)
+        {
+            imovel.Id = Guid.NewGuid();
+            AllHouses.Add(imovel);
+            return imovel.Id;
+        }
+
+        public IEnumerable<Imovel> BuscarTodosImoveis()
+        {
             return AllHouses.AsEnumerable();
         }
 
-        public Task<House> ObterImovelViaId(Guid idImovel)
+        public async Task<Imovel> BuscarImovelPorId(Guid idImovel)
+        {
+            return AllHouses.Where(imovel => imovel.Id.Equals(idImovel)).FirstOrDefault();
+        }
+
+        public Task SalvarAlteracoes(Imovel imovel)
         {
             throw new NotImplementedException();
         }
 
-        public Task SalvarAlteracoes(House imovel)
+        public async Task<IEnumerable<Imovel>> BuscarImoveisPorProprietario(Guid idProprietario)
         {
-            throw new NotImplementedException();
+            if (idProprietario == default)
+            {
+                throw new ArgumentException("Não foi informado o proprietário.");
+            }
+            return AllHouses.Where(house => house.Proprietario.Id == idProprietario).AsEnumerable();
         }
     }
 }

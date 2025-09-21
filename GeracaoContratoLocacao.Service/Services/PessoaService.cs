@@ -28,7 +28,7 @@ namespace GeracaoContratoLocacao.Service.Services
             return await _peopleRepository.BuscarPessoaViaIdConjuge(spouseId);
         }
 
-        public async Task<Pessoa> BuscarPessoaViaId(Guid personId)
+        public async Task<Pessoa> BuscarPessoaPorId(Guid personId)
         {
             if (personId == default)
             {
@@ -81,15 +81,12 @@ namespace GeracaoContratoLocacao.Service.Services
                         RG = person.Spouse.RG,
                         DataNascimento = person.Spouse.DataNascimento,
                         Gender = person.Spouse.Gender,
-                        LogicalStatus = LogicalStatus.Active,
-                        PersonType = PersonType.Spouse
+                        PersonType = TipoPessoa.Spouse
                     };
                 }
                 await _peopleRepository.AtualizarPessoa(existingPerson);
                 return;
             }
-
-            person.LogicalStatus = LogicalStatus.Active;
 
             if (person.Spouse != null
                 && !person.Spouse.IsNullOrEmpty())
@@ -102,8 +99,7 @@ namespace GeracaoContratoLocacao.Service.Services
                     RG = person.Spouse.RG,
                     DataNascimento = person.Spouse.DataNascimento,
                     Gender = person.Spouse.Gender,
-                    LogicalStatus = LogicalStatus.Active,
-                    PersonType = PersonType.Spouse
+                    PersonType = TipoPessoa.Spouse
                 };
             }
 

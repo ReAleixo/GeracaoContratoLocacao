@@ -2,8 +2,8 @@
 
 namespace GeracaoContratoLocacao.Presentation.Interfaces
 {
-    public interface IFormularioContratoController
+    public interface IContratoController
     {
-        void GerarContrato(ContratoViewModel contratoViewModel);
+        Task GerarContrato(ContratoViewModel contratoViewModel);
     }
 }

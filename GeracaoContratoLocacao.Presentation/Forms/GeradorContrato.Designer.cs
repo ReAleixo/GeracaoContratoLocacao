@@ -78,6 +78,7 @@
             cmdGerar.Size = new Size(70, 70);
             cmdGerar.Text = "&GERAR";
             cmdGerar.TextImageRelation = TextImageRelation.ImageAboveText;
+            cmdGerar.Click += cmdGerar_Click;
             // 
             // cmdCancelar
             // 
