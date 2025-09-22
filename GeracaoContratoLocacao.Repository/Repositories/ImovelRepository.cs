@@ -1,11 +1,10 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
 using GeracaoContratoLocacao.Domain.Enums;
+using GeracaoContratoLocacao.Domain.ValueObjects;
 using GeracaoContratoLocacao.Repository.Base.Repository;
 using GeracaoContratoLocacao.Repository.DTOs;
 using GeracaoContratoLocacao.Repository.Interfaces;
-using GeracaoContratoLocacao.Domain.ValueObjects;
 using System.Data;
-using System.Globalization;
 
 namespace GeracaoContratoLocacao.Repository.Repositories
 {
@@ -88,7 +87,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
 
         public async Task<Imovel> BuscarImovelPorId(Guid idImovel)
         {
-            return AllHouses.Where(imovel => imovel.Id.Equals(idImovel)).FirstOrDefault();
+            return AllHouses.FirstOrDefault(imovel => imovel.Id.Equals(idImovel));
         }
 
         public Task SalvarAlteracoes(Imovel imovel)
@@ -98,11 +97,13 @@ namespace GeracaoContratoLocacao.Repository.Repositories
 
         public async Task<IEnumerable<Imovel>> BuscarImoveisPorProprietario(Guid idProprietario)
         {
-            if (idProprietario == default)
-            {
-                throw new ArgumentException("Não foi informado o proprietário.");
-            }
             return AllHouses.Where(house => house.Proprietario.Id == idProprietario).AsEnumerable();
+        }
+
+        public async Task RemoverImovel(Guid idImovel)
+        {
+            Imovel imovel = AllHouses.FirstOrDefault(imovel => imovel.Id.Equals(idImovel));
+            AllHouses.Remove(imovel);
         }
     }
 }

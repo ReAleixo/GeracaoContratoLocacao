@@ -7,7 +7,7 @@ namespace GeracaoContratoLocacao.Repository.Interfaces
 {
     public interface IPessoaRepository : IRepositoryBase<PessoaDTO>
     {
-        Task<IEnumerable<Pessoa>> BuscarPessoaPorFiltro(FiltroPessoas filtro);
+        Task<IEnumerable<Pessoa>> BuscarPessoasPorFiltro(FiltroPessoas filtro);
         Task<Pessoa> BuscarPessoaViaId(Guid pessoaId);
         Task RemoverPessoa(Pessoa pessoa);
         Task CadastrarPessoa(Pessoa pessoa);

@@ -11,5 +11,6 @@ namespace GeracaoContratoLocacao.Repository.Interfaces
         Task SalvarAlteracoes(Imovel imovel);
         IEnumerable<Imovel> BuscarTodosImoveis();
         Task<IEnumerable<Imovel>> BuscarImoveisPorProprietario(Guid idProprietario);
+        Task RemoverImovel(Guid idImovel);
     }
 }

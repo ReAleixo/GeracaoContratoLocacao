@@ -53,8 +53,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(houseId));
             }
 
-            Imovel house = await _imovelService.BuscarImovelPorId(houseId);
-            await _imovelService.RemoverImovel(house);
+            await _imovelService.RemoverImovel(houseId);
         }
 
         public async Task<IEnumerable<ImovelViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
@@ -124,7 +123,7 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
         public async Task SaveChanges(ImovelViewModel viewModel)
         {
             Imovel imovel = TransformaViewModelEmImovel(viewModel);
-            await _imovelService.SaveChanges(imovel);
+            await _imovelService.AlterarImovel(imovel);
         }
 
         private Imovel TransformaViewModelEmImovel(ImovelViewModel viewModel)

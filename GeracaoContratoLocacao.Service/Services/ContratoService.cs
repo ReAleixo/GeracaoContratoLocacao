@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace GeracaoContratoLocacao.Service.Services
 {
-    public class GeracaoContratoService : IContratoService
+    public class ContratoService : IContratoService
     {
         public void GerarContratoLocacao(Contrato contratoLocacao, string pathDestino)
         {

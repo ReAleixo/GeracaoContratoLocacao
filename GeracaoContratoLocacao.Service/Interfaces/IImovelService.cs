@@ -4,8 +4,8 @@ namespace GeracaoContratoLocacao.Service.Interfaces
 {
     public interface IImovelService
     {
-        Task SaveChanges(Imovel imovel);
-        Task RemoverImovel(Imovel imovel);
+        Task AlterarImovel(Imovel imovel);
+        Task RemoverImovel(Guid idImovel);
         Task<Guid> CadastrarNovoImovel(Imovel imovel);
         Task<Imovel> BuscarImovelPorId(Guid idImovel);
         Task<IEnumerable<Imovel>> BuscarTodosImoveis();

@@ -62,7 +62,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             });
         }
 
-        public async Task<IEnumerable<Pessoa>> BuscarPessoaPorFiltro(FiltroPessoas filtro)
+        public async Task<IEnumerable<Pessoa>> BuscarPessoasPorFiltro(FiltroPessoas filtro)
         {
             List<Pessoa> filteredPeople = peopleDB.ToList();
             filteredPeople.AddRange(peopleDB.Where(p => p.Spouse != null).Select(p => p.Spouse));
@@ -107,10 +107,6 @@ namespace GeracaoContratoLocacao.Repository.Repositories
         public async Task RemoverPessoa(Pessoa person)
         {
             Pessoa existingPerson = peopleDB.FirstOrDefault(p => p.Id == person.Id);
-            if (existingPerson == null)
-            {
-                throw new KeyNotFoundException($"Person with ID {person.Id} not found.");
-            }
             peopleDB.Remove(existingPerson);
         }
 
