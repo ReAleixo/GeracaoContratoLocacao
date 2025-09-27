@@ -36,11 +36,6 @@
             cmdAdicionar = new ToolStripButton();
             cmdRemover = new ToolStripButton();
             dgvHouses = new DataGridView();
-            groupBox4 = new GroupBox();
-            panel1 = new Panel();
-            chkFiltroExibirLocados = new CheckBox();
-            txtFiltroLocador = new TextBox();
-            label11 = new Label();
             Id = new DataGridViewTextBoxColumn();
             Locado = new DataGridViewTextBoxColumn();
             OwnerId = new DataGridViewTextBoxColumn();
@@ -56,6 +51,11 @@
             Cidade = new DataGridViewTextBoxColumn();
             Estado = new DataGridViewTextBoxColumn();
             CEP = new DataGridViewTextBoxColumn();
+            groupBox4 = new GroupBox();
+            panel1 = new Panel();
+            chkFiltroExibirLocados = new CheckBox();
+            txtFiltroLocador = new TextBox();
+            label11 = new Label();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvHouses).BeginInit();
             groupBox4.SuspendLayout();
@@ -134,61 +134,6 @@
             dgvHouses.RowHeadersVisible = false;
             dgvHouses.Size = new Size(1065, 335);
             dgvHouses.TabIndex = 5;
-            // 
-            // groupBox4
-            // 
-            groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox4.Controls.Add(panel1);
-            groupBox4.Controls.Add(dgvHouses);
-            groupBox4.Location = new Point(12, 76);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(1090, 413);
-            groupBox4.TabIndex = 6;
-            groupBox4.TabStop = false;
-            groupBox4.Text = "CASAS CADASTRADAS";
-            // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            panel1.BackColor = SystemColors.GradientInactiveCaption;
-            panel1.Controls.Add(chkFiltroExibirLocados);
-            panel1.Controls.Add(txtFiltroLocador);
-            panel1.Controls.Add(label11);
-            panel1.Location = new Point(13, 22);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(1065, 45);
-            panel1.TabIndex = 6;
-            // 
-            // chkFiltroExibirLocados
-            // 
-            chkFiltroExibirLocados.AutoSize = true;
-            chkFiltroExibirLocados.Checked = true;
-            chkFiltroExibirLocados.CheckState = CheckState.Checked;
-            chkFiltroExibirLocados.Location = new Point(426, 15);
-            chkFiltroExibirLocados.Name = "chkFiltroExibirLocados";
-            chkFiltroExibirLocados.RightToLeft = RightToLeft.Yes;
-            chkFiltroExibirLocados.Size = new Size(164, 19);
-            chkFiltroExibirLocados.TabIndex = 4;
-            chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADOS";
-            chkFiltroExibirLocados.UseVisualStyleBackColor = true;
-            chkFiltroExibirLocados.CheckedChanged += FilterHousesGrid;
-            // 
-            // txtFiltroLocador
-            // 
-            txtFiltroLocador.Location = new Point(160, 12);
-            txtFiltroLocador.Name = "txtFiltroLocador";
-            txtFiltroLocador.Size = new Size(260, 23);
-            txtFiltroLocador.TabIndex = 3;
-            txtFiltroLocador.TextChanged += FilterHousesGrid;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(10, 16);
-            label11.Name = "label11";
-            label11.Size = new Size(144, 15);
-            label11.TabIndex = 2;
-            label11.Text = "LOCADOR PROPRIETÁRIO";
             // 
             // Id
             // 
@@ -310,6 +255,61 @@
             CEP.ReadOnly = true;
             CEP.Visible = false;
             // 
+            // groupBox4
+            // 
+            groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox4.Controls.Add(panel1);
+            groupBox4.Controls.Add(dgvHouses);
+            groupBox4.Location = new Point(12, 76);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(1090, 413);
+            groupBox4.TabIndex = 6;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "CASAS CADASTRADAS";
+            // 
+            // panel1
+            // 
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(chkFiltroExibirLocados);
+            panel1.Controls.Add(txtFiltroLocador);
+            panel1.Controls.Add(label11);
+            panel1.Location = new Point(13, 22);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1065, 45);
+            panel1.TabIndex = 6;
+            // 
+            // chkFiltroExibirLocados
+            // 
+            chkFiltroExibirLocados.AutoSize = true;
+            chkFiltroExibirLocados.Checked = true;
+            chkFiltroExibirLocados.CheckState = CheckState.Checked;
+            chkFiltroExibirLocados.Location = new Point(426, 15);
+            chkFiltroExibirLocados.Name = "chkFiltroExibirLocados";
+            chkFiltroExibirLocados.RightToLeft = RightToLeft.Yes;
+            chkFiltroExibirLocados.Size = new Size(164, 19);
+            chkFiltroExibirLocados.TabIndex = 4;
+            chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADOS";
+            chkFiltroExibirLocados.UseVisualStyleBackColor = true;
+            chkFiltroExibirLocados.CheckedChanged += FilterHousesGrid;
+            // 
+            // txtFiltroLocador
+            // 
+            txtFiltroLocador.Location = new Point(160, 12);
+            txtFiltroLocador.Name = "txtFiltroLocador";
+            txtFiltroLocador.Size = new Size(260, 23);
+            txtFiltroLocador.TabIndex = 3;
+            txtFiltroLocador.TextChanged += FilterHousesGrid;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(10, 16);
+            label11.Name = "label11";
+            label11.Size = new Size(144, 15);
+            label11.TabIndex = 2;
+            label11.Text = "LOCADOR PROPRIETÁRIO";
+            // 
             // PainelImoveis
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -318,8 +318,10 @@
             ControlBox = false;
             Controls.Add(groupBox4);
             Controls.Add(toolStrip1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "PainelImoveis";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "PAINEL DE IMÓVEIS";
             Load += PainelImoveis_Load;
             toolStrip1.ResumeLayout(false);

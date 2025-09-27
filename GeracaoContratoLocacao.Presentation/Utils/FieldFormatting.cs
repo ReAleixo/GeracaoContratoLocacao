@@ -4,28 +4,28 @@ namespace GeracaoContratoLocacao.Presentation.Utils
 {
     public class TextBoxKeyPress
     {
-        public static void OnlyDigits(object sender, KeyPressEventArgs e)
+        public static void OnlyDigits(KeyPressEventArgs @event)
         {
-            e.Handled = !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar);
+            @event.Handled = !char.IsControl(@event.KeyChar) && !char.IsDigit(@event.KeyChar);
         }
 
-        public static void OnlyLetters(object sender, KeyPressEventArgs e)
+        public static void OnlyLetters(KeyPressEventArgs @event)
         {
-            e.Handled = !char.IsControl(e.KeyChar) && !char.IsLetter(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar);
+            @event.Handled = !char.IsControl(@event.KeyChar) && !char.IsLetter(@event.KeyChar) && !char.IsWhiteSpace(@event.KeyChar);
         }
 
-        public static void OnlyLettersAndDigits(object sender, KeyPressEventArgs e)
+        public static void OnlyLettersAndDigits(KeyPressEventArgs @event)
         {
-            e.Handled = !char.IsControl(e.KeyChar) && !char.IsLetterOrDigit(e.KeyChar);
+            @event.Handled = !char.IsControl(@event.KeyChar) && !char.IsLetterOrDigit(@event.KeyChar);
         }
     }
 
     public class TextBoxMasks
     {
-        public static void ApplyCPFMask(object sender, KeyPressEventArgs e)
+        public static void ApplyCPFMask(object sender, KeyPressEventArgs @event)
         {
-            TextBoxKeyPress.OnlyDigits(sender, e);
-            if (e.KeyChar == (char)Keys.Back)
+            TextBoxKeyPress.OnlyDigits(@event);
+            if (@event.KeyChar == (char)Keys.Back)
             {
                 return;
             }
@@ -44,10 +44,10 @@ namespace GeracaoContratoLocacao.Presentation.Utils
             }
         }
 
-        public static void ApplyDateMask(object sender, KeyPressEventArgs e)
+        public static void ApplyDateMask(object sender, KeyPressEventArgs @event)
         {
-            TextBoxKeyPress.OnlyDigits(sender, e);
-            if (e.KeyChar == (char)Keys.Back)
+            TextBoxKeyPress.OnlyDigits(@event);
+            if (@event.KeyChar == (char)Keys.Back)
             {
                 return;
             }
@@ -63,10 +63,10 @@ namespace GeracaoContratoLocacao.Presentation.Utils
             }
         }
 
-        public static void ApplyMoneyMask(object sender, KeyPressEventArgs e)
+        public static void ApplyMoneyMask(object sender, KeyPressEventArgs @event)
         {
-            TextBoxKeyPress.OnlyDigits(sender, e);
-            if (e.KeyChar == (char)Keys.Back)
+            TextBoxKeyPress.OnlyDigits(@event);
+            if (@event.KeyChar == (char)Keys.Back)
             {
                 return;
             }
@@ -84,9 +84,9 @@ namespace GeracaoContratoLocacao.Presentation.Utils
             string digits = new string(textBox.Text.Where(char.IsDigit).ToArray());
             digits = digits.TrimStart('0');
 
-            if (!e.Handled && char.IsDigit(e.KeyChar))
+            if (!@event.Handled && char.IsDigit(@event.KeyChar))
             {
-                digits += e.KeyChar;
+                digits += @event.KeyChar;
             }
 
             if (digits.Length == 0)
@@ -107,7 +107,7 @@ namespace GeracaoContratoLocacao.Presentation.Utils
             }
 
             textBox.SelectionStart = textBox.Text.Length;
-            e.Handled = true;
+            @event.Handled = true;
         }
     }
 }

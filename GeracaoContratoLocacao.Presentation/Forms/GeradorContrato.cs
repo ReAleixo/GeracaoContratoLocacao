@@ -1,5 +1,6 @@
 ﻿using GeracaoContratoLocacao.Domain.Enums;
 using GeracaoContratoLocacao.Presentation.Interfaces;
+using GeracaoContratoLocacao.Presentation.Utils;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -145,6 +146,16 @@ namespace GeracaoContratoLocacao.Presentation.Forms
             cmbModeloContrato.DataSource = ModeloContrato.PreencherComboBox<ModeloContrato>();
             cmbModeloContrato.DisplayMember = ModeloContrato.DisplayMemberAttribute;
             cmbModeloContrato.ValueMember = ModeloContrato.ValueMemberAttribute;
+        }
+
+        private void FormatacaoCamposData(object sender, KeyPressEventArgs e)
+        {
+            TextBoxMasks.ApplyDateMask(sender, e);
+        }
+
+        private void txtPrazo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            TextBoxKeyPress.OnlyDigits(e);
         }
     }
 }

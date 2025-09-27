@@ -118,6 +118,7 @@
             // 
             // tabLocadorLocatario
             // 
+            tabLocadorLocatario.BackColor = SystemColors.Control;
             tabLocadorLocatario.Controls.Add(groupBox2);
             tabLocadorLocatario.Location = new Point(4, 24);
             tabLocadorLocatario.Name = "tabLocadorLocatario";
@@ -125,10 +126,10 @@
             tabLocadorLocatario.Size = new Size(369, 343);
             tabLocadorLocatario.TabIndex = 0;
             tabLocadorLocatario.Text = "  LOCADOR LOCATARIO  ";
-            tabLocadorLocatario.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            groupBox2.BackColor = SystemColors.Control;
             groupBox2.Controls.Add(cmbGender);
             groupBox2.Controls.Add(label11);
             groupBox2.Controls.Add(picDocument);
@@ -154,6 +155,7 @@
             // 
             // cmbGender
             // 
+            cmbGender.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbGender.FormattingEnabled = true;
             cmbGender.Location = new Point(259, 81);
             cmbGender.Name = "cmbGender";
@@ -178,11 +180,11 @@
             picDocument.TabIndex = 31;
             picDocument.TabStop = false;
             // 
-            // rdbLessee
+            // rdbLocatario
             // 
             rdbLocatario.AutoSize = true;
             rdbLocatario.Location = new Point(253, 17);
-            rdbLocatario.Name = "rdbLessee";
+            rdbLocatario.Name = "rdbLocatario";
             rdbLocatario.RightToLeft = RightToLeft.Yes;
             rdbLocatario.Size = new Size(88, 19);
             rdbLocatario.TabIndex = 30;
@@ -190,11 +192,11 @@
             rdbLocatario.Text = "LOCATÁRIO";
             rdbLocatario.UseVisualStyleBackColor = true;
             // 
-            // rdbLessor
+            // rdbLocador
             // 
             rdbLocador.AutoSize = true;
             rdbLocador.Location = new Point(167, 17);
-            rdbLocador.Name = "rdbLessor";
+            rdbLocador.Name = "rdbLocador";
             rdbLocador.RightToLeft = RightToLeft.Yes;
             rdbLocador.Size = new Size(80, 19);
             rdbLocador.TabIndex = 29;
@@ -213,6 +215,7 @@
             // 
             // cmbMaritalStatus
             // 
+            cmbMaritalStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbMaritalStatus.FormattingEnabled = true;
             cmbMaritalStatus.Location = new Point(182, 125);
             cmbMaritalStatus.Name = "cmbMaritalStatus";
@@ -301,6 +304,7 @@
             // 
             // tabConjuge
             // 
+            tabConjuge.BackColor = SystemColors.Control;
             tabConjuge.Controls.Add(groupBox1);
             tabConjuge.Location = new Point(4, 24);
             tabConjuge.Name = "tabConjuge";
@@ -308,10 +312,10 @@
             tabConjuge.Size = new Size(369, 343);
             tabConjuge.TabIndex = 1;
             tabConjuge.Text = "  CÔNJUGE  ";
-            tabConjuge.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = SystemColors.Control;
             groupBox1.Controls.Add(cmbSpouseGender);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(txtSpouseRG);
@@ -333,6 +337,7 @@
             // 
             // cmbSpouseGender
             // 
+            cmbSpouseGender.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbSpouseGender.FormattingEnabled = true;
             cmbSpouseGender.Location = new Point(259, 81);
             cmbSpouseGender.Name = "cmbSpouseGender";
@@ -436,7 +441,7 @@
             label10.TabIndex = 1;
             label10.Text = "NOME";
             // 
-            // EditPerson
+            // CadastroPessoa
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -444,8 +449,10 @@
             ControlBox = false;
             Controls.Add(tabPessoas);
             Controls.Add(toolStrip1);
-            Name = "EditPerson";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "CadastroPessoa";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "EDIT OR CREATE PERSON";
             Load += CadastroPessoa_Load;
             toolStrip1.ResumeLayout(false);

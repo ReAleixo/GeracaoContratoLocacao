@@ -111,7 +111,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private void txtNameFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBoxKeyPress.OnlyLetters(sender, e);
+            TextBoxKeyPress.OnlyLetters(e);
         }
 
         private void txtCPFFilter_KeyPress(object sender, KeyPressEventArgs e)

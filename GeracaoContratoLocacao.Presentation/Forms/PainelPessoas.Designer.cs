@@ -263,7 +263,7 @@
             cmdRemove.Visible = false;
             cmdRemove.Click += cmdRemove_Click;
             // 
-            // PeoplePanel
+            // PainelPessoas
             // 
             AcceptButton = cmdFilter;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -272,8 +272,10 @@
             ControlBox = false;
             Controls.Add(groupBox4);
             Controls.Add(toolStrip1);
-            Name = "PeoplePanel";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Name = "PainelPessoas";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "PAINEL DE PESSOAS";
             groupBox4.ResumeLayout(false);
             panel1.ResumeLayout(false);

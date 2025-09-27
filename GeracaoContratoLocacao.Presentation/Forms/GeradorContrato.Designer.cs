@@ -65,7 +65,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { cmdGerar, cmdCancelar });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(446, 73);
+            toolStrip1.Size = new Size(445, 73);
             toolStrip1.TabIndex = 1;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -102,8 +102,9 @@
             // 
             // cmbLocador
             // 
+            cmbLocador.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbLocador.FormattingEnabled = true;
-            cmbLocador.Location = new Point(13, 37);
+            cmbLocador.Location = new Point(12, 37);
             cmbLocador.Name = "cmbLocador";
             cmbLocador.Size = new Size(284, 23);
             cmbLocador.TabIndex = 1;
@@ -111,7 +112,7 @@
             // 
             // cmdAdicionarLocador
             // 
-            cmdAdicionarLocador.Location = new Point(303, 36);
+            cmdAdicionarLocador.Location = new Point(302, 36);
             cmdAdicionarLocador.Name = "cmdAdicionarLocador";
             cmdAdicionarLocador.Size = new Size(106, 23);
             cmdAdicionarLocador.TabIndex = 2;
@@ -136,7 +137,7 @@
             // 
             // cmdAdicionarLocatario
             // 
-            cmdAdicionarLocatario.Location = new Point(303, 80);
+            cmdAdicionarLocatario.Location = new Point(302, 80);
             cmdAdicionarLocatario.Name = "cmdAdicionarLocatario";
             cmdAdicionarLocatario.Size = new Size(106, 23);
             cmdAdicionarLocatario.TabIndex = 5;
@@ -146,8 +147,9 @@
             // 
             // cmbLocatario
             // 
+            cmbLocatario.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbLocatario.FormattingEnabled = true;
-            cmbLocatario.Location = new Point(13, 81);
+            cmbLocatario.Location = new Point(12, 81);
             cmbLocatario.Name = "cmbLocatario";
             cmbLocatario.Size = new Size(284, 23);
             cmbLocatario.TabIndex = 4;
@@ -176,7 +178,7 @@
             // 
             // cmdAdicionarImovel
             // 
-            cmdAdicionarImovel.Location = new Point(303, 36);
+            cmdAdicionarImovel.Location = new Point(301, 36);
             cmdAdicionarImovel.Name = "cmdAdicionarImovel";
             cmdAdicionarImovel.Size = new Size(106, 23);
             cmdAdicionarImovel.TabIndex = 2;
@@ -186,8 +188,9 @@
             // 
             // cmbImoveisLocador
             // 
+            cmbImoveisLocador.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbImoveisLocador.FormattingEnabled = true;
-            cmbImoveisLocador.Location = new Point(13, 37);
+            cmbImoveisLocador.Location = new Point(12, 37);
             cmbImoveisLocador.Name = "cmbImoveisLocador";
             cmbImoveisLocador.Size = new Size(284, 23);
             cmbImoveisLocador.TabIndex = 1;
@@ -215,7 +218,7 @@
             groupBox3.Controls.Add(label2);
             groupBox3.Location = new Point(12, 287);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(421, 151);
+            groupBox3.Size = new Size(421, 154);
             groupBox3.TabIndex = 7;
             groupBox3.TabStop = false;
             groupBox3.Text = "CONTRATO";
@@ -223,9 +226,11 @@
             // txtDataGeracaoContrato
             // 
             txtDataGeracaoContrato.Location = new Point(278, 89);
+            txtDataGeracaoContrato.MaxLength = 10;
             txtDataGeracaoContrato.Name = "txtDataGeracaoContrato";
-            txtDataGeracaoContrato.Size = new Size(131, 23);
+            txtDataGeracaoContrato.Size = new Size(130, 23);
             txtDataGeracaoContrato.TabIndex = 10;
+            txtDataGeracaoContrato.KeyPress += FormatacaoCamposData;
             // 
             // label8
             // 
@@ -257,16 +262,20 @@
             // txtDataInicio
             // 
             txtDataInicio.Location = new Point(136, 89);
+            txtDataInicio.MaxLength = 10;
             txtDataInicio.Name = "txtDataInicio";
             txtDataInicio.Size = new Size(131, 23);
             txtDataInicio.TabIndex = 5;
+            txtDataInicio.KeyPress += FormatacaoCamposData;
             // 
             // txtPrazo
             // 
-            txtPrazo.Location = new Point(13, 89);
+            txtPrazo.Location = new Point(12, 89);
+            txtPrazo.MaxLength = 3;
             txtPrazo.Name = "txtPrazo";
-            txtPrazo.Size = new Size(67, 23);
+            txtPrazo.Size = new Size(68, 23);
             txtPrazo.TabIndex = 4;
+            txtPrazo.KeyPress += txtPrazo_KeyPress;
             // 
             // label5
             // 
@@ -279,7 +288,7 @@
             // 
             // cmdAdcionarModeloContrato
             // 
-            cmdAdcionarModeloContrato.Location = new Point(303, 36);
+            cmdAdcionarModeloContrato.Location = new Point(301, 36);
             cmdAdcionarModeloContrato.Name = "cmdAdcionarModeloContrato";
             cmdAdcionarModeloContrato.Size = new Size(106, 23);
             cmdAdcionarModeloContrato.TabIndex = 2;
@@ -288,8 +297,9 @@
             // 
             // cmbModeloContrato
             // 
+            cmbModeloContrato.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbModeloContrato.FormattingEnabled = true;
-            cmbModeloContrato.Location = new Point(13, 37);
+            cmbModeloContrato.Location = new Point(12, 37);
             cmbModeloContrato.Name = "cmbModeloContrato";
             cmbModeloContrato.Size = new Size(284, 23);
             cmbModeloContrato.TabIndex = 1;
@@ -307,14 +317,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(446, 450);
+            ClientSize = new Size(445, 453);
             ControlBox = false;
             Controls.Add(groupBox3);
             Controls.Add(grbImovel);
             Controls.Add(groupBox2);
             Controls.Add(toolStrip1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "frmGeradorContrato";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Gerador de Contrato";
             Load += frmGeradorContrato_Load;
             toolStrip1.ResumeLayout(false);
