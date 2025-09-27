@@ -43,7 +43,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { cmdClose, toolStripSeparator1, cmdHousesPanel, cmdPeoplePanel, cmdFormularioContrato });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(583, 73);
+            toolStrip1.Size = new Size(582, 73);
             toolStrip1.TabIndex = 8;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -87,15 +87,16 @@
             cmdFormularioContrato.Name = "cmdFormularioContrato";
             cmdFormularioContrato.Size = new Size(221, 70);
             cmdFormularioContrato.Text = "PAINEL DE &GERAÇÃO DE CONTRATO";
-            cmdFormularioContrato.Click += cmdFormularioContrato_Click;
+            cmdFormularioContrato.Click += cmdGeradorContrato_Click;
             // 
             // Menu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(583, 224);
+            ClientSize = new Size(582, 449);
             ControlBox = false;
             Controls.Add(toolStrip1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Menu";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;

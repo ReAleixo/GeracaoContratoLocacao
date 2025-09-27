@@ -6,13 +6,13 @@ namespace GeracaoContratoLocacao.Presentation.Forms
     public partial class PainelImoveis : Form
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly IHouseController _imovelController;
+        private readonly IImovelController _imovelController;
 
         public PainelImoveis(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
-            _imovelController = _serviceProvider.GetRequiredService<IHouseController>();
+            _imovelController = _serviceProvider.GetRequiredService<IImovelController>();
         }
 
         private void cmdVoltar_Click(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private void cmdAlterar_Click(object sender, EventArgs e)
         {
-            Guid houseId = Guid.Parse(dgvHouses.CurrentRow.Cells["HouseId"].Value.ToString());
+            Guid houseId = Guid.Parse(dgvHouses.CurrentRow.Cells["Id"].Value.ToString());
             CadastroImovel cadastroImovel = new CadastroImovel(_serviceProvider, houseId);
             cadastroImovel.ShowDialog();
         }
@@ -43,7 +43,7 @@ namespace GeracaoContratoLocacao.Presentation.Forms
 
         private async void cmdRemover_Click(object sender, EventArgs e)
         {
-            Guid houseId = Guid.Parse(dgvHouses.CurrentRow.Cells["HouseId"].Value.ToString());
+            Guid houseId = Guid.Parse(dgvHouses.CurrentRow.Cells["Id"].Value.ToString());
             await _imovelController.DeleteHouse(houseId);
         }
 

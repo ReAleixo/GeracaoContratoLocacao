@@ -8,6 +8,6 @@
 
     public class Paths
     {
-        public const string pathModeloContrato = @"Your\Path\File\Here";
+        public const string pathModeloContrato = @"C:\MeusProjetos\GeracaoContratoLocacao\GeracaoContratoLocacao.Domain\Documentos\ModelosContrato\Modelo de contrato padrão.docx";
     }
 }

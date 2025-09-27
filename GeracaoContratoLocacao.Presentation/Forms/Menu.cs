@@ -27,14 +27,14 @@
 
         private void cmdPeoplePanel_Click(object sender, EventArgs e)
         {
-            PeoplePanel peoplePanel = new PeoplePanel(_serviceProvider);
+            PainelPessoas peoplePanel = new PainelPessoas(_serviceProvider);
             peoplePanel.ShowDialog();
         }
 
-        private void cmdFormularioContrato_Click(object sender, EventArgs e)
+        private void cmdGeradorContrato_Click(object sender, EventArgs e)
         {
-            FormularioContrato formularioContrato = new FormularioContrato(_serviceProvider);
-            formularioContrato.ShowDialog();
+            frmGeradorContrato geradorContrato = new frmGeradorContrato(_serviceProvider);
+            geradorContrato.ShowDialog();
         }
     }
 }

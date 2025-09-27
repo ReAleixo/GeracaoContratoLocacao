@@ -36,7 +36,7 @@
             cmdAdicionar = new ToolStripButton();
             cmdRemover = new ToolStripButton();
             dgvHouses = new DataGridView();
-            HouseId = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
             Locado = new DataGridViewTextBoxColumn();
             OwnerId = new DataGridViewTextBoxColumn();
             NomeLocador = new DataGridViewTextBoxColumn();
@@ -127,7 +127,7 @@
             dgvHouses.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvHouses.BackgroundColor = SystemColors.ScrollBar;
             dgvHouses.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvHouses.Columns.AddRange(new DataGridViewColumn[] { HouseId, Locado, OwnerId, NomeLocador, Imovel, ImovelStatus, NumeroComodos, ValorAluguel, Rua, Numero, Complemento, Bairro, Cidade, Estado, CEP });
+            dgvHouses.Columns.AddRange(new DataGridViewColumn[] { Id, Locado, OwnerId, NomeLocador, Imovel, ImovelStatus, NumeroComodos, ValorAluguel, Rua, Numero, Complemento, Bairro, Cidade, Estado, CEP });
             dgvHouses.Location = new Point(13, 64);
             dgvHouses.Name = "dgvHouses";
             dgvHouses.ReadOnly = true;
@@ -135,13 +135,13 @@
             dgvHouses.Size = new Size(1065, 335);
             dgvHouses.TabIndex = 5;
             // 
-            // HouseId
+            // Id
             // 
-            HouseId.DataPropertyName = "HouseId";
-            HouseId.HeaderText = "HouseId";
-            HouseId.Name = "HouseId";
-            HouseId.ReadOnly = true;
-            HouseId.Visible = false;
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
             // 
             // Locado
             // 
@@ -287,9 +287,9 @@
             chkFiltroExibirLocados.Location = new Point(426, 15);
             chkFiltroExibirLocados.Name = "chkFiltroExibirLocados";
             chkFiltroExibirLocados.RightToLeft = RightToLeft.Yes;
-            chkFiltroExibirLocados.Size = new Size(163, 19);
+            chkFiltroExibirLocados.Size = new Size(164, 19);
             chkFiltroExibirLocados.TabIndex = 4;
-            chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADAS";
+            chkFiltroExibirLocados.Text = "EXIBIR IMÓVEIS LOCADOS";
             chkFiltroExibirLocados.UseVisualStyleBackColor = true;
             chkFiltroExibirLocados.CheckedChanged += FilterHousesGrid;
             // 
@@ -318,8 +318,10 @@
             ControlBox = false;
             Controls.Add(groupBox4);
             Controls.Add(toolStrip1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "PainelImoveis";
             ShowIcon = false;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "PAINEL DE IMÓVEIS";
             Load += PainelImoveis_Load;
             toolStrip1.ResumeLayout(false);
@@ -346,7 +348,7 @@
         private Label label11;
         private TextBox txtFiltroLocador;
         private CheckBox chkFiltroExibirLocados;
-        private DataGridViewTextBoxColumn HouseId;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn Locado;
         private DataGridViewTextBoxColumn OwnerId;
         private DataGridViewTextBoxColumn NomeLocador;

@@ -1,25 +1,49 @@
 ﻿using GeracaoContratoLocacao.Domain.Entities;
+using GeracaoContratoLocacao.Domain.ValueObjects;
 using GeracaoContratoLocacao.Presentation.Interfaces;
 using GeracaoContratoLocacao.Presentation.ViewModels;
 using GeracaoContratoLocacao.Service.Interfaces;
-using GeracaoContratoLocacao.Domain.ValueObjects;
-using GeracaoContratoLocacao.Domain.Enums;
 
 namespace GeracaoContratoLocacao.Presentation.Controllers
 {
-    public class ImovelController : IHouseController
+    public class ImovelController : IImovelController
     {
-        private readonly IImovelService _houseService;
+        private readonly IImovelService _imovelService;
 
         public ImovelController(IImovelService imovelService)
         {
-            _houseService = imovelService;
+            _imovelService = imovelService;
         }
 
-        public async Task<Guid> CadastrarNovoImovel(HouseViewModel viewModel)
+        public async Task<IEnumerable<ImovelViewModel>> BuscarImoveisPorProprietario(Guid idProprietario)
         {
-            House house = TransformaViewModelEmImovel(viewModel);
-            return await _houseService.CadastrarNovoImovel(house);
+            if (idProprietario == default)
+            {
+                throw new ArgumentException("Não foi informado o proprietário.");
+            }
+            IEnumerable<Imovel> imoveis = await _imovelService.BuscarImoveisPorProprietario(idProprietario);
+            return imoveis.Select(imovel => new ImovelViewModel
+            {
+                Id = imovel.Id,
+                IdProprietario = imovel.Proprietario.Id,
+                NomeProprietario = imovel.Proprietario.Nome,
+                NumeroComodos = imovel.NumeroComodos,
+                ValorAluguel = imovel.ValorAluguel,
+                ImovelLocado = imovel.Locado,
+                Rua = imovel.Endereco.Rua,
+                Numero = imovel.Endereco.Numero,
+                Complemento = imovel.Endereco.Complemento,
+                Bairro = imovel.Endereco.Bairro,
+                Cidade = imovel.Endereco.Cidade,
+                Estado = imovel.Endereco.Estado,
+                CEP = imovel.Endereco.CEP
+            });
+        }
+
+        public async Task<Guid> CadastrarNovoImovel(ImovelViewModel viewModel)
+        {
+            Imovel house = TransformaViewModelEmImovel(viewModel);
+            return await _imovelService.CadastrarNovoImovel(house);
         }
 
         public async Task DeleteHouse(Guid houseId)
@@ -29,24 +53,23 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                 throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(houseId));
             }
 
-            House house = await _houseService.GetHouseById(houseId);
-            await _houseService.DeleteHouse(house);
+            await _imovelService.RemoverImovel(houseId);
         }
 
-        public async Task<IEnumerable<HouseViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
+        public async Task<IEnumerable<ImovelViewModel>> GetAllHouseViewModelList(string? lessorNameFilter = null, bool? showHouseRentedFilter = null)
         {
-            List<House> houses = (await _houseService.GetAllHouses()).ToList();
+            List<Imovel> houses = (await _imovelService.BuscarTodosImoveis()).ToList();
 
             if (houses == null || !houses.Any())
             {
                 throw new InvalidOperationException("Nenhum imóvel encontrado.");
             }
 
-            var housesViewModelList = houses.Select(h => new HouseViewModel
+            var housesViewModelList = houses.Select(h => new ImovelViewModel
             {
-                HouseId = h.Id,
-                IdProprietario = h.Owner.Id,
-                NomeProprietario = h.Owner.Nome,
+                Id = h.Id,
+                IdProprietario = h.Proprietario.Id,
+                NomeProprietario = h.Proprietario.Nome,
                 NumeroComodos = h.NumeroComodos,
                 ValorAluguel = h.ValorAluguel,
                 ImovelLocado = h.Locado,
@@ -72,18 +95,18 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             return housesViewModelList;
         }
 
-        public async Task<HouseViewModel> GetHouseViewModelByHouseId(Guid houseId)
+        public async Task<ImovelViewModel> GetHouseViewModelByHouseId(Guid houseId)
         {
             if (houseId == default)
             {
                 throw new ArgumentException("O ID do imóvel não pode ser o valor padrão.", nameof(houseId));
             }
 
-            House house = await _houseService.GetHouseById(houseId);
+            Imovel house = await _imovelService.BuscarImovelPorId(houseId);
 
-            return new HouseViewModel
+            return new ImovelViewModel
             {
-                HouseId = house.Id,
+                Id = house.Id,
                 NumeroComodos = house.NumeroComodos,
                 ValorAluguel = house.ValorAluguel,
                 ImovelLocado = house.Locado,
@@ -97,28 +120,23 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
             };
         }
 
-        public async Task<IEnumerable<Person>> ObterLocadores()
+        public async Task SaveChanges(ImovelViewModel viewModel)
         {
-            throw new NotImplementedException();
+            Imovel imovel = TransformaViewModelEmImovel(viewModel);
+            await _imovelService.AlterarImovel(imovel);
         }
 
-        public async Task SaveChanges(HouseViewModel viewModel)
-        {
-            House imovel = TransformaViewModelEmImovel(viewModel);
-            await _houseService.SaveChanges(imovel);
-        }
-
-        private House TransformaViewModelEmImovel(HouseViewModel viewModel)
+        private Imovel TransformaViewModelEmImovel(ImovelViewModel viewModel)
         {
             if (viewModel.IsNullOrEmpty())
             {
                 throw new ArgumentNullException("A ViewModel não possui nenhuma informação.");
             }
 
-            return new House
+            return new Imovel
             {
-                Id = viewModel.HouseId,
-                Owner = new Person
+                Id = viewModel.Id,
+                Proprietario = new Pessoa
                 {
                     Id = viewModel.IdProprietario
                 },
@@ -135,7 +153,6 @@ namespace GeracaoContratoLocacao.Presentation.Controllers
                     Estado = viewModel.Estado,
                     CEP = viewModel.CEP
                 },
-                LogicalStatus = LogicalStatus.Active,
             };
         }
     }

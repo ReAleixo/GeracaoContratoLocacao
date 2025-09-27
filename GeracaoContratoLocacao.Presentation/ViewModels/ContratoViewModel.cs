@@ -1,106 +1,77 @@
-﻿using GeracaoContratoLocacao.CrossCutting.Utils;
-using GeracaoContratoLocacao.Domain.Utils;
-using System.Diagnostics;
+﻿using GeracaoContratoLocacao.Domain.Utils;
 
 namespace GeracaoContratoLocacao.Presentation.ViewModels
 {
     public class ContratoViewModel
     {
         public Guid Id { get; set; }
-        public string NomeLocatario { get; set; }
-        public string CPFLocatario { get; set; }
-        public string RGLocatario { get; set; }
+        public Guid IdLocador { get; set; }
+        public Guid IdLocatario { get; set; }
+        public Guid IdImovel { get; set; }
+        public Guid IdModeloContrato { get; set; }
+        public int Prazo { get; set; }
         public DateTime DataInicioContrato { get; set; }
-        public int PrazoContrato { get; set; }
-        public int NumeroCasa { get; set; }
-        public decimal ValorAluguel { get; set; }
+        public DateTime DataGeracaoContrato { get; set; }
 
         public ContratoViewModel(
-            string nomeLocatario,
-            string cpfLocatario,
-            string rgLocatario,
+            string idLocador,
+            string idLocatario,
+            string idImovel,
+            string idModeloContrato,
+            string prazo,
             string dataInicioContrato,
-            string prazoContrato,
-            int numeroCasa,
-            string valorAluguel)
+            string dataGeracaoContrato)
         {
-            NomeLocatario = ValidaNome(nomeLocatario);
-            CPFLocatario = ValidaCPF(cpfLocatario);
-            RGLocatario = ValidaRG(rgLocatario);
-            DataInicioContrato = ValidaDataInicioContrato(dataInicioContrato);
-            PrazoContrato = ValidaPrazoContrato(prazoContrato);
-            NumeroCasa = ValidaNumeroCasa(numeroCasa);
-            ValorAluguel = ValidaValorAluguel(valorAluguel);
+            IdLocador = ValidaGuid(idLocador, "O locador não foi selecionado");
+            IdLocatario = ValidaGuid(idLocatario, "O locatário não foi selecionado");
+            IdImovel = ValidaGuid(idImovel, "O imóvel não foi selecionado");
+            IdModeloContrato = ValidaGuid(idModeloContrato, "O modelo de contrato não foi selecionado");
+            Prazo = ValidaPrazo(prazo);
+            DataInicioContrato = ValidaDateTime(dataInicioContrato, "data de início do contrato");
+            DataGeracaoContrato = ValidaDateTime(dataGeracaoContrato, "data de geração do contrato");
             Id = Guid.NewGuid();
         }
 
-        private string ValidaNome(string nome)
+        private Guid ValidaGuid(string id, string mensagemErro)
         {
-            if (string.IsNullOrWhiteSpace(nome.Trim()))
+            if (int.TryParse(id, out int intId)
+                && intId > 0)
             {
-                throw new ArgumentException("O nome do locatário não pode ser vazio.");
+                return Guid.Empty;
             }
-            if (nome.Length > 200)
+            if (string.IsNullOrEmpty(id) 
+                || !Guid.TryParse(id, out Guid guid)
+                || guid.Equals(Guid.Empty))
             {
-                throw new ArgumentException("O nome do locatário não pode ter mais de 200 caracteres.");
+                throw new ArgumentException(mensagemErro);
             }
-            if (nome.Split(' ').Count() < 2)
-            {
-                throw new ArgumentException("O nome do locatário deve conter pelo menos um sobrenome.");
-            }
-            return nome;
+            return guid;
         }
 
-        private string ValidaCPF(string cpf)
-        {
-            if (Validacoes.DocumentIsValid(cpf))
-            {
-                return Formatacoes.FormatarCPF(cpf);
-            }
-            throw new ArgumentException("CPF inválido.");
-        }
-
-        private string ValidaRG(string rg)
-        {
-            if (string.IsNullOrEmpty(rg))
-            {
-                throw new ArgumentException("O RG não pode ser nulo.");
-            }
-            if (rg.Length < 5)
-            {
-                throw new ArgumentException("RG inválido");
-            }
-            return rg;
-        }
-
-        private DateTime ValidaDataInicioContrato(string data)
+        private DateTime ValidaDateTime(string data, string nomeCampo)
         {
             if (string.IsNullOrEmpty(data))
             {
-                throw new ArgumentException("A data de início do contrato não pode ser nula.");
+                throw new ArgumentException($"A {nomeCampo} não foi informada.");
             }
 
             if (data.Length < Lengths.Data)
             {
-                throw new ArgumentException("A data de início do contrato é inválida.");
+                throw new ArgumentException($"A {nomeCampo} é inválida.");
             }
 
             if (DateTime.TryParse(data, out DateTime dataInicio))
             {
-                if (dataInicio < DateTime.Now.Date)
-                {
-                    throw new ArgumentException("A data de início do contrato não pode ser anterior à data atual.");
-                }
                 return dataInicio;
             }
-            throw new ArgumentException("A data de início do contrato é inválida.");
+            throw new ArgumentException($"A {nomeCampo} é inválida.");
         }
 
-        private int ValidaPrazoContrato(string prazo)
+        private int ValidaPrazo(string prazo)
         {
             if (string.IsNullOrEmpty(prazo))
             {
-                throw new ArgumentException("O prazo do contrato não pode ser nulo.");
+                throw new ArgumentException("O prazo do contrato não foi informado.");
             }
             if (int.TryParse(prazo, out int prazoInt))
             {
@@ -111,32 +82,6 @@ namespace GeracaoContratoLocacao.Presentation.ViewModels
                 return prazoInt;
             }
             throw new ArgumentException("O prazo do contrato é inválido.");
-        }
-
-        private int ValidaNumeroCasa(int numeroCasa)
-        {
-            if (numeroCasa <= 0)
-            {
-                throw new ArgumentException("Casa inválida");
-            }
-            return numeroCasa;
-        }
-
-        private decimal ValidaValorAluguel(string valor)
-        {
-            if (string.IsNullOrEmpty(valor))
-            {
-                throw new ArgumentException("O valor do aluguel não pode ser nulo.");
-            }
-            if (decimal.TryParse(valor, out decimal valorDecimal))
-            {
-                if (valorDecimal <= decimal.Zero)
-                {
-                    throw new ArgumentException("O valor do aluguel deve ser um valor positivo.");
-                }
-                return valorDecimal;
-            }
-            throw new ArgumentException("O valor do aluguel é inválido.");
         }
     }
 }
