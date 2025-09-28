@@ -125,10 +125,9 @@ namespace GeracaoContratoLocacao.Test.Service
 
         [Fact]
         [Trait("PessoaService", "Buscar pessoa")]
-        public async Task BuscarPessoasPorFiltro_FiltroVazio_DeveRetornarListaDePessoas()
+        public async Task BuscarPessoasPorFiltro_FiltroVazio_DeveRetornarException()
         {
-            IEnumerable<Pessoa> pessoas = await _pessoaService.BuscarPessoasPorFiltro(new FiltroPessoas());
-            Assert.NotNull(pessoas);
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _pessoaService.BuscarPessoasPorFiltro(new FiltroPessoas()));
         }
 
         [Fact]
