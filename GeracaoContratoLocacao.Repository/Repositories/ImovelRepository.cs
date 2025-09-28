@@ -8,7 +8,7 @@ using System.Data;
 
 namespace GeracaoContratoLocacao.Repository.Repositories
 {
-    public class ImovelRepository : RepositoryBase<ImoveisDTO>, IImovelRepository
+    public class ImovelRepository : RepositoryBase<ImovelDTO>, IImovelRepository
     {
         List<Imovel> AllHouses = new List<Imovel>();
 
@@ -80,7 +80,7 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             return imovel.Id;
         }
 
-        public IEnumerable<Imovel> BuscarTodosImoveis()
+        public async Task<IEnumerable<Imovel>> BuscarTodosImoveis()
         {
             return AllHouses.AsEnumerable();
         }

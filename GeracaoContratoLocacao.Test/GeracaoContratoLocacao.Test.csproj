@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GeracaoContratoLocacao.Repository\GeracaoContratoLocacao.Repository.csproj" />
+    <ProjectReference Include="..\GeracaoContratoLocacao.Service\GeracaoContratoLocacao.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

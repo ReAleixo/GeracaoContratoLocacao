@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeracaoContratoLocacao.CrossCutting\GeracaoContratoLocacao.CrossCutting.csproj" />
+    <Compile Remove="Validators\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Validators\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
+    <ProjectReference Include="..\GeracaoContratoLocacao.CrossCutting\GeracaoContratoLocacao.CrossCutting.csproj" />
   </ItemGroup>
 
 </Project>

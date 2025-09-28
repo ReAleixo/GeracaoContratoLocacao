@@ -15,7 +15,11 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public async Task<Guid> CadastrarNovoImovel(Imovel imovel)
         {
-            VerificaSeImovelEstaNulo(imovel);
+            if (imovel == null
+                || imovel.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException(nameof(imovel), "Não foi informado o imóvel a ser cadastrado.");
+            }
             return await _imovelRepository.CadastrarNovoImovel(imovel);
         }
 
@@ -30,7 +34,7 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public async Task<IEnumerable<Imovel>> BuscarTodosImoveis()
         {
-            return _imovelRepository.BuscarTodosImoveis();
+            return await _imovelRepository.BuscarTodosImoveis();
         }
 
         public async Task<Imovel> BuscarImovelPorId(Guid idImovel)
@@ -44,16 +48,12 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public Task AlterarImovel(Imovel imovel)
         {
-            VerificaSeImovelEstaNulo(imovel);
-            return _imovelRepository.SalvarAlteracoes(imovel);
-        }
-
-        private void VerificaSeImovelEstaNulo(Imovel imovel)
-        {
-            if (imovel.IsNullOrEmpty())
+            if (imovel == null
+                || imovel.IsNullOrEmpty())
             {
-                throw new ArgumentNullException(nameof(imovel), "O imóvel não pode ser nulo.");
+                throw new ArgumentNullException(nameof(imovel), "Não foi informado o imóvel a ser alterado.");
             }
+            return _imovelRepository.SalvarAlteracoes(imovel);
         }
 
         public async Task<IEnumerable<Imovel>> BuscarImoveisPorProprietario(Guid idProprietario)
