@@ -110,10 +110,10 @@ namespace GeracaoContratoLocacao.Repository.Repositories
             peopleDB.Remove(existingPerson);
         }
 
-        public Task CadastrarPessoa(Pessoa person)
+        public async Task<Guid> CadastrarPessoa(Pessoa person)
         {
             peopleDB.Add(person);
-            return Task.CompletedTask;
+            return person.Id;
         }
 
         public async Task AtualizarPessoa(Pessoa person)

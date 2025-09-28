@@ -17,6 +17,11 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public async Task<IEnumerable<Pessoa>> BuscarPessoasPorFiltro(FiltroPessoas filtro)
         {
+            if (filtro == null
+                || filtro.IsNullOrEmpty())
+            {
+                throw new ArgumentNullException("O filtro não foi informado.");
+            }
             return await _pessoaRepository.BuscarPessoasPorFiltro(filtro);
         }
 
@@ -46,16 +51,18 @@ namespace GeracaoContratoLocacao.Service.Services
 
         public Task RemoverPessoa(Pessoa person)
         {
-            if (person == null)
+            if (person == null
+                || person.IsNullOrEmpty())
             {
                 throw new ArgumentNullException("Não foi informada a pessoa a ser removida.");
             }
             return _pessoaRepository.RemoverPessoa(person);
         }
 
-        public async Task CadastrarPessoa(Pessoa person)
+        public async Task<Guid> CadastrarPessoa(Pessoa person)
         {
-            if (person == null)
+            if (person == null
+                || person.IsNullOrEmpty())
             {
                 throw new ArgumentNullException("Não foi informada uma pessoa");
             }
@@ -86,7 +93,7 @@ namespace GeracaoContratoLocacao.Service.Services
                     };
                 }
                 await _pessoaRepository.AtualizarPessoa(existingPerson);
-                return;
+                return existingPerson.Id;
             }
 
             if (person.Spouse != null
@@ -104,7 +111,7 @@ namespace GeracaoContratoLocacao.Service.Services
                 };
             }
 
-            await _pessoaRepository.CadastrarPessoa(person);
+            return await _pessoaRepository.CadastrarPessoa(person);
         }
     }
 }
